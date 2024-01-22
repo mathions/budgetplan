@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/header";
+import Header from "./header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -22,7 +22,7 @@ export default function Layout({
         <main className="flex-1">
         <div className="relative flex min-h-screen flex-col bg-background">
           <ThemeProvider attribute="class" defaultTheme='system' enableSystem>
-          <Navbar/>
+          <Header/>
           <div className="container max-w-screen-xl flex-1 items-start">
             <main className="relative py-6 lg:gap-10 lg:py-8">
               <div className="mx-auto w-full min-w-0">
