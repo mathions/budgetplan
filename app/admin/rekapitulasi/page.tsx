@@ -1,9 +1,13 @@
-import React from 'react'
+import { FormRekap } from "./form-rekap";
 
-const Rekapitulasi = () => {
+
+export default function Rekapitulasi () {
   return (
-    <div>Rekapitulasi</div>
+    <>
+      <h2 className="text-3xl font-bold tracking-tight">Rekapitulasi</h2>
+      <div className="my-6">
+        <FormRekap />
+      </div>
+    </>
   )
 }
-
-export default Rekapitulasi
