@@ -1,5 +1,4 @@
 
-import { Table } from "./Table/index"
 import { FileTextIcon } from "@radix-ui/react-icons"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -28,16 +27,15 @@ async function getData(): Promise<RAB[]> {
   ]
 }
 
-type CardProps = React.ComponentProps<typeof Card>
 
-export default async function Usulan ({ className, ...props }: CardProps) {
+export default async function Usulan () {
   const data = await getData()
 
   return (
     <>
       <h2 className="text-3xl font-bold tracking-tight">Belanja Modal / Usulan</h2>
       <div className="my-6">
-        <Card className={cn("w-full", className)} {...props}>
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>KBRI Islamabad</CardTitle>
             <CardDescription>Tahun Anggaran 2025</CardDescription>

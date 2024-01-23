@@ -28,16 +28,14 @@ async function getData(): Promise<RAB[]> {
   ]
 }
 
-type CardProps = React.ComponentProps<typeof Card>
-
-export default async function Usulan ({ className, ...props }: CardProps) {
+export default async function Dipa () {
   const data = await getData()
 
   return (
     <>
       <h2 className="text-3xl font-bold tracking-tight">Belanja Modal / DIPA</h2>
       <div className="my-6">
-        <Card className={cn("w-full", className)} {...props}>
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>KBRI Islamabad</CardTitle>
             <CardDescription>Tahun Anggaran 2025</CardDescription>

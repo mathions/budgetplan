@@ -11,16 +11,17 @@ import {
 } from "@/components/ui/card"
 import Link from "next/link"
 import { RabTable } from "./rab-table"
-import { Payment, columns } from "./rab-column"
+import { RAB, columns } from "./rab-column"
 
-async function getData(): Promise<Payment[]> {
+async function getData(): Promise<RAB[]> {
   // Fetch data from your API here.
   return [
     {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
+      kode:"1",
+      uraian: "1",
+      rincian: "1",
+      harga: "1",
+      jumlah: "1",
     },
     // ...
   ]
