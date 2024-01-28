@@ -66,12 +66,12 @@ export function LoginForm({ className, ...props }: AuthFormProps) {
             <Label htmlFor="password">Password</Label>
             <Input id="password" value={password} type="password" disabled={isLoading} onChange={e => setPassword(e.target.value)}/>
           </div>
-          <div className="grid mt-2">
+          <div className="grid">
             <Button disabled={isLoading} type="submit">
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-              Lanjutkan
+              Login
             </Button>
           </div>
         </div>

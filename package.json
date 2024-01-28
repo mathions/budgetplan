@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vite": "vite",
+    "jsonserver": "json-server ./app/(user)/belanja-modal/usulan/components/db.json --watch --port 5000"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -27,11 +29,14 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
+    "concurrently": "^8.2.2",
     "next": "14.1.0",
     "next-themes": "^0.2.1",
+    "primereact": "^10.3.3",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
+    "swr": "^2.2.4",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"

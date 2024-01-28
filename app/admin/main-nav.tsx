@@ -11,19 +11,23 @@ export default function MainNav () {
     const pathname = usePathname()
     const routes = [
       {
-          href: "/admin/",
+          href: "/admin",
+          nav: "dashboard",
           label: "Dashboard",
       },
       {
           href: "/admin/belanja-modal",
+          nav: "belanja-modal",
           label: "Belanja Modal",
       },
       {
           href: "/admin/abt",
+          nav: "abt",
           label: "ABT",
       },
       {
         href: "/admin/rekapitulasi",
+        nav: "rekapitulasi",
         label: "Rekapitulasi",
     },
     ];
@@ -96,17 +100,18 @@ export default function MainNav () {
             budgetplan
           </span>
         </Link>
-        <nav className="flex items-center gap-6 text-sm">
-            {routes.map((route, i) => (
-              <Link
-                key={i}
-                href={route.href}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-foreground/80",
-                  pathname === route.href ? "text-foreground" : "text-foreground/60"
-                )}
-              >
-                {route.label}
+        <nav className="flex items-center text-sm">
+          {routes.map((route, i) => (
+            <Link
+            key={i}
+            href={route.href}
+            className={cn(
+              "flex h-8 items-center justify-center rounded-lg px-4 text-center text-sm transition-colors hover:text-foreground",
+              pathname === route.href || pathname.includes(route.nav)
+              ? "bg-muted font-medium text-foreground" : "text-muted-foreground"
+            )}
+            >
+              {route.label}
             </Link>
           ))}
         </nav>

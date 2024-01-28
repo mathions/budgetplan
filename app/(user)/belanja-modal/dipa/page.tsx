@@ -13,6 +13,7 @@ import {
 import Link from "next/link"
 import { RabTable } from "@/components/rab-table";
 import { RAB, columns } from "@/components/rab-column";
+import ManualTable from "../usulan/components/manual-table"
 
 async function getData(): Promise<RAB[]> {
   // Fetch data from your API here.
@@ -47,9 +48,11 @@ export default async function Dipa () {
                 Daftar Isian Pelaksanaan Anggaran (DIPA)
                 </p>
                 <Button asChild variant="outline" className="flex justify-start h-12">
-                  <Link href="/belanja-modal/usulan">
-                    <FileTextIcon className="mr-4 h-4 w-4" />Lihat dokumen
-                  </Link>
+                  {/* <Link href="/belanja-modal/usulan"> */}
+                  <a href="/dokumen/DIPA-Kemlu-TA-2023.pdf" download="DIPA-Kemlu-TA-2023.pdf">
+                    <FileTextIcon className="mr-4 h-4 w-4" />Download
+                    </a>
+                  {/* </Link> */}
                 </Button>
               </div>
             </div>
@@ -59,8 +62,8 @@ export default async function Dipa () {
                   Rencana Anggaran Biaya
                 </p>
                 <div className="">
-                  <RabTable columns={columns} data={data} />
-                  {/* <Table /> */}
+                  {/* <RabTable columns={columns} data={data} /> */}
+                  <ManualTable />
                 </div>
               </div>
             </div>

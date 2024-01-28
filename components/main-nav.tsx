@@ -92,14 +92,14 @@ export default function MainNav () {
             budgetplan
           </span>
         </Link>
-        <nav className="flex items-center gap-6 text-sm">
+        <nav className="flex items-center text-sm">
             {routes.map((route, i) => (
               <Link
                 key={i}
                 href={route.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-foreground/80",
-                  pathname === route.href ? "text-foreground" : "text-foreground/60"
+                  "flex h-8 items-center justify-center rounded-lg px-4 text-center text-sm transition-colors hover:text-foreground",
+                  pathname.includes(route.href) ? "bg-muted font-medium text-foreground" : "text-muted-foreground"
                 )}
               >
                 {route.label}

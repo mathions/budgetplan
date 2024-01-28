@@ -1,36 +1,24 @@
+"use client"
+import { promises as fs } from "fs"
+import path from "path"
+import { dataSchema } from "./data/schema"
+import { z } from "zod"
+
+// import { columns } from "./components/column"
+import { DataTable } from "./components/data-table"
 
 import { FileTextIcon } from "@radix-ui/react-icons"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import Link from "next/link"
-import { RabTable } from "@/components/rab-table";
-import { RAB, columns } from "@/components/rab-column";
+import ManualTable from "./components/manual-table"
+import { Input } from "@/components/ui/input"
 
-async function getData(): Promise<RAB[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      kode: "1",
-      uraian: "2",
-      rincian: "3",
-      harga: "4",
-      jumlah: "5",
-    },
-    // ...
-  ]
-}
+import { useToast } from "@/components/ui/use-toast"
 
-
-export default async function Usulan () {
-  const data = await getData()
-
+export default function Usulan () {
+  const { toast } = useToast()
   return (
     <>
       <h2 className="text-3xl font-bold tracking-tight">Belanja Modal / Usulan</h2>
@@ -46,11 +34,20 @@ export default async function Usulan () {
                 <p className="text-sm font-medium leading-none">
                   Brafaks
                 </p>
-                <Button asChild variant="outline" className="flex justify-start h-12">
-                  <Link href="/belanja-modal/usulan">
-                    <FileTextIcon className="mr-4 h-4 w-4" />Unggah dokumen
-                  </Link>
-                </Button>
+                <div className="items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground flex justify-start h-14 ">
+                  <div className="w-full">
+                    <input type="file" className="block w-full text-sm text-gray-500
+                      file:me-4 file:py-2 file:px-4
+                      file:rounded-md file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-primary file:text-white
+                      hover:file:bg-primary/90
+                      hover:file:cursor-pointer
+                      file:disabled:opacity-50 file:disabled:pointer-events-none
+                      dark:file:bg-blue-500
+                      dark:hover:file:bg-blue-400 hover:cursor-pointer p-3" />
+                  </div>
+                </div>
               </div>
             </div>
             <div className="grid items-start pb-2 last:mb-0 last:pb-0">
@@ -59,8 +56,18 @@ export default async function Usulan () {
                   Rencana Anggaran Biaya
                 </p>
                 <div className="">
-                  <RabTable columns={columns} data={data} />
-                  {/* <Table /> */}
+                  <ManualTable />
+                  <div className="grid my-3">
+                    <Button 
+                      className="flex justify-self-end"
+                      onClick={() => {
+                        toast({
+                          title: "Pengajuan Usulan Belanja Modal Berhasil Disimpan",
+                          description: "Jum'at, 10 Februari 2024, 13.00 WIB",
+                        })
+                      }} 
+                    ><Link href="/belanja-modal">Simpan</Link></Button>
+                  </div>
                 </div>
               </div>
             </div>

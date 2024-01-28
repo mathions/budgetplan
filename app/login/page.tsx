@@ -7,14 +7,38 @@ import { buttonVariants } from "@/components/ui/button"
 import { LoginForm } from "./login-form"
 
 export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
+  title: "Login | budgetplan",
+  description: "budgetplan",
 }
 
 export default function LoginPage() {
   return (
     <>
-    <main className="flex-1">
+      <div className="h-screen w-screen bg-muted grid place-content-center">
+        <div className="h-[500px] w-[750px] bg-white flex flex-row rounded-[24px]">
+          <div className="basis-[350px] p-9 ">
+            <div className="h-full flex flex-col justify-around">
+              <div>
+                <img src="/logo_kemlu.webp" alt="logo" width="150"/>
+              </div>
+              <h1 className="text-3xl font-bold text-center">budgetplan</h1>
+              <LoginForm />
+            </div>
+          </div>
+          <div className="basis-[400px] p-2">
+            <div className="bg-black h-full flex items-end rounded-[24px] ">
+              <img src="decorative.png" alt="decorative" className="rounded-[24px]" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+    {/* <main className="flex-1">
       <div className="relative h-screen w-screen flex-col items-center justify-center grid max-w-none px-0">
           <div className="h-full w-screen flex-col p-8 md:p-10 flex dark:border-r">
             <div className="relative z-20 flex justify-between ">
@@ -45,7 +69,7 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
-        {/* <div className="relative h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+        <div className="relative h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
           <div className="absolute inset-0 bg-foreground/75" />
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
@@ -57,10 +81,10 @@ export default function LoginPage() {
               <footer className="text-sm text-end">Visi Kementerian Luar Negeri</footer>
             </blockquote>
           </div>
-        </div> */}
+        </div>
 
       </div>
-      </main>
+      </main> */}
     </>
   )
 }

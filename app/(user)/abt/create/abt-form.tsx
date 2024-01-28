@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
+import { redirect } from "next/navigation"
 
 const abtFormSchema = z.object({
   perihal: z.string().max(160).min(4, {message: "Perihal masih kosong"}),
@@ -43,19 +44,19 @@ export function AbtForm() {
 
   function onSubmit(data: AbtFormValues) {
     toast({
-      title: "You submitted the following values:",
+      title: "Pengajuan ABT Berhasil Dikirim",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
 
   return (
     
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="perihal"
@@ -84,7 +85,21 @@ export function AbtForm() {
             <FormItem>
               <FormLabel>Berita Faksimile (Brafaks)</FormLabel>
               <FormControl>
-                <Input type="file" {...field} className=""/>
+              <div className="items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground flex justify-start h-14 ">
+                  <div className="w-full">
+                    <input type="file" {...field}  className="block w-full text-sm text-gray-500
+                      file:me-4 file:py-2 file:px-4
+                      file:rounded-md file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-primary file:text-white
+                      hover:file:bg-primary/90
+                      hover:file:cursor-pointer
+                      file:disabled:opacity-50 file:disabled:pointer-events-none
+                      dark:file:bg-blue-500
+                      dark:hover:file:bg-blue-400 hover:cursor-pointer p-3" />
+                  </div>
+                </div>
+                {/* <Input type="file" {...field} className=""/> */}
               </FormControl>
               {/* <FormDescription>
                 Format yang diterima adalah pdf
@@ -93,7 +108,9 @@ export function AbtForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Kirim</Button>
+        <div className="grid">
+          <Button type="submit" className="justify-self-end">Kirim</Button>
+        </div>
       </form>
     </Form>
   )

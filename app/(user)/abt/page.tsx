@@ -1,18 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Abt, columns } from "./column";
-import { DataTable } from "./data-table";
-import Link from "next/link";
+import { promises as fs } from "fs"
+import path from "path"
+import { dataSchema } from "./data/schema"
+import { z } from "zod"
 
-async function getData(): Promise<Abt[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      tahun_anggaran: 2023,
-      perihal: "Pengajuan Kendaraan Dinas",
-      status: "diajukan",
-    },
-    // ...
-  ]
+import { columns } from "./components/column"
+import { DataTable } from "./components/data-table"
+
+async function getData() {
+  const data = await fs.readFile(
+    path.join(process.cwd(), "app/admin/abt/data/data.json")
+  )
+  const tasks = JSON.parse(data.toString())
+  return z.array(dataSchema).parse(tasks)
 }
 
 export default async function Abt () {
@@ -21,11 +20,7 @@ export default async function Abt () {
   return (
     <>
       <h2 className="text-3xl font-bold tracking-tight">ABT</h2>
-      <div>
-        <Button asChild variant="outline">
-          <Link href="/abt/create">Buat Pengajuan</Link>
-        </Button>
-      </div>
+
       <div className="my-6">
         <DataTable columns={columns} data={data} />
       </div>
