@@ -8,63 +8,55 @@ import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 
-interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+export default function LoginForm() {
 
-export function LoginForm({ className, ...props }: AuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const onSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    const submitData = {username,password}
-    console.log(submitData)
+  const { push } = useRouter();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
     try {
-      const res = await fetch('http://192.168.8.165/Backend/public/api/login',{
-        method: 'POST',
-        body: JSON.stringify(submitData),
-        headers: {
-          'content-type': 'application/json'
+      const res = await signIn('credentials', {
+        redirect: false,
+        username: e.target.username.value,
+        password: e.target.password.value,
+        callbackUrl: '/beranda',
+      });
+      console.log(res);
+      if (!res?.error) {
+        e.target.reset();
+        setIsLoading(false);
+        push('/beranda');
+      } else {
+        setIsLoading(false);
+        if (res.status === 401){
+          setError("Username atau Password salah");
         }
-      })
-      console.log(res)
-      if(res.ok){
-        return redirect('/dashboard')
-      }else{
-        console.log("Oops! Something is wrong.")
       }
-    } catch (error) {
-        console.log(error)
+    } catch (err) {
+      console.log(err);
     }
-    setUsername('')
-    setPassword('')
-  }
-
-  
-
-  // async function onSubmit(event: React.SyntheticEvent) {
-  //   event.preventDefault()
-  //   setIsLoading(true)
-
-  //   setTimeout(() => {
-  //     setIsLoading(false)
-  //   }, 3000)
-  // }
+  } ;
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className="grid gap-6">
+      {error !== '' && (
+        <div className="text-destructive text-center text-sm font-semibold">{error}</div>
+      )}
       <form onSubmit={onSubmit}>
         <div className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="username">Username</Label>
-            <Input id="username"  type="username" autoCapitalize="none" autoComplete="email" autoCorrect="off" disabled={isLoading} onChange={e => setUsername(e.target.value)}/>
+            <Input id="username" type="username" disabled={isLoading} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" value={password} type="password" disabled={isLoading} onChange={e => setPassword(e.target.value)}/>
+            <Input id="password" type="password" disabled={isLoading} />
           </div>
           <div className="grid">
             <Button disabled={isLoading} type="submit">

@@ -1,14 +1,20 @@
+'use client'
+
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
 export default function Beranda () {
+
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight">Beranda</h2>
+      {/* <h2 className="text-3xl font-bold tracking-tight">Beranda</h2> */}
       <div className="grid my-6 gap-4">
-        <div className="h-60 rounded-xl border bg-card shadow p-6 grid content-center">
-          <div className="text-4xl md:text-6xl font-black text-center">
-            KBRI ISLAMABAD
+        <div className="h-60 rounded-xl bg-card  p-6 grid content-center flex-row">
+          <div className="text-4xl md:text-6xl font-bold text-center">
+            budgetplan
+          </div>
+          <div className="text-center text-xl">
+            Aplikasi pengajuan usulan Belanja Modal dan ABT
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-4">

@@ -5,6 +5,7 @@ import { z } from "zod"
 
 import { columns } from "./components/column"
 import { DataTable } from "./components/data-table"
+import { ChevronRightIcon } from "@radix-ui/react-icons"
 
 
 async function getData() {
@@ -20,6 +21,11 @@ export default async function Abt() {
 
   return (
     <>
+      <div className="flex items-center space-x-2 mb-4">
+        <div className="text-foreground/70 text-[14px]">Dashboard</div>
+        <div className="text-foreground/70 "><ChevronRightIcon/></div>
+        <div className="text-[14px]">ABT</div>
+      </div>
       <h2 className="text-3xl font-bold tracking-tight">ABT</h2>
       <div className="py-6">
         <DataTable columns={columns} data={data} />

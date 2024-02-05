@@ -1,26 +1,36 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Data } from "../data/schema"
+// import { Data } from "../data/schema"
 
 import { DataTableRowActions } from "./data-table-row-actions"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { statuses } from "../data/data"
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+
+export type Data = {
+  no_urut: number
+  office: string
+  year: number
+  slug: string
+  status: string
+}
 
 export const columns: ColumnDef<Data>[] = [
   {
-    accessorKey: "tahun_anggaran",
+    accessorKey: "year",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Tahun Anggaran" />
+      <DataTableColumnHeader column={column} title="Tahun" />
     ),
+    cell: ({ row }) => <div className="ml-4">{row.getValue("year")}</div>
   },
   {
-    accessorKey: "satuan_kerja",
+    accessorKey: "office",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Satuan Kerja" />
-    ),
+      ),
+    cell: ({ row }) => <div className="ml-4">{row.getValue("office")}</div>
   },
   {
     accessorKey: "status",
@@ -37,7 +47,7 @@ export const columns: ColumnDef<Data>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="flex w-[150px] items-center">
           {status.icon && (
             <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
@@ -49,8 +59,24 @@ export const columns: ColumnDef<Data>[] = [
       return value.includes(row.getValue(id))
     },
   },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
   {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    accessorKey: "slug",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="" />
+    ),
+    cell: ({ row }) => 
+      <div className="text-xs">
+        <Button asChild variant="link">
+          <Link href={`/belanja-modal/usulan/${row.getValue("slug")}`} className="text-sm">Lihat Usulan</Link>
+        </Button>
+        <Button asChild variant="link">
+          <Link href={`/belanja-modal/dipa/${row.getValue("slug")}`}>Lihat DIPA</Link>
+        </Button>
+      </div>,
+    enableSorting: false,
   },
 ]

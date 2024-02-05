@@ -11,7 +11,7 @@ import {
 export default function Create () {
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight">ABT / Buat</h2>
+      <h2 className="text-3xl font-bold tracking-tight">Buat Pengajuan ABT</h2>
       <div className="my-6">
       <Card className="w-full">
         <CardHeader>

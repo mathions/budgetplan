@@ -21,7 +21,7 @@ export default function Usulan () {
   const { toast } = useToast()
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight">Belanja Modal / Usulan</h2>
+      <h2 className="text-3xl font-bold tracking-tight">Usulan</h2>
       <div className="my-6">
         <Card className="w-full">
           <CardHeader>
@@ -66,7 +66,7 @@ export default function Usulan () {
                           description: "Jum'at, 10 Februari 2024, 13.00 WIB",
                         })
                       }} 
-                    ><Link href="/belanja-modal">Simpan</Link></Button>
+                    ><Link href="/belanja-modal">Submit</Link></Button>
                   </div>
                 </div>
               </div>

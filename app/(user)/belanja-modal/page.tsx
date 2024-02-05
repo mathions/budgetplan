@@ -1,4 +1,8 @@
+'use client'
+
 import { BelmodCard } from "@/components/belmod-card";
+import { signIn } from "next-auth/react";
+import router from "next/router";
 
 export default function BelanjaModal () {
   return (

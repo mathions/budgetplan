@@ -1,0 +1,30 @@
+[
+  {
+    "no_urut": 1,
+    "office": "KBRI Berlin",
+    "year": 2025,
+    "status": "belum diajukan",
+    "slug": "kbri-berlin-2025"
+  },
+  {
+      "no_urut": 2,
+      "office": "KBRI London",
+      "year": 2025,
+      "status": "belum diajukan",
+      "slug": "kbri-london-2025"
+  },
+  {
+      "no_urut": 3,
+      "office": "KBRI Berlin",
+      "year": 2026,
+      "status": "belum diajukan",
+      "slug": "kbri-berlin-2026"
+  },
+  {
+      "no_urut": 4,
+      "office": "KBRI London",
+      "year": 2026,
+      "status": "belum diajukan",
+      "slug": "kbri-london-2026"
+  }
+]

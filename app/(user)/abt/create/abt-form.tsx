@@ -109,7 +109,7 @@ export function AbtForm() {
           )}
         />
         <div className="grid">
-          <Button type="submit" className="justify-self-end">Kirim</Button>
+          <Button type="submit" className="justify-self-end">Submit</Button>
         </div>
       </form>
     </Form>

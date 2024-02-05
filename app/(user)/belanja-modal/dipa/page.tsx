@@ -34,7 +34,7 @@ export default async function Dipa () {
 
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight">Belanja Modal / DIPA</h2>
+      <h2 className="text-3xl font-bold tracking-tight">Daftar Isian Pelaksanaan Anggaran (DIPA)</h2>
       <div className="my-6">
         <Card className="w-full">
           <CardHeader>

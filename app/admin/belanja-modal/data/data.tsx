@@ -1,15 +1,21 @@
 import {
   CheckCircledIcon,
   CircleIcon,
+  ClockIcon,
   CrossCircledIcon,
 } from "@radix-ui/react-icons"
 
 
 export const statuses = [
   {
+    value: "belum diajukan",
+    label: "Belum Diajukan",
+    icon: CircleIcon,
+  },
+  {
     value: "diajukan",
     label: "Diajukan",
-    icon: CircleIcon,
+    icon: ClockIcon,
   },
   {
     value: "diterima",
