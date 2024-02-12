@@ -71,10 +71,10 @@ export const columns: ColumnDef<Data>[] = [
     cell: ({ row }) => 
       <div className="text-xs">
         <Button asChild variant="link">
-          <Link href={`/belanja-modal/usulan/${row.getValue("slug")}`} className="text-sm">Lihat Usulan</Link>
+          <Link href={`/admin/belanja-modal/usulan/${row.getValue("slug")}`} className="text-sm">Lihat Usulan</Link>
         </Button>
         <Button asChild variant="link">
-          <Link href={`/belanja-modal/dipa/${row.getValue("slug")}`}>Lihat DIPA</Link>
+          <Link href={`/admin/belanja-modal/dipa/${row.getValue("slug")}`}>Lihat DIPA</Link>
         </Button>
       </div>,
     enableSorting: false,

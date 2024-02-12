@@ -1,26 +1,22 @@
 "use client"
-import { promises as fs } from "fs"
-import path from "path"
-import { dataSchema } from "./data/schema"
-import { z } from "zod"
-
-// import { columns } from "./components/column"
-import { DataTable } from "./components/data-table"
-
-import { FileTextIcon } from "@radix-ui/react-icons"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import Link from "next/link"
-import ManualTable from "./components/manual-table"
-import { Input } from "@/components/ui/input"
+import ManualTable from "../../../../components/zzz/components/manual-table"
 
 import { useToast } from "@/components/ui/use-toast"
+import Breadcrumbs from "@/components/breadcrumbs"
 
 export default function Usulan () {
   const { toast } = useToast()
   return (
     <>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Beranda', href: '/beranda' },
+          { label: 'Belanja Modal', href: '/belanja-modal' }
+        ]}
+      />
       <h2 className="text-3xl font-bold tracking-tight">Usulan</h2>
       <div className="my-6">
         <Card className="w-full">
@@ -28,8 +24,8 @@ export default function Usulan () {
             <CardTitle>KBRI Islamabad</CardTitle>
             <CardDescription>Tahun Anggaran 2025</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid items-start pb-2 last:mb-0 last:pb-0">
+          <CardContent className="gap-4">
+            <div className="items-start pb-2 last:mb-0 last:pb-0">
               <div className="space-y-2">
                 <p className="text-sm font-medium leading-none">
                   Brafaks

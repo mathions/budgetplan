@@ -1,21 +1,15 @@
-// "use client"
-
-import { promises as fs } from "fs"
-import path from "path"
-import { dataSchema } from "./data/schema"
-import { z } from "zod"
-
 import { Data, columns } from "./components/column"
 import { DataTable } from "./components/data-table"
-import { useSession } from "next-auth/react"
 import { ChevronRightIcon } from "@radix-ui/react-icons"
+import { getServerSession } from "next-auth"
+import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 
-async function getProposal(): Promise<Data[]>  {
-  const res = await fetch('http://localhost/skripsi/public/api/umum/proposal', {
+async function getProposal(token:string): Promise<Data[]>  {
+  const res = await fetch('http://localhost/skripsi/public/api/admin/proposal', {
     method: 'GET',
     headers: {
-        // 'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
     }
   });
   const jsonResponse = await res.json();
@@ -27,10 +21,10 @@ async function getProposal(): Promise<Data[]>  {
 }
 
 export default async function BelanjaModal() {
-  // const { data: session }: { data: any } = useSession();
-  // const token = session?.user?.token;
+  const session: any = await getServerSession(authOptions)
+  const token = session?.user?.token;
 
-  const data = await getProposal()
+  const data = await getProposal(token)
 
   return (
     <>

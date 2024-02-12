@@ -1,7 +1,5 @@
-"use client"
-
 import MainNav from "./main-nav";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../mode-toggle";
 import { UserNav } from "./user-nav";
 
 export default function Header () {

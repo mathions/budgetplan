@@ -1,10 +1,8 @@
-'use client'
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/header";
+import Navbar from "@/components/user/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +19,6 @@ export default function Layout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <SessionProvider>
         <main className="flex-1">
         <div className="relative flex min-h-screen flex-col bg-background">
           <ThemeProvider attribute="class" defaultTheme='system' enableSystem>
@@ -37,7 +34,6 @@ export default function Layout({
         </ThemeProvider>
         </div>
         </main>
-      </SessionProvider>
     </body>
     </html>
   );

@@ -11,26 +11,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link"
-import { RabTable } from "@/components/rab-table";
-import { RAB, columns } from "@/components/rab-column";
-import ManualTable from "../usulan/components/manual-table"
-
-async function getData(): Promise<RAB[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      kode: "1",
-      uraian: "2",
-      rincian: "3",
-      harga: "4",
-      jumlah: "5",
-    },
-    // ...
-  ]
-}
+import ManualTable from "../../../../components/zzz/components/manual-table"
 
 export default async function Dipa () {
-  const data = await getData()
 
   return (
     <>

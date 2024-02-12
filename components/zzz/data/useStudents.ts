@@ -1,5 +1,5 @@
 import useSWR, { mutate } from 'swr';
-import { Student } from './types';
+import { Student } from '../components/types';
 
 const url = 'http://localhost:5000/students';
 

@@ -22,11 +22,11 @@ export default function withAuth(
         return NextResponse.redirect(url)
       }
 
-      if(token.role !== 'umum' && onlyAdminPage.includes(pathname)) {
+      if(token.role !== 'admin' && onlyAdminPage.includes(pathname)) {
         return NextResponse.redirect(new URL('/beranda', req.url));
       }
 
-      if(token.role !== 'satker' && onlyUserPage.includes(pathname)) {
+      if(token.role !== 'user' && onlyUserPage.includes(pathname)) {
         return NextResponse.redirect(new URL('/admin', req.url));
       }
 

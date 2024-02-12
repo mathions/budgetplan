@@ -15,7 +15,7 @@ export default function CreateBelanjaModal() {
   const token = session?.user?.token;
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const res = await fetch('http://localhost/skripsi/public/api/umum/year', {
+    const res = await fetch('http://localhost/skripsi/public/api/admin/year', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

@@ -2,7 +2,7 @@
 
 import MainNav from "./main-nav";
 import { ModeToggle } from "@/components/mode-toggle";
-import { UserNav } from "@/components/user-nav";
+import { UserNav } from "@/components/user/user-nav";
 
 export default function Header () {
   
