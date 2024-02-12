@@ -3,15 +3,16 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Data } from "../data/schema"
 
-import { DataTableRowActions } from "./data-table-row-actions"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { statuses } from "../data/data"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
 export const columns: ColumnDef<Data>[] = [
   {
-    accessorKey: "tanggal",
+    accessorKey: "created_at",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Tanggal" />
     ),
@@ -49,8 +50,21 @@ export const columns: ColumnDef<Data>[] = [
       return value.includes(row.getValue(id))
     },
   },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
   {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  accessorKey: "slug",
+  header: ({ column }) => (
+    <DataTableColumnHeader column={column} title="" />
+  ),
+  cell: ({ row }) => 
+    <div className="text-xs">
+      <Button asChild variant="link">
+        <Link href={`/abt/detail/${row.getValue("slug")}`} className="text-sm">Lihat Detail</Link>
+      </Button>
+    </div>,
+  enableSorting: false,
+},
 ]

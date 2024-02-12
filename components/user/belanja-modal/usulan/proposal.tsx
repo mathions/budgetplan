@@ -99,6 +99,7 @@ export default function Proposal ({ items, slug, token, office, year } : { items
 
       const data = new FormData()
       data.set('file', file)
+      console.log(data)
       const res2 = await postBrafaks(token,slug, data)
       console.log(res2)
 

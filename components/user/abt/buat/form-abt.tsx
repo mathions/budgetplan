@@ -2,14 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { postAbt } from "@/lib/service";
 import { useState } from "react";
 
-export default function FormAbt() {
+export default function FormAbt({ token } : { token: string }) {
   const [perihal, setPerihal] = useState('');
   const [file, setFile] = useState<File>()
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
   const handleClick = async () => {
     setIsLoading(true);
     setError('');
@@ -17,19 +19,19 @@ export default function FormAbt() {
     if (!file) return
 
     try {
-      const res = await postItems(token, slug, newData)
-      console.log(res1)
-
       const data = new FormData()
       data.set('file', file)
-      const res2 = await postBrafaks(token,slug, data)
-      console.log(res2)
-
-      console.log('Both requests succeeded');
+      data.set('perihal', perihal)
+      const res = await postAbt(token, data)
+      console.log(res)
+      // console.log(perihal);
+      console.log('Success');
+      // setIsLoading(false);
     } catch (error) {
       setError('File is invalid');
     } finally {
       setIsLoading(false);
+      setError('Abt berhasil diajukan')
     }
   };
 
@@ -51,7 +53,7 @@ export default function FormAbt() {
         <Button onClick={handleClick} disabled={isLoading}>
               {isLoading ? 'Loading...' : 'Simpan'}
             </Button>
-            {error && <p>Error: {error}</p>}
+            {error && <p>{error}</p>}
       </div>
     </>
   )

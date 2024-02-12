@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { getBrafaks } from "@/lib/service";
+import { getBrafaks } from "@/lib/service-admin";
 import { useState } from 'react';
 
 export default function DownloadPDF ({ slug, token } : { slug: string, token: string }) {

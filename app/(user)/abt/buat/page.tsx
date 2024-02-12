@@ -25,8 +25,7 @@ export default async function Buat () {
           <CardTitle>{session?.user?.office}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <AbtForm />
-          <FormAbt />
+          <FormAbt token={token}/>
         </CardContent>
       </Card>  
       </div>

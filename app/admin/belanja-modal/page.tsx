@@ -1,8 +1,8 @@
-import { Data, columns } from "./components/column"
-import { DataTable } from "./components/data-table"
-import { ChevronRightIcon } from "@radix-ui/react-icons"
+import { Data, columns } from "@/components/admin/belanja-modal/components/column"
+import { DataTable } from "@/components/admin/belanja-modal/components/data-table"
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
+import Breadcrumbs from "@/components/breadcrumbs"
 
 async function getProposal(token:string): Promise<Data[]>  {
   const res = await fetch('http://localhost/skripsi/public/api/admin/proposal', {
@@ -28,11 +28,12 @@ export default async function BelanjaModal() {
 
   return (
     <>
-      <div className="flex items-center space-x-2 mb-4">
-        <div className="text-foreground/70 text-[14px]">Dashboard</div>
-        <div className="text-foreground/70 "><ChevronRightIcon/></div>
-        <div className="text-[14px]">Belanja Modal</div>
-      </div>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/admin' },
+          { label: 'Belanja Modal', href: '/belanja-modal', active: true },
+        ]}
+      />
       <h2 className="text-3xl font-bold tracking-tight"> Belanja Modal</h2>
       <div className="py-6">
         <DataTable columns={columns} data={data} />

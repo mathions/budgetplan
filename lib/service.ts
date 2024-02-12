@@ -114,3 +114,67 @@ export async function getBrafaks(token: string, slug:string){
   }
 }
 
+export async function postAbt(token: string, data:any){
+  const res = await fetch(`http://localhost/skripsi/public/api/abt`, {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
+    body: data
+  });
+  console.log(res)
+  if (res.status === 200) {
+    return res;
+  } else {
+    return res;
+  }
+}
+
+export async function getAbt(token: string){
+  const res = await fetch(`http://localhost/skripsi/public/api/abt`, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    }
+  });
+  console.log(res)
+  if (res.status === 200) {
+    return res;
+  } else {
+    return res;
+  }
+}
+
+export async function getDetailAbt(token: string, slug:string){
+  const res = await fetch(`http://localhost/skripsi/public/api/abt/${slug}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return res.json();
+  }
+}
+
+export async function getBrafaksAbt(token: string, slug:string){
+  const res = await fetch(`http://localhost/skripsi/public/api/abt/${slug}/abtfile`, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/pdf',
+    }
+  });
+  console.log(res)
+  if (res.status === 200) {
+    return res;
+  } else {
+    return res;
+  }
+}
+
