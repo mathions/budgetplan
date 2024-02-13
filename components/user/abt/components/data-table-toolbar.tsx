@@ -48,11 +48,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <Button 
-        asChild
-        variant="outline"
-        size="sm"
-        className="h-8 lg:flex ml-2">
+      <Button asChild variant="outline" size="sm" className="h-8 lg:flex ml-2">
           <Link href="/abt/buat">
             <PlusIcon className="mr-2 h-4 w-4"/>
             Buat Pengajuan

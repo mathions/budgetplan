@@ -25,7 +25,7 @@ async function getAbt(token:string): Promise<Data[]>  {
   if (res.status === 200) {
     return jsonResponse.data;
   } else {
-    return res.json();
+    return jsonResponse;
   }
 }
 

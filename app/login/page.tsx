@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import LoginForm from "./login-form"
+import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: "Login | budgetplan",
@@ -14,7 +15,7 @@ export default function LoginPage() {
           <div className="basis-[350px] p-9 ">
             <div className="h-full flex flex-col justify-around">
               <div>
-                <img src="/logo_kemlu.webp" alt="logo" width="150"/>
+                <Image src="/logo_kemlu.webp" alt="logo" width={150} height={50}/>
               </div>
               <h1 className="text-3xl font-bold text-center">budgetplan</h1>
               <LoginForm />
@@ -22,7 +23,7 @@ export default function LoginPage() {
           </div>
           <div className="basis-[400px] p-2">
             <div className="bg-black h-full flex items-end rounded-[24px] ">
-              <img src="decorative.png" alt="decorative" className="rounded-[24px]" />
+              <Image src="/decorative.png" alt="decorative" 	width={400} height={400} className="rounded-[24px]"/>
             </div>
           </div>
         </div>

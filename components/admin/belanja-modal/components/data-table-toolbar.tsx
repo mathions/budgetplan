@@ -1,6 +1,6 @@
 "use client"
 
-import { Cross2Icon } from "@radix-ui/react-icons"
+import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
@@ -9,6 +9,7 @@ import { DataTableViewOptions } from "./data-table-view-options"
 
 import { statuses } from "../data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import Link from "next/link"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -48,7 +49,13 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      {/* <DataTableViewOptions table={table} /> */}
+      <Button asChild variant="outline" size="sm" className="h-8 lg:flex ml-2">
+          <Link href="/admin/belanja-modal/buat">
+            <PlusIcon className="mr-2 h-4 w-4"/>
+            Buat Pengajuan
+          </Link>
+      </Button>
     </div>
   )
 }

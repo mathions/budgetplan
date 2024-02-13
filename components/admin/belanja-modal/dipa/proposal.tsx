@@ -179,7 +179,7 @@ export default function Proposal ({ items, slug, token, office, year } : { items
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <p className="text-sm font-medium leading-none">
-              Brafaks
+              Dokumen DIPA
             </p>
             <Input type="file" name="file" className="file-input" onChange={(e) => setFile(e.target.files?.[0])} />
           </div>
