@@ -11,9 +11,10 @@ import Link from "next/link"
 
 export type Data = {
   no_urut: number
+  uuid: string
+  created_at: string
   office: string
-  year: number
-  slug: string
+  year: string
   status: string
 }
 
@@ -64,17 +65,17 @@ export const columns: ColumnDef<Data>[] = [
   //   cell: ({ row }) => <DataTableRowActions row={row} />,
   // },
   {
-    accessorKey: "slug",
+    accessorKey: "uuid",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="" />
     ),
     cell: ({ row }) => 
       <div className="text-xs">
         <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/usulan/${row.getValue("slug")}`} className="text-sm">Lihat Usulan</Link>
+          <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} className="text-sm">Lihat Usulan</Link>
         </Button>
         <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/dipa/${row.getValue("slug")}`}>Lihat DIPA</Link>
+          <Link href={`/admin/belanja-modal/dipa/${row.getValue("uuid")}`}>Lihat DIPA</Link>
         </Button>
       </div>,
     enableSorting: false,

@@ -55,14 +55,14 @@ export const columns: ColumnDef<Data>[] = [
   //   cell: ({ row }) => <DataTableRowActions row={row} />,
   // },
   {
-  accessorKey: "slug",
+  accessorKey: "uuid",
   header: ({ column }) => (
     <DataTableColumnHeader column={column} title="" />
   ),
   cell: ({ row }) => 
     <div className="text-xs">
       <Button asChild variant="link">
-        <Link href={`/abt/detail/${row.getValue("slug")}`} className="text-sm">Lihat Detail</Link>
+        <Link href={`/abt/detail/${row.getValue("uuid")}`} className="text-sm">Lihat Detail</Link>
       </Button>
     </div>,
   enableSorting: false,

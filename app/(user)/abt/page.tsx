@@ -1,20 +1,20 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import { columns } from "../../../components/user/abt/components/column"
-import { DataTable } from "../../../components/user/abt/components/data-table"
+import { DataTable } from "@/components/user/abt/components/data-table"
 import Breadcrumbs from "@/components/breadcrumbs"
+import { columns } from "@/components/user/abt/components/column"
 
 type Data = {
   no_urut: string
+  uuid: string
   status: string
-  slug: string
   office: string
   perihal: string
   created_at: string
 }
 
 async function getAbt(token:string): Promise<Data[]>  {
-  const res = await fetch('http://localhost/skripsi/public/api/abt', {
+  const res = await fetch('https://budgetplan.masuk.id/api/v1/abt', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -22,6 +22,7 @@ async function getAbt(token:string): Promise<Data[]>  {
     }
   });
   const jsonResponse = await res.json();
+  console.log(jsonResponse)
   if (res.status === 200) {
     return jsonResponse.data;
   } else {

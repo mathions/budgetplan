@@ -8,22 +8,22 @@ import {
 
 export const statuses = [
   {
-    value: "diajukan",
+    value: "Diajukan",
     label: "Diajukan",
     icon: CircleIcon,
   },
   {
-    value: "diproses",
+    value: "Diproses",
     label: "Diproses",
     icon: ClockIcon,
   },
   {
-    value: "diterima",
+    value: "Diterima",
     label: "Diterima",
     icon: CheckCircledIcon,
   },
   {
-    value: "ditolak",
+    value: "Ditolak",
     label: "Ditolak",
     icon: CrossCircledIcon,
   },

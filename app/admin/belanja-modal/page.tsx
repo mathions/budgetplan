@@ -1,11 +1,12 @@
-import { Data, columns } from "@/components/admin/belanja-modal/components/column"
-import { DataTable } from "@/components/admin/belanja-modal/components/data-table"
+
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Breadcrumbs from "@/components/breadcrumbs"
+import { DataTable } from "@/components/admin/belanja-modal/components/data-table";
+import { columns, Data } from "@/components/admin/belanja-modal/components/column";
 
 async function getProposal(token:string): Promise<Data[]>  {
-  const res = await fetch('http://localhost/skripsi/public/api/admin/proposal', {
+  const res = await fetch('https://budgetplan.masuk.id/api/v1/a/proposal', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -13,10 +14,11 @@ async function getProposal(token:string): Promise<Data[]>  {
     }
   });
   const jsonResponse = await res.json();
+  console.log(jsonResponse)
   if (res.status === 200) {
     return jsonResponse.data;
   } else {
-    return res.json();
+    return jsonResponse;
   }
 }
 

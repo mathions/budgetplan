@@ -5,12 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Link from "next/link"
 
 export function BelanjaModalCard({ data }: { data: any }) {
-
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>{data?.user?.office}</CardTitle>
-        <CardDescription>Tahun Anggaran {data?.year_id}</CardDescription>
+        <CardTitle>{data?.office}</CardTitle>
+        <CardDescription>Tahun Anggaran {data?.year}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
@@ -23,10 +22,10 @@ export function BelanjaModalCard({ data }: { data: any }) {
               Pengajuan usulan anggaran telah dibuka
             </p>
             <p className="text-sm text-muted-foreground">
-              3 hari yang lalu
+              {data?.created_at}
             </p>
             <Button asChild variant="outline" className="flex justify-start h-12">
-              <Link href={`/belanja-modal/usulan/${data?.slug}`}>
+              <Link href={`/belanja-modal/usulan/${data?.uuid}`}>
                 <FileTextIcon className="mr-4 h-4 w-4" />Buat Usulan
               </Link>
             </Button>
@@ -59,7 +58,7 @@ export function BelanjaModalCard({ data }: { data: any }) {
               3 hari yang lalu
             </p>
             <Button asChild variant="outline" className="flex justify-start h-12">
-              <Link href={`/belanja-modal/dipa/${data?.slug}`}>
+              <Link href={`/belanja-modal/dipa/${data?.uuid}`}>
                 <FileTextIcon className="mr-4 h-4 w-4" />Lihat DIPA
               </Link>
             </Button>

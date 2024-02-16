@@ -35,10 +35,10 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Link href={data.slug}>
+        <Link href={data.uuid}>
           <DropdownMenuItem>Lihat Usulan</DropdownMenuItem>
         </Link>
-        <Link href={data.slug}>
+        <Link href={data.uuid}>
           <DropdownMenuItem>Lihat DIPA</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>

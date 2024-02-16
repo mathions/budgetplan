@@ -2,15 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { getBrafaks } from "@/lib/service";
+import { FileTextIcon } from "@radix-ui/react-icons";
 import { useState } from 'react';
 
-export default function DownloadPDF ({ slug, token } : { slug: string, token: string }) {
+export default function DownloadPDF ({ uuid, token } : { uuid: string, token: string }) {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await getBrafaks(token,slug);
+      const response = await getBrafaks(token,uuid);
       console.log(response)
       // Convert the response to Blob
       const pdfBlob = await response.blob();
@@ -44,9 +45,9 @@ export default function DownloadPDF ({ slug, token } : { slug: string, token: st
   return (
     <>
     <div>
-    <Button onClick={handleDownload} disabled={loading}>
-    {loading ? 'Downloading...' : 'Download PDF'}
-    </Button>
+      <Button variant="outline" onClick={handleDownload} disabled={loading} className="flex justify-start h-12 w-full shadow">
+        <FileTextIcon className="mr-4 h-4 w-4" />{loading ? 'Sedang mengunduh' : 'Unduh PDF'}
+      </Button>
     </div>
     </>
   );

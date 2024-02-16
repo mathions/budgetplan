@@ -1,5 +1,7 @@
+const url = 'https://budgetplan.masuk.id/api/v1';
+
 export async function login(data: { username: string, password: string}) {
-  const res = await fetch('http://localhost/skripsi/public/api/login', {
+  const res = await fetch(`${url}/login`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -20,49 +22,41 @@ export async function login(data: { username: string, password: string}) {
 
 
 export async function getProposal(token: string){
-    const res = await fetch('http://localhost/skripsi/public/api/proposal', {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-      }
-    });
-    const jsonResponse = await res.json();
-    console.log(jsonResponse.data)
-    if (res.status === 200) {
-      return jsonResponse.data;
-    } else {
-      return res.json();
+  const res = await fetch(`${url}/proposal/latest`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
   }
+}
 
-export  async function getItems(token: string, slug: string) {
-    try {
-      const res = await fetch(`http://localhost/skripsi/public/api/proposal/${slug}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-  
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const jsonResponse = await res.json();
-      if (jsonResponse && jsonResponse.data && jsonResponse.data.items) {
-        return jsonResponse.data.items;
-      } else {
-        throw new Error('Items not found in response');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
+export  async function getItems(token: string, uuid: string) {
+  const res = await fetch(`${url}/proposal/detail/${uuid}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse?.data?.items;
+  } else {
+    return jsonResponse;
   }
+}
 
-export async function postItems(token: string, slug:string, data:any){
-  const res = await fetch(`http://localhost/skripsi/public/api/proposal/${slug}/items`, {
+export async function postItems(token: string, uuid:string, data:any){
+  const res = await fetch(`${url}/proposal/items/${uuid}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -77,12 +71,12 @@ export async function postItems(token: string, slug:string, data:any){
   if (res.status === 200) {
     return jsonResponse;
   } else {
-    return res.json();
+    return jsonResponse;
   }
 }
 
-export async function postBrafaks(token: string, slug:string, data: any){
-  const res = await fetch(`http://localhost/skripsi/public/api/proposal/${slug}/brafaks`, {
+export async function postBrafaks(token: string, uuid:string, data: any){
+  const res = await fetch(`${url}/proposal/brafaks-store/${uuid}`, {
     method: 'POST',
     headers: {
         'Authorization': `Bearer ${token}`
@@ -98,8 +92,8 @@ export async function postBrafaks(token: string, slug:string, data: any){
   }
 }
 
-export async function getBrafaks(token: string, slug:string){
-  const res = await fetch(`http://localhost/skripsi/public/api/proposal/${slug}/brafaks/1`, {
+export async function getBrafaks(token: string, uuid:string){
+  const res = await fetch(`${url}/proposal/${uuid}/brafaks/1`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -115,7 +109,7 @@ export async function getBrafaks(token: string, slug:string){
 }
 
 export async function postAbt(token: string, data:any){
-  const res = await fetch(`http://localhost/skripsi/public/api/abt`, {
+  const res = await fetch(`${url}/abt/create`, {
     method: 'POST',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -123,7 +117,7 @@ export async function postAbt(token: string, data:any){
     body: data
   });
   console.log(res)
-  if (res.status === 200) {
+  if (res.status === 201) {
     return res;
   } else {
     return res;
@@ -131,22 +125,23 @@ export async function postAbt(token: string, data:any){
 }
 
 export async function getAbt(token: string){
-  const res = await fetch(`http://localhost/skripsi/public/api/abt`, {
+  const res = await fetch(`${url}/abt`, {
     method: 'GET',
     headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
     }
   });
-  console.log(res)
+  const jsonResponse = await res.json();
   if (res.status === 200) {
-    return res;
+    return jsonResponse.data;
   } else {
-    return res;
+    return jsonResponse;
   }
 }
 
-export async function getDetailAbt(token: string, slug:string){
-  const res = await fetch(`http://localhost/skripsi/public/api/abt/${slug}`, {
+export async function getDetailAbt(token: string, uuid:string){
+  const res = await fetch(`${url}/abt/detail/${uuid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -158,12 +153,12 @@ export async function getDetailAbt(token: string, slug:string){
   if (res.status === 200) {
     return jsonResponse.data;
   } else {
-    return res.json();
+    return jsonResponse;
   }
 }
 
-export async function getBrafaksAbt(token: string, slug:string){
-  const res = await fetch(`http://localhost/skripsi/public/api/abt/${slug}/abtfile`, {
+export async function getBrafaksAbt(token: string, uuid:string){
+  const res = await fetch(`${url}/abt/abtfile/${uuid}`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,

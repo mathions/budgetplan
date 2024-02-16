@@ -74,8 +74,8 @@ export default function MainNav () {
         </SheetTrigger>
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
             <Link href="/" className="flex items-center">
-              <Icons.logo className="mr-2 h-4 w-4" />
-              <span className="font-bold">
+              <Icons.bp className="mr-2 h-6 w-6" />
+              <span className="font-bold text-lg">
                 budgetplan
               </span>
             </Link>
@@ -94,8 +94,8 @@ export default function MainNav () {
           </SheetContent>
       </Sheet>
       <div className="mr-4 hidden md:flex">
-        <Link href="/" className="mr-6 flex items-center space-x-2">
-          <Icons.logo className="h-6 w-6" />
+        <Link href="/" className="mr-6 flex items-center space-x-1">
+          <Icons.bp className="h-6 w-6" />
           <span className="hidden font-bold sm:inline-block">
             budgetplan
           </span>

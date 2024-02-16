@@ -16,7 +16,16 @@ export default function FormAbt({ token } : { token: string }) {
     setIsLoading(true);
     setError('');
 
-    if (!file) return
+    if(!perihal) {
+      setError('Perihal belum terisi')
+      setIsLoading(false);
+      return
+    }
+    if (!file) {
+      setError('Pilih brafaks terlebih dahulu')
+      setIsLoading(false);
+      return
+    }
 
     try {
       const data = new FormData()
@@ -24,9 +33,7 @@ export default function FormAbt({ token } : { token: string }) {
       data.set('perihal', perihal)
       const res = await postAbt(token, data)
       console.log(res)
-      // console.log(perihal);
       console.log('Success');
-      // setIsLoading(false);
     } catch (error) {
       setError('File is invalid');
     } finally {
@@ -50,10 +57,14 @@ export default function FormAbt({ token } : { token: string }) {
           </p>
           <Input type="file" name="file" onChange={(e) => setFile(e.target.files?.[0])} />
         </div>
-        <Button onClick={handleClick} disabled={isLoading}>
-              {isLoading ? 'Loading...' : 'Simpan'}
-            </Button>
-            {error && <p>{error}</p>}
+        <div className="flex justify-end">
+          <Button onClick={handleClick} disabled={isLoading} className="w-[96px]">
+            {isLoading ? 'Loading...' : 'Buat'}
+          </Button>
+        </div>
+        <div className="flex justify-end">
+          {error && <p>{error}</p>}
+        </div>
       </div>
     </>
   )

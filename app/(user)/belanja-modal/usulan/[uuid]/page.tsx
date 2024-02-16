@@ -1,0 +1,37 @@
+import { getServerSession } from "next-auth"
+import { authOptions }from "@/app/api/auth/[...nextauth]/route"
+import Proposal from "@/components/user/belanja-modal/usulan/proposal";
+import { getItems, getProposal } from "@/lib/service";
+import Breadcrumbs from "@/components/breadcrumbs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
+
+export default async function Usulan({ params }: {params: { uuid: string } }) {
+  const uuid = params.uuid;
+  const session: any = await getServerSession(authOptions)
+  const token = session?.user?.token;
+  const proposal = await getProposal(token);
+  const items = await getItems(token, uuid);
+  return (
+    <>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Beranda', href: '/beranda' },
+          { label: 'Belanja Modal', href: '/belanja-modal' },
+          { label: 'Usulan', href: `/belanja-modal/usulan/${uuid}`, active: true }
+        ]}
+      />
+      <h1 className="text-3xl font-bold tracking-tight">Usulan</h1>
+      <div className="my-6">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>{proposal?.office}</CardTitle>
+            <CardDescription>Tahun Anggaran {proposal?.year}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+          <Proposal items={items} uuid={uuid} token={token} />
+          </CardContent>
+        </Card>
+      </div>
+    </>
+  );
+}

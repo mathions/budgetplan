@@ -19,10 +19,10 @@ export default function FormBelanjaModal({ token } : { token: string }) {
       const res = await createBelMod(token, year)
       const jsonResponse = await res.json();
       console.log(jsonResponse)
-      if (res.status === 200) {
-          return setError('Usulan Belanja Modal berhasil dibuat')
+      if (res.status === 201) {
+          return setError(jsonResponse?.message)
       } else {
-          return setError('Tahun Anggaran sudah ada')
+          return setError(jsonResponse?.error?.year)
       }
     } catch (error) {
       setError('Maaf, ada permsalahan teknis');

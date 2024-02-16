@@ -1,33 +1,51 @@
-import { promises as fs } from "fs"
-import path from "path"
-import { dataSchema } from "./data/schema"
-import { z } from "zod"
+import { getServerSession } from "next-auth"
+import { authOptions }from "@/app/api/auth/[...nextauth]/route"
+import Breadcrumbs from "@/components/breadcrumbs"
+import { DataTable } from "@/components/admin/abt/components/data-table"
+import { columns } from "@/components/admin/abt/components/column"
 
-import { columns } from "./components/column"
-import { DataTable } from "./components/data-table"
-import { ChevronRightIcon } from "@radix-ui/react-icons"
-
-
-async function getData() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "app/admin/abt/data/data.json")
-  )
-  const tasks = JSON.parse(data.toString())
-  return z.array(dataSchema).parse(tasks)
+type Data = {
+  no_urut: string
+  uuid: string
+  status: string
+  office: string
+  perihal: string
+  created_at: string
 }
 
-export default async function Abt() {
-  const data = await getData()
+async function getAbt(token:string): Promise<Data[]>  {
+  const res = await fetch('https://budgetplan.masuk.id/api/v1/a/abt', {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export default async function Abt () {
+  const session: any = await getServerSession(authOptions)
+  const token = session?.user?.token;
+  const data = await getAbt(token)
 
   return (
     <>
-      <div className="flex items-center space-x-2 mb-4">
-        <div className="text-foreground/70 text-[14px]">Dashboard</div>
-        <div className="text-foreground/70 "><ChevronRightIcon/></div>
-        <div className="text-[14px]">ABT</div>
-      </div>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/admin' },
+          { label: 'ABT', href: '/admin/abt', active: true },
+        ]}
+      />
       <h2 className="text-3xl font-bold tracking-tight">ABT</h2>
-      <div className="py-6">
+
+      <div className="my-6">
         <DataTable columns={columns} data={data} />
       </div>
     </>

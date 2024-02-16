@@ -1,11 +1,11 @@
 
 export type Item = {
   no_urut: string;
-  output_id: string;
+  output_number: string;
   output: string;
-  code_id: string;
+  code_number: string;
   code: string;
-  account_id: string;
+  account_number: string;
   account: string;
   uraian: string;
   jumlah: string;
@@ -14,15 +14,15 @@ export type Item = {
 }
 
 export interface GroupedItems {
-  [output_id: string]: {
+  [output_number: string]: {
     name: string;
     total: number;
     codes: {
-      [code_id: string]: {
+      [code_number: string]: {
         name: string;
         total: number;
         accounts: {
-          [account_id: string]: {
+          [account_number: string]: {
             name: string;
             total: number;
             items: Item[];

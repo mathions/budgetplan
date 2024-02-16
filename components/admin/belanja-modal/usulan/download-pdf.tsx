@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { getBrafaks } from "@/lib/service-admin";
 import { useState } from 'react';
 
-export default function DownloadPDF ({ slug, token } : { slug: string, token: string }) {
+export default function DownloadPDF ({ uuid, token } : { uuid: string, token: string }) {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await getBrafaks(token,slug);
+      const response = await getBrafaks(token,uuid);
       console.log(response)
       // Convert the response to Blob
       const pdfBlob = await response.blob();
