@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { getBrafaks } from "@/lib/service-admin";
+import { FileTextIcon } from "@radix-ui/react-icons";
 import { useState } from 'react';
 
 export default function DownloadPDF ({ uuid, token } : { uuid: string, token: string }) {
@@ -43,11 +44,9 @@ export default function DownloadPDF ({ uuid, token } : { uuid: string, token: st
 
   return (
     <>
-    <div>
-    <Button onClick={handleDownload} disabled={loading}>
-    {loading ? 'Downloading...' : 'Download PDF'}
-    </Button>
-    </div>
+      <Button variant="outline" onClick={handleDownload} disabled={loading} className="flex justify-start h-12 w-full shadow">
+        <FileTextIcon className="mr-4 h-4 w-4" />{loading ? 'Sedang mengunduh' : 'Unduh PDF'}
+      </Button>
     </>
   );
 };

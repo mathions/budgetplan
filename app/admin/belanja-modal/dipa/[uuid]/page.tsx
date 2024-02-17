@@ -4,14 +4,14 @@ import { getItems, getProposal } from "@/lib/service-admin";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Proposal from "@/components/admin/belanja-modal/dipa/proposal";
 
-export default async function Dipa ({ params }: {params: { slug: string } }) {
-  const slug = params.slug;
+export default async function Dipa ({ params }: {params: { uuid: string } }) {
+  const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
-  const proposal = await getProposal(token, slug);
+  const proposal = await getProposal(token, uuid);
   const office = proposal?.office;
   const year = proposal?.year;
-  const items = await getItems(token, slug);
+  const items = await getItems(token, uuid);
 
   return (
     <>
@@ -22,9 +22,9 @@ export default async function Dipa ({ params }: {params: { slug: string } }) {
           { label: 'DIPA', href: '/admin/belanja-modal/dipa', active: true },
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Daftar Isian Pelaksanaan Anggaran (DIPA)</h1>
+      <h1 className="text-3xl font-bold tracking-tight">DIPA</h1>
       <div className="my-6">
-        <Proposal items={items} slug={slug} token={token} office={office} year={year}/>
+        <Proposal items={items} uuid={uuid} token={token} office={office} year={year}/>
       </div>
     </>
   )

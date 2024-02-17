@@ -49,7 +49,7 @@ export  async function getItems(token:string, uuid:string) {
 }
 
 export async function getBrafaks(token: string, uuid:string){
-  const res = await fetch(`${url}/a/proposal/${uuid}/brafaks`, {
+  const res = await fetch(`${url}/a/proposal/brafaks-latest/${uuid}`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -109,5 +109,45 @@ export async function getBrafaksAbt(token: string, uuid:string){
     return res;
   } else {
     return res;
+  }
+}
+
+export async function editStatusBelmod(token:string, uuid:string, status:string){
+  const res = await fetch(`${url}/a/proposal/status/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      status_id: status,
+  }),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function editStatusAbt(token:string, uuid:string, status:string){
+  const res = await fetch(`${url}/a/abt/status/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      status_id: status,
+  }),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
   }
 }

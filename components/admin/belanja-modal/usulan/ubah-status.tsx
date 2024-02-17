@@ -4,13 +4,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { useState } from "react";
-import { editStatusAbt } from "@/lib/service-admin";
+import { editStatusBelmod } from "@/lib/service-admin";
 
 export default function UbahStatus({ uuid, token } : { uuid: string, token: string }) {
   const [status, setStatus] = useState('');
   const editStatus = async (status : string) => {
     try {
-      const res = await editStatusAbt(token, uuid, status)
+      const res = await editStatusBelmod(token, uuid, status)
       console.log(res)
       window.location.reload();
     } catch (error) {
@@ -27,7 +27,7 @@ export default function UbahStatus({ uuid, token } : { uuid: string, token: stri
     </DialogTrigger>
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle>Status Pengajuan ABT</DialogTitle>
+        <DialogTitle>Status Pengajuan Usulan Belanja Modal</DialogTitle>
         <DialogDescription>
           perihal
         </DialogDescription>
@@ -37,7 +37,6 @@ export default function UbahStatus({ uuid, token } : { uuid: string, token: stri
           <SelectValue placeholder="status" />
         </SelectTrigger>
         <SelectContent position="popper">
-          <SelectItem value="3">Diproses</SelectItem>
           <SelectItem value="4">Diterima</SelectItem>
           <SelectItem value="5">Ditolak</SelectItem>
         </SelectContent>

@@ -5,16 +5,26 @@ import Rab from "@/components/admin/belanja-modal/usulan/rab";
 import DownloadPDF from "@/components/admin/belanja-modal/usulan/download-pdf";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import Breadcrumbs from "@/components/breadcrumbs";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import UbahStatus from "@/components/admin/belanja-modal/usulan/ubah-status";
 
 export default async function Usulan({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
+  console.log(session)
   const token = session?.user?.token;
   const proposal = await getProposal(token, uuid)
   const items = await getItems(token, uuid)
-  console.log(uuid)
-  console.log(items)
-  
+  if(session == null){
+    return (
+      <>
+        <div className="w-full mt-24 flex-row flex justify-center align-middle">
+          <Button asChild variant="link"><Link href="/login">Unauthenticated! Please login again</Link></Button>
+        </div>
+      </>
+    )
+  }
   return (
     <>
       <Breadcrumbs
@@ -26,28 +36,39 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
       />
       <h1 className="text-3xl font-bold tracking-tight">Usulan</h1>
       <div className="py-6">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>{proposal?.office}</CardTitle>
-          <CardDescription>Tahun Anggaran {proposal?.year}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-3">
-            <p className="text-sm font-medium leading-none">
-              Daftar Isian Pelaksanaan Anggaran (DIPA)
-            </p>
-            <DownloadPDF token={token} uuid={uuid}/>
-          </div>
-          <div className="space-y-3">
-            <p className="text-sm font-medium leading-none">
-              Rencana Anggaran Biaya
-            </p>
-            <div className="rounded-md border">
-            <Rab items={items}/>
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>{proposal?.office}</CardTitle>
+            <CardDescription>Tahun Anggaran {proposal?.year}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <p className="text-sm font-medium leading-none">Status</p>
+                <p>{proposal?.status}</p>
+              </div>
+              <div className="space-y-3">
+                <p className="text-sm font-medium leading-none">
+                  Brafaks
+                </p>
+                <DownloadPDF token={token} uuid={uuid}/>
+              </div>
+              <div className="space-y-3">
+                <p className="text-sm font-medium leading-none">
+                  Rencana Anggaran Biaya
+                </p>
+                <div className="rounded-md border">
+                <Rab items={items}/>
+                </div>
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" className="w-[96px]">Kembali</Button>
+                <UbahStatus uuid={uuid} token={token}/>
+                <Button>Buat DIPA</Button>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
       </div>
     </>
   );

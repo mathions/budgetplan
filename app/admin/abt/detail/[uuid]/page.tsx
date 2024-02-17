@@ -17,8 +17,6 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
   const detail = await getDetailAbt(token, uuid)
-  const str = detail?.status
-  const status = str[0].toUpperCase() + str.slice(1)
   console.log(detail)
   
   return (
@@ -37,42 +35,27 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
             <CardTitle>{detail?.office}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Perihal
-              </p>
-              <p className="">
-                {detail?.perihal}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Tanggal Pengajuan
-              </p>
-              <p className="">
-                {detail?.created_at}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Status
-              </p>
-              <p className="">
-                {status}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Brafaks
-              </p>
-              <DownloadAbt uuid={uuid} token={token}/>
-            </div>
-            
-            <div className="flex justify-end space-x-2">
-              <Button variant="outline" className="w-[96px]">Kembali</Button>
-              <UbahStatus/>
-            </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-sm font-semibold leading-none">Perihal</p>
+                <p className="">{detail?.perihal}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold leading-none">Tanggal Pengajuan</p>
+                <p className="">{detail?.created_at}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold leading-none">Status</p>
+                <p className="">{detail?.status}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold leading-none">Brafaks</p>
+                <DownloadAbt uuid={uuid} token={token}/>
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" className="w-[96px]">Kembali</Button>
+                <UbahStatus uuid={uuid} token={token}/>
+              </div>
             </div>
           </CardContent>
         </Card>  

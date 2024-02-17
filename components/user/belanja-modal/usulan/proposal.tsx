@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+
 
 export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid: string, token: string }) {
   const [itemsData, setItemsData] = useState<Item[]>(items);
@@ -88,38 +88,44 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
       addRow(output_number, output, code_number, code, account_number, account);
     };
 
+  
+  const showProposal = () => {
+    // Ensure itemsData is an array
+    if (!Array.isArray(itemsData)) {
+      console.error('itemsData is not an array');
+      return;
+    }
   // Function to add rows for each missing code_number
-  const addMissingCodeNumbers = () => {
     ['058', '057', '056', '055'].forEach(code_number => {
       // Check if code_number is not present in itemsData
       if (!itemsData.some(item => item.code_number === code_number)) {
         addRowForCodeNumber(code_number);
       }
     });
-  };
-
-  addMissingCodeNumbers();
 
   // Group items based on code_number and then account_number
-  itemsData.forEach((item) => {
-    if (!groupedItems[item.output_number]) {
-      groupedItems[item.output_number] = { name: "", total: 0, codes: {} };
-    }
-    if (!groupedItems[item.output_number].codes[item.code_number]) {
-      groupedItems[item.output_number].codes[item.code_number] = { name: "", total: 0, accounts: {} };
-    }
-    if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
-    }
-    groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].name = item.output;
-    groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].codes[item.code_number].name = item.code;
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
-    total += parseInt(item.total_harga, 10);
-  });
+    itemsData.forEach((item) => {
+      if (!groupedItems[item.output_number]) {
+        groupedItems[item.output_number] = { name: "", total: 0, codes: {} };
+      }
+      if (!groupedItems[item.output_number].codes[item.code_number]) {
+        groupedItems[item.output_number].codes[item.code_number] = { name: "", total: 0, accounts: {} };
+      }
+      if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
+        groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
+      }
+      groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].name = item.output;
+      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].name = item.code;
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
+      total += parseInt(item.total_harga, 10);
+    });
+  };
+
+  showProposal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -158,6 +164,11 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
     }
   };
 
+  const finalClick = async () => {
+    saveClick()
+
+  }
+
   return (
     <>
       <div className="space-y-3">
@@ -186,7 +197,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
               <TableRow>
                 <TableCell className="text-center font-semibold">6023</TableCell>
                 <TableCell className="font-semibold" colSpan={3}>Pengelolaan Keuangan BMN dan Umum</TableCell>
-                <TableCell>Rp {total}</TableCell>
+                <TableCell className="font-semibold">Rp {total}</TableCell>
               </TableRow>
               
               {Object.keys(groupedItems).map((outputNumber) => (
@@ -194,7 +205,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                   <TableRow key={`output_${outputNumber}`}>
                     <TableCell className="text-center font-semibold">{outputNumber}</TableCell>
                     <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].name}</TableCell>
-                    <TableCell>{`Rp ${groupedItems[outputNumber].total}`}</TableCell>
+                    <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].total}`}</TableCell>
                   </TableRow>
 
                   {Object.keys(groupedItems[outputNumber].codes).map((codeNumber) => (
@@ -202,7 +213,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                       <TableRow key={`code_${codeNumber}`}>
                         <TableCell className="text-center font-semibold">{codeNumber}</TableCell>
                         <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].codes[codeNumber].name}</TableCell>
-                        <TableCell>{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</TableCell>
+                        <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</TableCell>
                         <TableCell>
                           <Dialog>
                             <DialogTrigger asChild>
@@ -214,9 +225,6 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                               </DialogHeader>
                               <div className="grid gap-4">
                                 <div className="grid grid-cols-4 items-center gap-4">
-                                  {/* <Label htmlFor="name" className="text-right">
-                                    Akun
-                                  </Label> */}
                                   <Select onValueChange={setAkun}>
                                     <SelectTrigger className="w-[360px]">
                                       <SelectValue placeholder="Pilih akun"/>
@@ -246,11 +254,14 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                         <>
                           <TableRow key={`code_${codeNumber}_account_${accountNumber}`}>
                             <TableCell></TableCell>
-                            <TableCell colSpan={3}>{`${accountNumber} - ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name}`}</TableCell>
-                            <TableCell>{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</TableCell>
+                            <TableCell className="font-medium" colSpan={3}>{`${accountNumber} - ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name}`}</TableCell>
+                            <TableCell className="font-medium">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</TableCell>
                             <TableCell className="flex justify-between">
                               <Button variant="ghost" onClick={() => addRow(outputNumber, groupedItems[outputNumber].name, codeNumber, groupedItems[outputNumber].codes[codeNumber].name, accountNumber, groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name)}><PlusIcon/></Button>
-                              <Button variant="ghost" onClick={() => deleteAccount(accountNumber)}><Cross2Icon/></Button>
+                              {/* <Button variant="ghost" onClick={() => deleteAccount(accountNumber)}><Cross2Icon/></Button> */}
+                              {Object.keys(groupedItems[outputNumber].codes[codeNumber].accounts).length !== 1 && (
+                                  <Button variant="ghost" onClick={() => deleteAccount(accountNumber)}><Cross2Icon/></Button>
+                                )}
                             </TableCell>
                           </TableRow>
                           {groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].items.map((item, index) => (
@@ -285,7 +296,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
           <Button onClick={saveClick} disabled={isLoading} variant="outline">
             {isLoading ? 'Loading...' : 'Simpan'}
           </Button>
-          <Button onClick={saveClick} disabled={isLoading}>
+          <Button onClick={finalClick} disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Finalisasi'}
           </Button>
         </div>

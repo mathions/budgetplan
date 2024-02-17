@@ -67,6 +67,7 @@ export async function postItems(token: string, uuid:string, data:any){
   }),
   });
   const jsonResponse = await res.json();
+  console.log(data)
   console.log(jsonResponse)
   if (res.status === 200) {
     return jsonResponse;

@@ -4,6 +4,8 @@ import Proposal from "@/components/user/belanja-modal/usulan/proposal";
 import { getItems, getProposal } from "@/lib/service";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function Usulan({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -11,6 +13,16 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
   const token = session?.user?.token;
   const proposal = await getProposal(token);
   const items = await getItems(token, uuid);
+  console.log(session)
+  if(session == null){
+    return (
+      <>
+        <div className="w-full mt-24 flex-row flex justify-center align-middle">
+          <Button asChild variant="link"><Link href="/login">Unauthenticated! Please login again</Link></Button>
+        </div>
+      </>
+    )
+  }
   return (
     <>
       <Breadcrumbs

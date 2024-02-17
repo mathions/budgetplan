@@ -5,26 +5,34 @@ export default function Rab ({ items } : { items: [Item] }) {
   const groupedItems: GroupedItems = {};
   let total = 0;
 
-  // Group items based on code_number and then account_number
-  items.forEach((item) => {
-    if (!groupedItems[item.output_number]) {
-      groupedItems[item.output_number] = { name: "", total: 0, codes: {} };
+  const showProposal = () => {
+    if (!Array.isArray(items)) {
+      console.error('itemsData is not an array');
+      return;
     }
-    if (!groupedItems[item.output_number].codes[item.code_number]) {
-      groupedItems[item.output_number].codes[item.code_number] = { name: "", total: 0, accounts: {} };
-    }
-    if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
-    }
-    groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].name = item.output;
-    groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].codes[item.code_number].name = item.code;
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
-    total += parseInt(item.total_harga, 10);
-  });
+    items.forEach((item) => {
+      if (!groupedItems[item.output_number]) {
+        groupedItems[item.output_number] = { name: "", total: 0, codes: {} };
+      }
+      if (!groupedItems[item.output_number].codes[item.code_number]) {
+        groupedItems[item.output_number].codes[item.code_number] = { name: "", total: 0, accounts: {} };
+      }
+      if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
+        groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
+      }
+      groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].name = item.output;
+      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].name = item.code;
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
+      total += parseInt(item.total_harga, 10);
+    });
+  };
+
+  showProposal();
+
   return (
     <>
       <Table>
