@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import { getItems, getProposal } from "@/lib/service-admin";
+import { getItems, getDetailProposal } from "@/lib/service-admin";
 import Rab from "@/components/admin/belanja-modal/usulan/rab";
 import DownloadPDF from "@/components/admin/belanja-modal/usulan/download-pdf";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
@@ -12,9 +12,8 @@ import UbahStatus from "@/components/admin/belanja-modal/usulan/ubah-status";
 export default async function Usulan({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
-  console.log(session)
   const token = session?.user?.token;
-  const proposal = await getProposal(token, uuid)
+  const proposal = await getDetailProposal(token, uuid)
   const items = await getItems(token, uuid)
   if(session == null){
     return (

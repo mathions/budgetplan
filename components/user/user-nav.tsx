@@ -49,7 +49,7 @@ export function UserNav() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <button onClick={() => signOut()}>Sign out</button>
+          <button className="w-full text-start" onClick={() => signOut()}>Logout</button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import React from "react"
-import { DataTablePagination } from "./data-table-pagination"
+import { DataTablePagination } from "@/components/data-table/data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
 
 interface DataTableProps<TData, TValue> {
@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} style={{width: header.getSize() }}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

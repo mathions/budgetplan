@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import { getItems, getProposal } from "@/lib/service-admin";
+import { getItems, getDetailProposal } from "@/lib/service-admin";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Proposal from "@/components/admin/belanja-modal/dipa/proposal";
 
@@ -8,7 +8,7 @@ export default async function Dipa ({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
-  const proposal = await getProposal(token, uuid);
+  const proposal = await getDetailProposal(token, uuid);
   const office = proposal?.office;
   const year = proposal?.year;
   const items = await getItems(token, uuid);

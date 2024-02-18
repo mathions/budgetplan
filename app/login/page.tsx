@@ -1,6 +1,10 @@
 import { Metadata } from "next"
 import LoginForm from "./login-form"
 import Image from 'next/image'
+import { getServerSession } from "next-auth"
+import { authOptions }from "@/app/api/auth/[...nextauth]/route"
+import { NextResponse } from "next/server";
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: "Login | budgetplan",
@@ -10,7 +14,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getServerSession(authOptions)
+  if(session) {
+    redirect('/beranda')
+  }
+
   return (
     <>
       <div className="h-screen w-screen bg-muted grid place-content-center">

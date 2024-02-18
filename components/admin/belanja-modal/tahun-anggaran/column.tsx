@@ -6,9 +6,9 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { statuses } from "./status"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { BelmodTable } from "@/lib/definitions"
+import { YearTable } from "@/lib/definitions"
 
-export const columns: ColumnDef<BelmodTable>[] = [
+export const columns: ColumnDef<YearTable>[] = [
   {
     accessorKey: "year",
     size: 150,
@@ -18,22 +18,22 @@ export const columns: ColumnDef<BelmodTable>[] = [
     cell: ({ row }) => <div className="ml-4">{row.getValue("year")}</div>
   },
   {
-    accessorKey: "office",
+    accessorKey: "proposal_count",
     size: 250,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Satuan Kerja" />
+      <DataTableColumnHeader column={column} title="Jumlah Pengajuan" />
       ),
-    cell: ({ row }) => <div className="ml-4">{row.getValue("office")}</div>
+    cell: ({ row }) => <div className="ml-4">{row.getValue("proposal_count")}</div>
   },
   {
-    accessorKey: "status",
+    accessorKey: "is_active",
     size: 200,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("status")
+        (status) => status.value === row.getValue("is_active")
       )
 
       if (!status) {
@@ -63,10 +63,7 @@ export const columns: ColumnDef<BelmodTable>[] = [
     cell: ({ row }) => 
       <div className="text-xs flex w-fit">
         <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} className="text-sm">Lihat Usulan</Link>
-        </Button>
-        <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/dipa/${row.getValue("uuid")}`}>Lihat DIPA</Link>
+          <Link href={`/admin/belanja-modal/tahun-anggaran/${row.getValue("uuid")}`} className="text-sm">Lihat Detail</Link>
         </Button>
       </div>,
     enableSorting: false,

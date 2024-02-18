@@ -23,16 +23,16 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Cari satuan kerja..."
-          value={(table.getColumn("office")?.getFilterValue() as string) ?? ""}
+          placeholder="Cari tahun..."
+          value={(table.getColumn("year")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("office")?.setFilterValue(event.target.value)
+            table.getColumn("year")?.setFilterValue(event.target.value)
           }
           className="h-10 w-[180px] lg:w-[360px]"
         />
-        {table.getColumn("status") && (
+        {table.getColumn("is_active") && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
+            column={table.getColumn("is_active")}
             title="Status"
             options={statuses}
           />
@@ -48,6 +48,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      {/* <DataTableViewOptions table={table} /> */}
       <Button asChild variant="outline" className="h-10 lg:flex ml-2">
           <Link href="/admin/belanja-modal/buat">
             {/* <PlusIcon className="mr-2 h-4 w-4"/> */}

@@ -1,3 +1,6 @@
+import { unstable_noStore as noStore } from "next/cache";
+import { AbtTable } from "./definitions";
+
 const url = 'https://budgetplan.masuk.id/api/v1';
 
 export async function login(data: { username: string, password: string}) {
@@ -125,15 +128,17 @@ export async function postAbt(token: string, data:any){
   }
 }
 
-export async function getAbt(token: string){
+export async function getAbt(token:string): Promise<AbtTable[]>  {
+  noStore()
   const res = await fetch(`${url}/abt`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${token}` 
     }
   });
   const jsonResponse = await res.json();
+  console.log(jsonResponse)
   if (res.status === 200) {
     return jsonResponse.data;
   } else {

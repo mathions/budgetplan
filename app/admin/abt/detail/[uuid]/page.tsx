@@ -4,12 +4,7 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getBrafaksAbt, getDetailAbt } from "@/lib/service-admin";
 import DownloadAbt from "@/components/admin/abt/detail/download-abt";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
-import { CopyIcon } from "@radix-ui/react-icons";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import UbahStatus from "@/components/admin/abt/detail/ubah-status";
 
 export default async function Detail({ params }: {params: { uuid: string } }) {

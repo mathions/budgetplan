@@ -1,4 +1,29 @@
 
+export type BelmodTable = {
+  no_urut: number
+  uuid: string
+  created_at: string
+  office: string
+  year: string
+  status: string
+}
+
+export type YearTable = {
+  year: string
+  is_active: string
+  proposal_count: number
+  uuid: string
+}
+
+export type AbtTable = {
+  no_urut: string
+  uuid: string
+  status: string
+  office: string
+  perihal: string
+  created_at: string
+}
+
 export type Item = {
   no_urut: string;
   output_number: string;
