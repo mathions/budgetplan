@@ -23,18 +23,15 @@ export default function UbahStatus({ uuid, token } : { uuid: string, token: stri
   return (
   <Dialog>
     <DialogTrigger asChild>
-      <Button>Ubah Status</Button>
+      <Button variant="outline">Ubah Status</Button>
     </DialogTrigger>
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
         <DialogTitle>Status Pengajuan Usulan Belanja Modal</DialogTitle>
-        <DialogDescription>
-          perihal
-        </DialogDescription>
       </DialogHeader>
       <Select onValueChange={setStatus}>
         <SelectTrigger id="status">
-          <SelectValue placeholder="status" />
+          <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent position="popper">
           <SelectItem value="4">Diterima</SelectItem>

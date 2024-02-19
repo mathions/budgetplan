@@ -39,11 +39,11 @@ export const columns: ColumnDef<BelmodTable>[] = [
       if (!status) {
         return null
       }
-
+      
       return (
         <div className="flex w-[150px] items-center ml-4">
           {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+            <status.icon className={status.classname} />
           )}
           <span>{status.label}</span>
         </div>

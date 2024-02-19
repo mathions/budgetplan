@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { Item, GroupedItems } from "@/lib/definitions"
-import { postBrafaks, postItems } from "@/lib/service";
+import { editStatusBelmod, postBrafaks, postItems } from "@/lib/service";
 import { useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
 
 
-export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid: string, token: string }) {
+export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: any, items: [Item]; uuid: string, token: string }) {
   const [itemsData, setItemsData] = useState<Item[]>(items);
   const [akun, setAkun] = useState("");
   const [file, setFile] = useState<File>()
@@ -140,8 +140,9 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
     if (!file) {
       const res1 = await postItems(token, uuid, newItemsData)
       console.log(res1)
-      setError(res1?.message);
+      setError(res1?.error);
       setIsLoading(false);
+      window.location.reload();
       return;
     }
     try {
@@ -153,6 +154,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
       const res2 = await postBrafaks(token,uuid, data)
       console.log(res2)
       setError('Berhasil mengunggah Brafaks dan memperbarui RAB')
+      window.location.reload();
       if (res2.status === 'error') {
         throw new Error('Failed to fetch from API 1');
       }
@@ -165,7 +167,18 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
   };
 
   const finalClick = async () => {
-    saveClick()
+    setIsLoading(true);
+    setError('');
+    try {
+      const res = await editStatusBelmod(token, uuid)
+      console.log(res)
+      setError('Finalisasi berhasil')
+      window.location.reload();
+    } catch (error) {
+      setError('Error');
+    } finally {
+      setIsLoading(false);
+    }
 
   }
 
@@ -175,6 +188,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
         <p className="text-sm font-medium leading-none">
           Brafaks
         </p>
+        <p>{brafaks[brafaks.length - 1]?.name}</p>
         <Input type="file" name="file" className="border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground hover:cursor-pointer" onChange={(e) => setFile(e.target.files?.[0])} />
       </div>
       <div className="space-y-3">
@@ -197,7 +211,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
               <TableRow>
                 <TableCell className="text-center font-semibold">6023</TableCell>
                 <TableCell className="font-semibold" colSpan={3}>Pengelolaan Keuangan BMN dan Umum</TableCell>
-                <TableCell className="font-semibold">Rp {total}</TableCell>
+                <TableCell className="font-semibold"><p className="pl-2">Rp {total}</p></TableCell>
               </TableRow>
               
               {Object.keys(groupedItems).map((outputNumber) => (
@@ -205,7 +219,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                   <TableRow key={`output_${outputNumber}`}>
                     <TableCell className="text-center font-semibold">{outputNumber}</TableCell>
                     <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].name}</TableCell>
-                    <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].total}`}</TableCell>
+                    <TableCell className="font-semibold"><p className="pl-2">{`Rp ${groupedItems[outputNumber].total}`}</p></TableCell>
                   </TableRow>
 
                   {Object.keys(groupedItems[outputNumber].codes).map((codeNumber) => (
@@ -213,7 +227,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                       <TableRow key={`code_${codeNumber}`}>
                         <TableCell className="text-center font-semibold">{codeNumber}</TableCell>
                         <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].codes[codeNumber].name}</TableCell>
-                        <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</TableCell>
+                        <TableCell className="font-semibold"><p className="pl-2">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</p></TableCell>
                         <TableCell>
                           <Dialog>
                             <DialogTrigger asChild>
@@ -255,7 +269,7 @@ export default function Proposal ({ items, uuid, token } : { items: [Item]; uuid
                           <TableRow key={`code_${codeNumber}_account_${accountNumber}`}>
                             <TableCell></TableCell>
                             <TableCell className="font-medium" colSpan={3}>{`${accountNumber} - ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name}`}</TableCell>
-                            <TableCell className="font-medium">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</TableCell>
+                            <TableCell className="font-medium"><p className="pl-2">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</p></TableCell>
                             <TableCell className="flex justify-between">
                               <Button variant="ghost" onClick={() => addRow(outputNumber, groupedItems[outputNumber].name, codeNumber, groupedItems[outputNumber].codes[codeNumber].name, accountNumber, groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name)}><PlusIcon/></Button>
                               {/* <Button variant="ghost" onClick={() => deleteAccount(accountNumber)}><Cross2Icon/></Button> */}

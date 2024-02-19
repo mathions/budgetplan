@@ -9,13 +9,13 @@ import { useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
+import { postItemsDipa } from "@/lib/service-admin";
+import Link from "next/link";
 
 export default function Proposal ({ items, uuid, token, office, year } : { items: [Item]; uuid: string, token: string, office: string, year: string }) {
   const [itemsData, setItemsData] = useState<Item[]>(items);
   const [akun, setAkun] = useState("");
-  const [file, setFile] = useState<File>()
 
   const delimiter = ",";
   const tambahAkun = akun.split(delimiter);
@@ -31,27 +31,6 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
 
   const groupedItems: GroupedItems = {};
   let total = 0;
-
-  // Group items based on code_number and then account_number
-  itemsData.forEach((item) => {
-    if (!groupedItems[item.output_number]) {
-      groupedItems[item.output_number] = { name: "", total: 0, codes: {} };
-    }
-    if (!groupedItems[item.output_number].codes[item.code_number]) {
-      groupedItems[item.output_number].codes[item.code_number] = { name: "", total: 0, accounts: {} };
-    }
-    if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
-    }
-    groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].name = item.output;
-    groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].codes[item.code_number].name = item.code;
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
-    groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
-    total += parseInt(item.total_harga, 10);
-  });
 
   const addRow = (output_number:string, output:string, code_number: string, code: string, account_number: string, account: string) => {
     const newNoUrut = String(itemsData.length + 1);
@@ -120,7 +99,42 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
     });
   };
 
-  addMissingCodeNumbers();
+  const showProposal = () => {
+    // Ensure itemsData is an array
+    if (!Array.isArray(itemsData)) {
+      console.error('itemsData is not an array');
+      return;
+    }
+  // Function to add rows for each missing code_number
+    ['058', '057', '056', '055'].forEach(code_number => {
+      // Check if code_number is not present in itemsData
+      if (!itemsData.some(item => item.code_number === code_number)) {
+        addRowForCodeNumber(code_number);
+      }
+    });
+
+    // Group items based on code_number and then account_number
+    itemsData.forEach((item) => {
+      if (!groupedItems[item.output_number]) {
+        groupedItems[item.output_number] = { name: "", total: 0, codes: {} };
+      }
+      if (!groupedItems[item.output_number].codes[item.code_number]) {
+        groupedItems[item.output_number].codes[item.code_number] = { name: "", total: 0, accounts: {} };
+      }
+      if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
+        groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
+      }
+      groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].name = item.output;
+      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].name = item.code;
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
+      total += parseInt(item.total_harga, 10);
+    });
+  }
+  showProposal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -132,48 +146,16 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
       const { no_urut, output_number, output, code, account, ...rest } = item;
       return rest;
     });
-    function mapCodeNumberToValue(codeNumber:string) {
-      switch (codeNumber) {
-        case '055':
-          return 1;
-        case '056':
-          return 2;
-        case '057':
-          return 3;
-        default:
-          return 4;
-      }
-    }
-    const newData = newItemsData.map(item => ({
-      ...item,
-      code_number: mapCodeNumberToValue(item.code_number)
-    }));
-
-    if (!file) {
-      const res1 = await postItems(token, uuid, newItemsData)
-      console.log(res1)
-      setError(res1?.message);
-      setIsLoading(false);
-      return;
-    }
 
     try {
-      const res1 = await postItems(token, uuid, newItemsData)
-      console.log(res1)
-      const data = new FormData()
-      data.set('file', file)
-      console.log(data)
-      const res2 = await postBrafaks(token,uuid, data)
-      console.log(res2)
-      setError('Berhasil mengunggah Brafaks dan memperbarui RAB')
-      if (res2.status === 'error') {
-        throw new Error('Failed to fetch from API 1');
-      }
-      console.log('Both requests succeeded');
+      const res = await postItemsDipa(token, uuid, newItemsData)
+      console.log(res)
+      
     } catch (error) {
       setError('File is invalid');
     } finally {
       setIsLoading(false);
+      setError('RAB berhasil disimpan')
     }
   };
 
@@ -187,9 +169,10 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
         <CardContent className="space-y-4">
           <div className="space-y-3">
             <p className="text-sm font-medium leading-none">
-              Daftar Isian Pelaksanaan Anggaran (DIPA)
+              Dokumen DIPA
             </p>
-            <Input type="file" name="file" className="file-input" onChange={(e) => setFile(e.target.files?.[0])} />
+            {/* <Input type="file" name="file" className="file-input" onChange={(e) => setFile(e.target.files?.[0])} /> */}
+            <p>dipa2024.pdf</p>
           </div>
           <div className="space-y-3">
             <p className="text-sm font-medium leading-none">
@@ -211,7 +194,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                   <TableRow>
                     <TableCell className="text-center font-semibold">6023</TableCell>
                     <TableCell className="font-semibold" colSpan={3}>Pengelolaan Keuangan BMN dan Umum</TableCell>
-                    <TableCell className="font-semibold">Rp {total}</TableCell>
+                    <TableCell className="font-semibold"><p className="pl-2">Rp {total}</p></TableCell>
                   </TableRow>
                   
                   {Object.keys(groupedItems).map((outputNumber) => (
@@ -219,7 +202,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                     <TableRow key={`output_${outputNumber}`}>
                       <TableCell className="text-center font-semibold">{outputNumber}</TableCell>
                       <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].name}</TableCell>
-                      <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].total}`}</TableCell>
+                      <TableCell className="font-semibold"><p className="pl-2">{`Rp ${groupedItems[outputNumber].total}`}</p></TableCell>
                     </TableRow>
 
                       {Object.keys(groupedItems[outputNumber].codes).map((codeNumber) => (
@@ -227,7 +210,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                           <TableRow key={`code_${codeNumber}`}>
                             <TableCell className="text-center font-semibold">{codeNumber}</TableCell>
                             <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].codes[codeNumber].name}</TableCell>
-                            <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</TableCell>
+                            <TableCell className="font-semibol"><p className="pl-2">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</p></TableCell>
                             <TableCell>
                               <Dialog>
                                 <DialogTrigger asChild>
@@ -269,7 +252,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                               <TableRow key={`code_${codeNumber}_account_${accountNumber}`}>
                                 <TableCell></TableCell>
                                 <TableCell colSpan={3}>{`${accountNumber} - ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name}`}</TableCell>
-                                <TableCell>{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</TableCell>
+                                <TableCell><p className="pl-2">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</p></TableCell>
                                 <TableCell className="flex justify-between">
                                   <Button variant="ghost" onClick={() => addRow(outputNumber, groupedItems[outputNumber].name, codeNumber, groupedItems[outputNumber].codes[codeNumber].name, accountNumber, groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name)}><PlusIcon/></Button>
                                     {Object.keys(groupedItems[outputNumber].codes[codeNumber].accounts).length !== 1 && (
@@ -282,8 +265,8 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                                   <TableCell> </TableCell>
                                   <TableCell><Input value={item.uraian} type="text" name="uraian" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
                                   <TableCell><Input value={item.jumlah} type="number" className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>   
-                                  <TableCell><Input value={item.harga_satuan} type="number" className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="harga_satuan" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
-                                  <TableCell><Input value={item.total_harga} type="number" className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="total_harga" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
+                                  <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-6" name="harga_satuan" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">$</div></TableCell>      
+                                  <TableCell className="relative"><Input value={item.total_harga} type="number" className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="total_harga" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
                                   <TableCell className="flex justify-end">
                                     {index !== 0 && (
                                     <Button variant="ghost" onClick={() => deleteRow(item.no_urut)}><Cross2Icon/></Button>
@@ -304,13 +287,14 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
               </Table>
             </div>
           </div>
-          <div className="flex justify-end">
-            <div>
+          <div className="flex justify-end space-x-2">
+            <Button variant="outline" className="w-[96px]" asChild><Link href='/admin/belanja-modal'>Kembali</Link></Button>
             <Button onClick={handleClick} disabled={isLoading}>
               {isLoading ? 'Loading...' : 'Simpan'}
             </Button>
-            {error && <p>Error: {error}</p>}
-            </div>
+          </div>
+          <div className="flex justify-end">
+            {error && <p>{error}</p>}
           </div>
         </CardContent>
       </Card>

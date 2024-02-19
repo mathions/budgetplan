@@ -140,6 +140,60 @@ export async function postDipa(token: string, uuid:string, data:any){
   }
 }
 
+export async function rabToDipa(token: string, uuid:string){
+  const res = await fetch(`${url}/a/proposal/dipa/rab-to-dipa/${uuid}`, {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 201) {
+    return jsonResponse;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function getItemsDipa(token: string, uuid:string){
+  const res = await fetch(`${url}/a/proposal/dipa/${uuid}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse?.data?.items;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function postItemsDipa(token: string, uuid:string, data:any){
+  const res = await fetch(`${url}/a/proposal/dipa/create/${uuid}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      data: data
+  }),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 201) {
+    return jsonResponse;
+  } else {
+    return jsonResponse;
+  }
+}
+
+
 export async function getAbt(token:string): Promise<AbtTable[]>  {
   const res = await fetch(`${url}/a/abt/`, {
     method: 'GET',

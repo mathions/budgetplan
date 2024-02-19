@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import UbahStatus from "@/components/admin/belanja-modal/usulan/ubah-status";
+import BuatDipa from "@/components/admin/belanja-modal/usulan/buat-dipa";
 
 export default async function Usulan({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -61,9 +62,9 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
                 </div>
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" className="w-[96px]">Kembali</Button>
+                {/* <Button variant="outline" className="w-[96px]">Kembali</Button> */}
                 <UbahStatus uuid={uuid} token={token}/>
-                <Button>Buat DIPA</Button>
+                <BuatDipa uuid={uuid} token={token}></BuatDipa>
               </div>
             </div>
           </CardContent>

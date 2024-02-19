@@ -19,10 +19,11 @@ export default function FormBelanjaModal({ token } : { token: string }) {
       const res = await createBelMod(token, year)
       const jsonResponse = await res.json();
       console.log(jsonResponse)
+      console.log(res)
       if (res.status === 201) {
           return setError(jsonResponse?.message)
       } else {
-          return setError(jsonResponse?.error?.year)
+          return setError(jsonResponse?.error)
       }
     } catch (error) {
       setError('Maaf, ada permsalahan teknis');

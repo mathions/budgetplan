@@ -17,13 +17,10 @@ export default async function BuatBelanjaModal() {
           { label: 'Buat', href: '/admin/belanja-modal/buat', active: true },
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Buat Pengajuan Belanja Modal</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Mulai Tahun Anggaran</h1>
       <div className="my-6">
         <Card className="w-full">
-          <CardHeader>
-            <CardTitle>{session?.user?.office}</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent className="grid gap-4 py-6">
             <FormBelanjaModal token={token}/>
           </CardContent>
         </Card>  

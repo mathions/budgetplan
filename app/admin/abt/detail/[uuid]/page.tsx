@@ -6,6 +6,7 @@ import { getBrafaksAbt, getDetailAbt } from "@/lib/service-admin";
 import DownloadAbt from "@/components/admin/abt/detail/download-abt";
 import { Button } from "@/components/ui/button";
 import UbahStatus from "@/components/admin/abt/detail/ubah-status";
+import Link from "next/link";
 
 export default async function Detail({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -48,7 +49,7 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
                 <DownloadAbt uuid={uuid} token={token}/>
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" className="w-[96px]">Kembali</Button>
+                <Button variant="outline" className="w-[96px]" asChild><Link href='/admin/abt'>Kembali</Link></Button>
                 <UbahStatus uuid={uuid} token={token}/>
               </div>
             </div>

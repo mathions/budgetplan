@@ -41,7 +41,8 @@ export async function getProposal(token: string){
   }
 }
 
-export  async function getItems(token: string, uuid: string) {
+export async function getItems(token: string, uuid: string) {
+  noStore()
   const res = await fetch(`${url}/proposal/detail/${uuid}`, {
     method: 'GET',
     headers: {
@@ -79,6 +80,24 @@ export async function postItems(token: string, uuid:string, data:any){
   }
 }
 
+export async function getBrafaksPath(token: string, uuid: string) {
+  noStore()
+  const res = await fetch(`${url}/proposal/detail/${uuid}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse?.data?.brafaks;
+  } else {
+    return jsonResponse;
+  }
+}
+
 export async function postBrafaks(token: string, uuid:string, data: any){
   const res = await fetch(`${url}/proposal/brafaks-store/${uuid}`, {
     method: 'POST',
@@ -109,6 +128,23 @@ export async function getBrafaks(token: string, uuid:string){
     return res;
   } else {
     return res;
+  }
+}
+
+export async function editStatusBelmod(token:string, uuid:string){
+  const res = await fetch(`${url}/proposal/status/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
   }
 }
 
