@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { postDipa } from "@/lib/service-admin";
 import { useState } from "react";
 
-export default function unggahDipa({ token, uuid } : { token: string, uuid:string }) {
+export default function UnggahDipa({ token, uuid } : { token: string, uuid:string }) {
   const [file, setFile] = useState<File>()
 
   const [isLoading, setIsLoading] = useState(false);

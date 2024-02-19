@@ -4,10 +4,9 @@ import { Table } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "./data-table-view-options"
 
-import { statuses } from "../data/data"
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import { statuses } from "./status"
+import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import Link from "next/link"
 
 interface DataTableToolbarProps<TData> {
@@ -28,7 +27,7 @@ export function DataTableToolbar<TData>({
           onChange={(event) =>
             table.getColumn("perihal")?.setFilterValue(event.target.value)
           }
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-10 w-[180px] lg:w-[360px]"
         />
         {table.getColumn("status") && (
           <DataTableFacetedFilter
@@ -48,10 +47,10 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <Button asChild variant="outline" size="sm"
-        className="h-8 lg:flex ml-2">
+      <Button asChild variant="outline"
+        className="h-10 lg:flex ml-2">
           <Link href="/abt/buat">
-            <PlusIcon className="mr-2 h-4 w-4"/>
+            {/* <PlusIcon className="mr-2 h-4 w-4"/> */}
             Buat Pengajuan
           </Link>
       </Button>
