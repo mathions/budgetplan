@@ -63,10 +63,10 @@ export const columns: ColumnDef<BelmodTable>[] = [
     cell: ({ row }) => 
       <div className="text-xs flex w-fit">
         <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} className="text-sm">Lihat Usulan</Link>
+          <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} className="text-sm">Usulan</Link>
         </Button>
         <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/dipa/${row.getValue("uuid")}`}>Lihat DIPA</Link>
+          <Link href={`/admin/belanja-modal/dipa/${row.getValue("uuid")}`}>Penyesuaian</Link>
         </Button>
       </div>,
     enableSorting: false,

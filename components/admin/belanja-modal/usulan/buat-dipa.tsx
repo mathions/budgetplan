@@ -21,11 +21,11 @@ export default function BuatDipa({ uuid, token } : { uuid: string, token: string
   return (
   <Dialog>
     <DialogTrigger asChild>
-      <Button variant="outline">Buat DIPA</Button>
+      <Button variant="outline">Buat Penyesuaian</Button>
     </DialogTrigger>
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle>Buat Usulan ini menjadi DIPA</DialogTitle>
+        <DialogTitle>Buat Penyesuaian RAB untuk Usulan ini</DialogTitle>
       </DialogHeader>
       <DialogFooter className="sm:justify-between">
         <DialogClose asChild>

@@ -30,10 +30,10 @@ export default async function Dipa({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Beranda', href: '/beranda' },
           { label: 'Belanja Modal', href: '/belanja-modal' },
-          { label: 'DIPA', href: `/belanja-modal/dipa/${uuid}`, active: true }
+          { label: 'Penyesuaian', href: `/belanja-modal/dipa/${uuid}`, active: true }
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">DIPA</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Penyesuaian</h1>
       <div className="my-6">
         <Card className="w-full">
           <CardHeader>
@@ -42,13 +42,7 @@ export default async function Dipa({ params }: {params: { uuid: string } }) {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-3">
-              <p className="text-sm font-medium leading-none">
-                Daftar Isian Pelaksanaan Anggaran (DIPA)
-              </p>
-              <DownloadPDF uuid={uuid} token={token}/>
-            </div>
-            <div className="space-y-3">
-              <p className="text-sm font-medium leading-none">
+              <p className="text-sm font-semibold leading-none">
                 Rencana Anggaran Biaya
               </p>
               <div className="rounded-md border">

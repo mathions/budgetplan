@@ -5,14 +5,11 @@ import { DataTable } from "@/components/admin/belanja-modal/components/data-tabl
 import { columns } from "@/components/admin/belanja-modal/components/column";
 import { getDetailYear, getProposal, getYear } from "@/lib/service-admin";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { columns as yearColumns } from "@/components/admin/belanja-modal/tahun-anggaran/column"
-import { DataTable as YearTable } from "@/components/admin/belanja-modal/tahun-anggaran/data-table"
 
 export default async function BelanjaModal() {
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
   const data = await getProposal(token)
-  const year = await getYear(token)
   
   return (
     <>
@@ -24,24 +21,8 @@ export default async function BelanjaModal() {
       />
       <h2 className="text-3xl font-bold tracking-tight"> Belanja Modal</h2>
       <div className="py-6">
-        <Tabs defaultValue="pengajuan" className="w-full">
-          <TabsList>
-            <TabsTrigger value="pengajuan">Pengajuan</TabsTrigger>
-            <TabsTrigger value="tahun-anggaran">Tahun Anggaran</TabsTrigger>
-          </TabsList>
-          <TabsContent value="pengajuan">
-            <div className="py-2">
-              <DataTable columns={columns} data={data} />
-            </div>
-          </TabsContent>
-          <TabsContent value="tahun-anggaran">
-            <div className="py-2">
-              <YearTable columns={yearColumns} data={year} />
-            </div>
-          </TabsContent>
-        </Tabs>
+        <DataTable columns={columns} data={data} />
       </div>
-
     </>
   )
 }

@@ -26,7 +26,7 @@ export function BelanjaModalCard({ data }: { data: any }) {
             </p>
             <Button asChild variant="outline" className="flex justify-start h-12">
               <Link href={`/belanja-modal/usulan/${data?.uuid}`}>
-                <FileTextIcon className="mr-4 h-4 w-4" />Buat Usulan
+                <FileTextIcon className="mr-4 h-4 w-4" />Usulan
               </Link>
             </Button>
           </div>
@@ -52,14 +52,14 @@ export function BelanjaModalCard({ data }: { data: any }) {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-medium leading-none">
-              Penyerahan DIPA
+              Terdapat penyesuaian RAB
             </p>
             <p className="text-sm text-muted-foreground">
               3 hari yang lalu
             </p>
             <Button asChild variant="outline" className="flex justify-start h-12">
               <Link href={`/belanja-modal/dipa/${data?.uuid}`}>
-                <FileTextIcon className="mr-4 h-4 w-4" />Lihat DIPA
+                <FileTextIcon className="mr-4 h-4 w-4" />Penyesuaian
               </Link>
             </Button>
           </div>

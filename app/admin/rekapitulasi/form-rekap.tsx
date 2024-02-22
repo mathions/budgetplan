@@ -21,7 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState } from "react"
 
 const rekapFormSchema = z.object({
-  wilayah: z.string(),
+  tahun: z.string(),
   satuan_kerja: z.string(),
   komponen: z.string(),
 })
@@ -68,21 +68,20 @@ export function FormRekap() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="wilayah"
+          name="tahun"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Wilayah</FormLabel>
+              <FormLabel>Tahun Anggaran</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Pilih wilayah" />
+                    <SelectValue placeholder="Pilih tahun anggaran" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="asia">Asia</SelectItem>
-                  <SelectItem value="eropa">Eropa</SelectItem>
-                  <SelectItem value="america">Amerika</SelectItem>
-                  <SelectItem value="afrika">Afrika</SelectItem>
+                  <SelectItem value="2026">2026</SelectItem>
+                  <SelectItem value="2025">2025</SelectItem>
+                  <SelectItem value="2024">2024</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

@@ -20,10 +20,10 @@ export default async function Dipa ({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Dashboard', href: '/admin' },
           { label: 'Belanja Modal', href: '/admin/belanja-modal'},
-          { label: 'DIPA', href: '/admin/belanja-modal/dipa', active: true },
+          { label: 'Penyesuaian', href: '/admin/belanja-modal/dipa', active: true },
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">DIPA</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Penyesuaian</h1>
       <div className="my-6">
         <Proposal items={items} uuid={uuid} token={token} office={office} year={year}/>
       </div>
