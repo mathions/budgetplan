@@ -18,12 +18,12 @@ export const columns: ColumnDef<BelmodTable>[] = [
     cell: ({ row }) => <div className="ml-4">{row.getValue("year")}</div>
   },
   {
-    accessorKey: "office",
+    accessorKey: "user",
     size: 250,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Satuan Kerja" />
       ),
-    cell: ({ row }) => <div className="ml-4">{row.getValue("office")}</div>
+    cell: ({ row }) => <div className="ml-4">{row.getValue("user")}</div>
   },
   {
     accessorKey: "status",
@@ -42,10 +42,12 @@ export const columns: ColumnDef<BelmodTable>[] = [
       
       return (
         <div className="flex w-[150px] items-center ml-4">
-          {status.icon && (
-            <status.icon className={status.classname} />
-          )}
-          <span>{status.label}</span>
+          <div className={status.class}>
+            {status.icon && (
+              <status.icon className={status.classname} />
+            )}
+            <span>{status.label}</span>
+          </div>
         </div>
       )
     },
@@ -61,11 +63,11 @@ export const columns: ColumnDef<BelmodTable>[] = [
       <DataTableColumnHeader column={column} title=""/>
     ),
     cell: ({ row }) => 
-      <div className="text-xs flex w-fit">
-        <Button asChild variant="link">
-          <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} className="text-sm">Usulan</Link>
+      <div className="text-xs flex w-full gap-2 justify-start">
+        <Button asChild variant="ghost" className=" h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
+          <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} >Usulan</Link>
         </Button>
-        <Button asChild variant="link">
+        <Button asChild variant="ghost" className=" h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
           <Link href={`/admin/belanja-modal/dipa/${row.getValue("uuid")}`}>Penyesuaian</Link>
         </Button>
       </div>,

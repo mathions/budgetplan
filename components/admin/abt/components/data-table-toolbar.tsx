@@ -26,7 +26,7 @@ export function DataTableToolbar<TData>({
           onChange={(event) =>
             table.getColumn("office")?.setFilterValue(event.target.value)
           }
-          className="h-10 w-[180px] lg:w-[360px]"
+          className="h-10 flex flex-1 bg-background"
         />
         {table.getColumn("status") && (
           <DataTableFacetedFilter
@@ -34,16 +34,6 @@ export function DataTableToolbar<TData>({
             title="Status"
             options={statuses}
           />
-        )}
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-10 px-2 lg:px-3"
-          >
-            Reset
-            <Cross2Icon className="ml-2 h-4 w-4" />
-          </Button>
         )}
       </div>
     </div>

@@ -1,10 +1,10 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { AbtTable } from "./definitions";
 
-const url = 'https://budgetplan.masuk.id/api/v1';
+const url = 'https://api.budgetplan.masuk.id/api/v1';
 
 export async function login(data: { username: string, password: string}) {
-  const res = await fetch(`${url}/login`, {
+  const res = await fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,8 @@ export async function login(data: { username: string, password: string}) {
     }),
   });
 
-  const jsonResponse = await res.json();
+  const jsonResponse = await res.json();  console.log(res)
+  console.log(jsonResponse)
   if (jsonResponse.success === true) {
       return jsonResponse;
   } else {
@@ -43,7 +44,7 @@ export async function getProposal(token: string){
 
 export async function getItems(token: string, uuid: string) {
   noStore()
-  const res = await fetch(`${url}/proposal/detail/${uuid}`, {
+  const res = await fetch(`${url}/proposal/${uuid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -60,7 +61,7 @@ export async function getItems(token: string, uuid: string) {
 }
 
 export async function postItems(token: string, uuid:string, data:any){
-  const res = await fetch(`${url}/proposal/items/${uuid}`, {
+  const res = await fetch(`${url}/proposal/${uuid}/items`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -80,9 +81,9 @@ export async function postItems(token: string, uuid:string, data:any){
   }
 }
 
-export async function getBrafaksPath(token: string, uuid: string) {
+export async function getFilesPath(token: string, uuid: string) {
   noStore()
-  const res = await fetch(`${url}/proposal/detail/${uuid}`, {
+  const res = await fetch(`${url}/proposal/${uuid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -92,14 +93,14 @@ export async function getBrafaksPath(token: string, uuid: string) {
   const jsonResponse = await res.json();
   console.log(jsonResponse)
   if (res.status === 200) {
-    return jsonResponse?.data?.brafaks;
+    return jsonResponse?.data?.files;
   } else {
     return jsonResponse;
   }
 }
 
-export async function postBrafaks(token: string, uuid:string, data: any){
-  const res = await fetch(`${url}/proposal/brafaks-store/${uuid}`, {
+export async function postFiles(token: string, uuid:string, data: any){
+  const res = await fetch(`${url}/proposal/${uuid}/files/upload`, {
     method: 'POST',
     headers: {
         'Authorization': `Bearer ${token}`
@@ -115,8 +116,8 @@ export async function postBrafaks(token: string, uuid:string, data: any){
   }
 }
 
-export async function getBrafaks(token: string, uuid:string){
-  const res = await fetch(`${url}/proposal/${uuid}/brafaks/1`, {
+export async function getFiles(token: string, uuid:string){
+  const res = await fetch(`${url}/proposal/${uuid}/latest`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -132,7 +133,7 @@ export async function getBrafaks(token: string, uuid:string){
 }
 
 export async function editStatusBelmod(token:string, uuid:string){
-  const res = await fetch(`${url}/proposal/status/${uuid}?_method=PATCH`, {
+  const res = await fetch(`${url}/proposal/${uuid}/finalize?_method=PATCH`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -152,11 +153,13 @@ export async function postAbt(token: string, data:any){
   const res = await fetch(`${url}/abt/create`, {
     method: 'POST',
     headers: {
-        'Authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
     },
-    body: data
+    body: data,
   });
   console.log(res)
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
   if (res.status === 201) {
     return res;
   } else {
@@ -183,7 +186,7 @@ export async function getAbt(token:string): Promise<AbtTable[]>  {
 }
 
 export async function getDetailAbt(token: string, uuid:string){
-  const res = await fetch(`${url}/abt/detail/${uuid}`, {
+  const res = await fetch(`${url}/abt/${uuid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -199,8 +202,8 @@ export async function getDetailAbt(token: string, uuid:string){
   }
 }
 
-export async function getBrafaksAbt(token: string, uuid:string){
-  const res = await fetch(`${url}/abt/abtfile/${uuid}`, {
+export async function getFilesAbt(token: string, uuid:string){
+  const res = await fetch(`${url}/abt/${uuid}/files`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,

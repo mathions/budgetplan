@@ -43,11 +43,13 @@ export const columns: ColumnDef<AbtTable>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center ml-4">
-          {status.icon && (
-            <status.icon className={status.classname} />
-          )}
-          <span>{status.label}</span>
+        <div className="flex w-[150px] items-center ml-4">
+          <div className={status.class}>
+            {status.icon && (
+              <status.icon className={status.classname} />
+            )}
+            <span>{status.label}</span>
+          </div>
         </div>
       )
     },
@@ -63,7 +65,7 @@ export const columns: ColumnDef<AbtTable>[] = [
   ),
   cell: ({ row }) => 
     <div className="text-xs">
-      <Button asChild variant="link">
+      <Button asChild variant="ghost" className="h-8 px-3 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary">
         <Link href={`/abt/detail/${row.getValue("uuid")}`} className="text-sm">Lihat Detail</Link>
       </Button>
     </div>,

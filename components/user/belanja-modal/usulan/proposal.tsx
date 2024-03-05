@@ -4,27 +4,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { Item, GroupedItems } from "@/lib/definitions"
-import { editStatusBelmod, postBrafaks, postItems } from "@/lib/service";
+import { editStatusBelmod, postFiles, postItems } from "@/lib/service";
 import { useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
 
 
-export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: any, items: [Item]; uuid: string, token: string }) {
+export default function Proposal ({ files, items, uuid, token } : { files: any, items: [Item]; uuid: string, token: string }) {
   const [itemsData, setItemsData] = useState<Item[]>(items);
   const [akun, setAkun] = useState("");
   const [file, setFile] = useState<File>()
 
   const delimiter = ",";
   const tambahAkun = akun.split(delimiter);
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>, no_urut: string) => {
     const { name, value } = e.target;
-
     const editData = itemsData.map((item) =>
       item.no_urut === no_urut && name ? { ...item, [name]: value } : item
     );
+    setItemsData(editData);
+  };
 
+  const onChangeNumber = (e: React.ChangeEvent<HTMLInputElement>, no_urut: string) => {
+    const { name, value } = e.target;
+    const numericValue = parseFloat(value);
+    const editData = itemsData.map((item) =>
+      item.no_urut === no_urut && name ? { ...item, [name]: numericValue } : item
+    );
     setItemsData(editData);
   };
 
@@ -33,7 +41,7 @@ export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: a
 
   const addRow = (output_number:string, output:string, code_number: string, code: string, account_number: string, account: string) => {
     const newNoUrut = String(itemsData.length + 1);
-    const newRow = { no_urut: newNoUrut, output_number: output_number, output: output, code_number: code_number, code: code, account_number: account_number, account: account, uraian: '', jumlah: '', harga_satuan: '', total_harga: '0' };
+    const newRow = { no_urut: newNoUrut, output_number: output_number, output: output, code_number: code_number, code: code, account_number: account_number, account: account, uraian: '', jumlah: 0, harga_satuan: 0, harga_total: 0 };
     setItemsData([...itemsData, newRow]);
   };
 
@@ -88,7 +96,7 @@ export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: a
       addRow(output_number, output, code_number, code, account_number, account);
     };
 
-  
+  console.log(itemsData)
   const showProposal = () => {
     // Ensure itemsData is an array
     if (!Array.isArray(itemsData)) {
@@ -114,14 +122,14 @@ export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: a
       if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
         groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
       }
-      groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].total += item.harga_total;
       groupedItems[item.output_number].name = item.output;
-      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].total += item.harga_total;
       groupedItems[item.output_number].codes[item.code_number].name = item.code;
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += item.harga_total;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
-      total += parseInt(item.total_harga, 10);
+      total += item.harga_total;
     });
   };
 
@@ -151,9 +159,9 @@ export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: a
       const data = new FormData()
       data.set('file', file)
       console.log(data)
-      const res2 = await postBrafaks(token,uuid, data)
+      const res2 = await postFiles(token,uuid, data)
       console.log(res2)
-      setError('Berhasil mengunggah Brafaks dan memperbarui RAB')
+      setError('Berhasil mengunggah Dokumen dan memperbarui RAB')
       window.location.reload();
       if (res2.status === 'error') {
         throw new Error('Failed to fetch from API 1');
@@ -186,10 +194,20 @@ export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: a
     <>
       <div className="space-y-3">
         <p className="text-sm font-medium leading-none">
-          Brafaks
+          Dokumen Brafaks
         </p>
-        <p>{brafaks[brafaks.length - 1]?.name}</p>
-        <Input type="file" name="file" className="border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground hover:cursor-pointer" onChange={(e) => setFile(e.target.files?.[0])} />
+        <div className="w-full rounded-md border p-4">
+          <div className="flex flex-wrap w-full gap-4 mb-4">
+            {files.map((item: { path: string }, index: number) => (
+              <div key={index} className="rounded-md border text-sm p-2">
+                {item.path.length > 20 ? `${item.path.slice(0, 20)}...` : item.path}
+                <div className="text-muted-foreground ">{item.path.split('.').pop()?.toUpperCase()}</div>
+              </div>
+            ))}
+          </div>
+          <Input type="file" name="file" className="border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground hover:cursor-pointer" onChange={(e) => setFile(e.target.files?.[0])} />
+        </div>
+        {/* <p>{files[files.length - 1]?.name}</p> */}
       </div>
       <div className="space-y-3">
         <p className="text-sm font-medium leading-none">
@@ -282,9 +300,9 @@ export default function Proposal ({ brafaks, items, uuid, token } : { brafaks: a
                             <TableRow key={item.no_urut}>
                               <TableCell> </TableCell>
                               <TableCell><Input value={item.uraian} type="text" className="border-foreground/30" name="uraian" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
-                              <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>   
-                              <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-6" name="harga_satuan" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">$</div></TableCell>      
-                              <TableCell className="relative"><Input value={item.total_harga} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="total_harga" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
+                              <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>   
+                              <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-6" name="harga_satuan" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">$</div></TableCell>      
+                              <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
                               <TableCell className="flex justify-end">
                                 {index !== 0 && (
                                   <Button variant="ghost" onClick={() => deleteRow(item.no_urut)}><Cross2Icon/></Button>

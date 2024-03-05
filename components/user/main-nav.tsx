@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { ArchiveIcon, FilePlusIcon, HomeIcon } from "@radix-ui/react-icons";
 
 export default function MainNav () {
     const pathname = usePathname()
@@ -14,14 +15,17 @@ export default function MainNav () {
       {
           href: "/beranda",
           label: "Beranda",
+          icon: HomeIcon,
       },
       {
           href: "/belanja-modal",
           label: "Belanja Modal",
+          icon: ArchiveIcon,
       },
       {
           href: "/abt",
           label: "ABT",
+          icon: FilePlusIcon,
       },
     ];
 
@@ -67,7 +71,7 @@ export default function MainNav () {
         </SheetTrigger>
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
             <Link href="/" className="flex items-center">
-              <Icons.bp className="mr-2 h-6 w-6" />
+              <Icons.ball className="mr-2 h-6 w-6" />
               <span className="font-bold text-lg">
                 budgetplan
               </span>
@@ -86,24 +90,19 @@ export default function MainNav () {
             </div>
           </SheetContent>
       </Sheet>
-      <div className="mr-4 hidden md:flex">
-        <Link href="/" className="mr-6 flex items-center space-x-1">
-          <Icons.bp className="h-6 w-6" />
-          <span className="hidden font-bold sm:inline-block">
-            budgetplan
-          </span>
-        </Link>
-        <nav className="flex items-center text-sm">
-            {routes.map((route, i) => (
-              <Link
-                key={i}
-                href={route.href}
-                className={cn(
-                  "flex h-8 items-center justify-center rounded-lg px-4 text-center text-sm transition-colors hover:text-foreground",
-                  pathname.includes(route.href) ? "bg-muted font-medium text-foreground" : "text-muted-foreground"
-                )}
-              >
-                {route.label}
+      <div className="hidden md:flex">
+        <nav className="flex items-center text-sm h-10 px-[2px] bg-muted rounded-full space-x-1">
+          {routes.map((route, i) => (
+            <Link
+              key={i}
+              href={route.href}
+              className={cn(
+                "flex h-9 items-center justify-center rounded-full px-4 text-center text-sm transition-colors hover:bg-foreground/10",
+                pathname.includes(route.href) ? "bg-primary text-white hover:bg-primary" : ""
+              )}
+            >
+              <route.icon className="mr-1 h-4 w-4"/>
+              {route.label}
             </Link>
           ))}
         </nav>

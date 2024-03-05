@@ -2,10 +2,11 @@
 export type BelmodTable = {
   no_urut: number
   uuid: string
-  created_at: string
-  office: string
   year: string
+  user: string
   status: string
+  created_at: string
+  updated_at: string
 }
 
 export type YearTable = {
@@ -33,9 +34,9 @@ export type Item = {
   account_number: string;
   account: string;
   uraian: string;
-  jumlah: string;
-  harga_satuan: string;
-  total_harga: string;
+  jumlah: number;
+  harga_satuan: number;
+  harga_total: number;
 }
 
 export interface GroupedItems {

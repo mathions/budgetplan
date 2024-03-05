@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Proposal from "@/components/user/belanja-modal/usulan/proposal";
-import { getBrafaksPath, getItems, getProposal } from "@/lib/service";
+import { getFilesPath, getItems, getProposal } from "@/lib/service";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,10 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
   const proposal = await getProposal(token);
-  const brafaks = await getBrafaksPath(token, uuid)
+  const files = await getFilesPath(token, uuid)
   const items = await getItems(token, uuid);
   console.log(proposal)
+  console.log(files)
   if(session == null){
     return (
       <>
@@ -45,7 +46,7 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
             <p className="text-sm font-medium leading-none">Status</p>
             <p>{proposal?.status}</p>
           </div>
-            <Proposal uuid={uuid} token={token} brafaks={brafaks} items={items}  />
+            <Proposal uuid={uuid} token={token} files={files} items={items}  />
           </CardContent>
         </Card>
       </div>

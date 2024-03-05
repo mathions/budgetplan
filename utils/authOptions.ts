@@ -34,11 +34,11 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({token, account, profile, user}: any) {
       if(account?.provider === 'credentials') {
-        token.username = user.user.username;
-        token.name = user.user.name;
-        token.office = user.user.office;
-        token.role = user.user.role;
-        token.token = user.user.token;
+        token.username = user.data.username;
+        token.name = user.data.name;
+        token.office = user.data.office;
+        token.role = user.data.role;
+        token.token = user.data.token;
       }
       return token;
     },

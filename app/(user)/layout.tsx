@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "budgetplan",
   description: "budgetplan",
   icons: {
-    icon: "/bp.svg",
+    icon: "/logo.svg",
   },
 }
 
@@ -26,12 +26,14 @@ export default function Layout({
         <div className="relative flex min-h-screen flex-col bg-background">
           <ThemeProvider attribute="class" defaultTheme='system' enableSystem>
           <Navbar/>
-          <div className="container max-w-screen-xl flex-1 items-start">
-            <main className="relative py-6 lg:gap-10 lg:py-8">
-              <div className="mx-auto w-full min-w-0">
-                {children}
-              </div>
-            </main>
+          <div className="bg-bsc min-h-screen">        
+            <div className="w-full mx-auto px-10 max-w-screen-xl flex-1 items-start ">
+              <main className="relative py-6 lg:gap-10 lg:py-8">
+                <div className="mx-auto w-full min-w-0">
+                  {children}
+                </div>
+              </main>
+            </div>
           </div>
           <Toaster />
         </ThemeProvider>

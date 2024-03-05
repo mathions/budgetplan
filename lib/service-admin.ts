@@ -1,7 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { AbtTable, BelmodTable } from "./definitions";
 
-const url = 'https://budgetplan.masuk.id/api/v1';
+const url = 'https://api.budgetplan.masuk.id/api/v1';
 
 export async function createBelMod(token:string, year:string) {
   const res = await fetch(`${url}/a/year/create`, {
@@ -37,7 +37,7 @@ export async function getProposal(token:string): Promise<BelmodTable[]>  {
 
 export  async function getDetailProposal(token:string, uuid:string) {
   noStore()
-  const res = await fetch(`${url}/a/proposal/detail/${uuid}`, {
+  const res = await fetch(`${url}/a/proposal/${uuid}`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -53,9 +53,9 @@ export  async function getDetailProposal(token:string, uuid:string) {
   }
 }
 
-export  async function getItems(token:string, uuid:string) {
+export async function getItems(token:string, uuid:string) {
   noStore()
-  const res = await fetch(`${url}/a/proposal/detail/${uuid}`, {
+  const res = await fetch(`${url}/a/proposal/${uuid}`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -71,8 +71,25 @@ export  async function getItems(token:string, uuid:string) {
   }
 }
 
-export async function getBrafaks(token: string, uuid:string){
-  const res = await fetch(`${url}/a/proposal/brafaks-latest/${uuid}`, {
+export async function getListFiles(token: string, uuid:string){
+  const res = await fetch(`${url}/a/proposal/${uuid}/files`, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse;
+  } else {
+    return res;
+  }
+}
+
+export async function getFiles(token: string, uuid:string, fileuuid: string){
+  const res = await fetch(`${url}/a/proposal/${uuid}/files/${fileuuid}`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -89,7 +106,7 @@ export async function getBrafaks(token: string, uuid:string){
 
 export async function getYear(token:string) {
   noStore()
-  const res = await fetch(`${url}/a/year/`, {
+  const res = await fetch(`${url}/a/year`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -107,7 +124,7 @@ export async function getYear(token:string) {
 
 export async function getDetailYear(token:string, uuid:string) {
   noStore()
-  const res = await fetch(`${url}/a/year/detail/${uuid}`, {
+  const res = await fetch(`${url}/a/year/${uuid}`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -123,25 +140,8 @@ export async function getDetailYear(token:string, uuid:string) {
   }
 }
 
-export async function postDipa(token: string, uuid:string, data:any){
-  const res = await fetch(`${url}/a/year/dipa/${uuid}`, {
-    method: 'POST',
-    headers: {
-        'Authorization': `Bearer ${token}`,
-    },
-    body: data
-  });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 201) {
-    return jsonResponse;
-  } else {
-    return jsonResponse;
-  }
-}
-
-export async function rabToDipa(token: string, uuid:string){
-  const res = await fetch(`${url}/a/proposal/dipa/rab-to-dipa/${uuid}`, {
+export async function rabToApproved(token: string, uuid:string){
+  const res = await fetch(`${url}/a/proposal/${uuid}/rab-to-approved`, {
     method: 'POST',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -156,8 +156,8 @@ export async function rabToDipa(token: string, uuid:string){
   }
 }
 
-export async function getItemsDipa(token: string, uuid:string){
-  const res = await fetch(`${url}/a/proposal/dipa/${uuid}`, {
+export async function getItemsApproved(token: string, uuid:string){
+  const res = await fetch(`${url}/a/${uuid}/approved`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -173,8 +173,8 @@ export async function getItemsDipa(token: string, uuid:string){
   }
 }
 
-export async function postItemsDipa(token: string, uuid:string, data:any){
-  const res = await fetch(`${url}/a/proposal/dipa/create/${uuid}`, {
+export async function postItemsApproved(token: string, uuid:string, data:any){
+  const res = await fetch(`${url}/a/proposal/${uuid}/approved`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -213,7 +213,7 @@ export async function getAbt(token:string): Promise<AbtTable[]>  {
 
 export async function getDetailAbt(token: string, uuid:string){
   noStore()
-  const res = await fetch(`${url}/a/abt/detail/${uuid}`, {
+  const res = await fetch(`${url}/a/abt/${uuid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -229,8 +229,8 @@ export async function getDetailAbt(token: string, uuid:string){
   }
 }
 
-export async function getBrafaksAbt(token: string, uuid:string){
-  const res = await fetch(`${url}/a/abt/abtfile/${uuid}`, {
+export async function getFilesAbt(token: string, uuid:string){
+  const res = await fetch(`${url}/a/abt/${uuid}/files`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ${token}`,
@@ -246,7 +246,7 @@ export async function getBrafaksAbt(token: string, uuid:string){
 }
 
 export async function editStatusBelmod(token:string, uuid:string, status:string){
-  const res = await fetch(`${url}/a/proposal/status/${uuid}?_method=PATCH`, {
+  const res = await fetch(`${url}/a/proposal/${uuid}?_method=PATCH`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -266,7 +266,7 @@ export async function editStatusBelmod(token:string, uuid:string, status:string)
 }
 
 export async function editStatusAbt(token:string, uuid:string, status:string){
-  const res = await fetch(`${url}/a/abt/status/${uuid}?_method=PATCH`, {
+  const res = await fetch(`${url}/a/abt/${uuid}?_method=PATCH`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

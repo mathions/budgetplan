@@ -23,6 +23,13 @@ const config = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        bsc: "hsl(var(--bsc))",
+        pmr: "hsl(var(--pmr))",
+        status1: "hsl(var(--status1))",
+        status2: "hsl(var(--status2))",
+        status3: "hsl(var(--status3))",
+        status4: "hsl(var(--status4))",
+        status5: "hsl(var(--status5))",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",

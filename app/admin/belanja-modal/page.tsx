@@ -3,8 +3,7 @@ import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { DataTable } from "@/components/admin/belanja-modal/components/data-table";
 import { columns } from "@/components/admin/belanja-modal/components/column";
-import { getDetailYear, getProposal, getYear } from "@/lib/service-admin";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getProposal } from "@/lib/service-admin";
 
 export default async function BelanjaModal() {
   const session: any = await getServerSession(authOptions)

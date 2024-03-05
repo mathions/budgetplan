@@ -6,6 +6,7 @@ import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { ArchiveIcon, DashboardIcon, FilePlusIcon, ReaderIcon } from "@radix-ui/react-icons";
 
 export default function MainNav () {
     const pathname = usePathname()
@@ -14,26 +15,30 @@ export default function MainNav () {
           href: "/admin",
           nav: "dashboard",
           label: "Dashboard",
+          icon: DashboardIcon,
       },
       {
           href: "/admin/belanja-modal",
           nav: "belanja-modal",
           label: "Belanja Modal",
+          icon: ArchiveIcon,
       },
       {
           href: "/admin/abt",
           nav: "abt",
           label: "ABT",
+          icon: FilePlusIcon,
       },
       {
         href: "/admin/rekapitulasi",
         nav: "rekapitulasi",
         label: "Rekapitulasi",
+        icon: ReaderIcon,
     },
     ];
 
   return (
-    <div className="">
+    <div className="flex flex-1">
       <Sheet>
         <SheetTrigger asChild>
           <Button
@@ -93,24 +98,19 @@ export default function MainNav () {
             </div>
           </SheetContent>
       </Sheet>
-      <div className="mr-4 hidden md:flex">
-        <Link href="/" className="mr-6 flex items-center space-x-1">
-          <Icons.bp className="h-6 w-6" />
-          <span className="hidden font-bold sm:inline-block">
-            budgetplan
-          </span>
-        </Link>
-        <nav className="flex items-center text-sm">
+      <div className="hidden md:flex">
+        <nav className="flex items-center text-sm h-10 px-[2px] bg-muted rounded-full space-x-1">
           {routes.map((route, i) => (
             <Link
             key={i}
             href={route.href}
             className={cn(
-              "flex h-8 items-center justify-center rounded-lg px-4 text-center text-sm transition-colors hover:text-foreground",
+              "flex h-9 items-center justify-center rounded-full px-4 text-center text-sm transition-colors hover:bg-foreground/10",
               pathname === route.href || pathname.includes(route.nav)
-              ? "bg-muted font-medium text-foreground" : "text-muted-foreground"
+              ? "bg-primary text-white hover:bg-primary" : ""
             )}
             >
+              <route.icon className="mr-1 h-4 w-4"/>
               {route.label}
             </Link>
           ))}

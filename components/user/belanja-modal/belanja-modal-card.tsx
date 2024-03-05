@@ -24,7 +24,7 @@ export function BelanjaModalCard({ data }: { data: any }) {
             <p className="text-sm text-muted-foreground">
               {data?.created_at}
             </p>
-            <Button asChild variant="outline" className="flex justify-start h-12">
+            <Button asChild variant="ghost" className="flex justify-start h-12 border hover:bg-primary/20 hover:text-primary">
               <Link href={`/belanja-modal/usulan/${data?.uuid}`}>
                 <FileTextIcon className="mr-4 h-4 w-4" />Usulan
               </Link>
