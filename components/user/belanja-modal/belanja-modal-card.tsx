@@ -3,8 +3,11 @@ import { FileTextIcon} from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { getProposal } from "@/lib/service"
 
-export function BelanjaModalCard({ data }: { data: any }) {
+export default async function BelanjaModalCard({ token }: { token: any }) {
+  const data = await getProposal(token)
+  
   return (
     <Card className="w-full">
       <CardHeader>

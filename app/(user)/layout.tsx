@@ -27,7 +27,7 @@ export default function Layout({
           <ThemeProvider attribute="class" defaultTheme='system' enableSystem>
           <Navbar/>
           <div className="bg-bsc min-h-screen">        
-            <div className="w-full mx-auto px-10 max-w-screen-xl flex-1 items-start ">
+            <div className="w-full mx-auto px-6 md:px-10 max-w-screen-xl flex-1 items-start ">
               <main className="relative py-6 lg:gap-10 lg:py-8">
                 <div className="mx-auto w-full min-w-0">
                   {children}

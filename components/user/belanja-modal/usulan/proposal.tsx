@@ -148,7 +148,7 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
     if (!file) {
       const res1 = await postItems(token, uuid, newItemsData)
       console.log(res1)
-      setError(res1?.error);
+      setError('Berhasil menyimpan RAB');
       setIsLoading(false);
       window.location.reload();
       return;
@@ -161,7 +161,7 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
       console.log(data)
       const res2 = await postFiles(token,uuid, data)
       console.log(res2)
-      setError('Berhasil mengunggah Dokumen dan memperbarui RAB')
+      setError('Berhasil mengunggah Dokumen dan menyimpan RAB')
       window.location.reload();
       if (res2.status === 'error') {
         throw new Error('Failed to fetch from API 1');
