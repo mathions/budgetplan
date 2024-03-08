@@ -21,14 +21,14 @@ export default function Rab ({ items } : { items: [Item] }) {
       if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.code_number]) {
         groupedItems[item.output_number].codes[item.code_number].accounts[item.code_number] = { name: "", total: 0, items: [] };
       }
-      groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].total += item.harga_total;
       groupedItems[item.output_number].name = item.output;
-      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].total += item.harga_total;
       groupedItems[item.output_number].codes[item.code_number].name = item.code;
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.code_number].total += item.harga_total;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.code_number].name = item.account;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.code_number].items.push(item);
-      total += parseInt(item.total_harga, 10);
+      total += item.harga_total;
     });
   };
 
@@ -81,7 +81,7 @@ export default function Rab ({ items } : { items: [Item] }) {
                           <TableCell>{item.uraian}</TableCell>
                           <TableCell className="text-center">{item.jumlah}</TableCell>   
                           <TableCell className="text-center">$ {item.harga_satuan}</TableCell>
-                          <TableCell>Rp {item.total_harga}</TableCell>
+                          <TableCell>Rp {item.harga_total}</TableCell>
                         </TableRow>
                       ))}
                     </>

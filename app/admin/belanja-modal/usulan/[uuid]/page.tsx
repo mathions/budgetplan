@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import { getItems, getDetailProposal } from "@/lib/service-admin";
+import { getItems, getDetailProposal, getFiles, getListFiles } from "@/lib/service-admin";
 import Rab from "@/components/admin/belanja-modal/usulan/rab";
 import DownloadPDF from "@/components/admin/belanja-modal/usulan/download-pdf";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
@@ -8,7 +8,7 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import UbahStatus from "@/components/admin/belanja-modal/usulan/ubah-status";
-import BuatDipa from "@/components/admin/belanja-modal/usulan/buat-dipa";
+import BuatDipa from "@/components/admin/belanja-modal/usulan/buat-penyesuaian";
 
 export default async function Usulan({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -16,6 +16,8 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
   const token = session?.user?.token;
   const proposal = await getDetailProposal(token, uuid)
   const items = await getItems(token, uuid)
+  const files = await getListFiles(token, uuid)
+  console.log(files)
   if(session == null){
     return (
       <>
@@ -48,10 +50,24 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
                 <p>{proposal?.status}</p>
               </div>
               <div className="space-y-3">
-                <p className="text-sm font-medium leading-none">
+                {/* <p className="text-sm font-medium leading-none">
                   Brafaks
                 </p>
-                <DownloadPDF token={token} uuid={uuid}/>
+                <DownloadPDF token={token} uuid={uuid}/> */}
+                <p className="text-sm font-medium leading-none">
+                  Dokumen Brafaks
+                </p>
+                <div className="w-full rounded-md border p-4">
+                  <div className="flex flex-wrap w-full gap-4">
+                    {files?.data?.map((item: { path: string, uuid: string }, index: number) => (
+                      <div key={index} className="rounded-md border text-sm p-2">
+                        {item.path.length > 20 ? `${item.path.slice(0, 20)}...` : item.path}
+                        <div className="text-muted-foreground ">{item.path.split('.').pop()?.toUpperCase()}</div>
+                        <DownloadPDF token={token} uuid={uuid} fileuuid={item.uuid}/>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               <div className="space-y-3">
                 <p className="text-sm font-medium leading-none">

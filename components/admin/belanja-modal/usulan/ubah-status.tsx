@@ -4,13 +4,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { useState } from "react";
-import { editStatusBelmod } from "@/lib/service-admin";
+import { ubahStatusBelmod } from "@/lib/service-admin";
 
 export default function UbahStatus({ uuid, token } : { uuid: string, token: string }) {
   const [status, setStatus] = useState('');
   const editStatus = async (status : string) => {
     try {
-      const res = await editStatusBelmod(token, uuid, status)
+      const res = await ubahStatusBelmod(token, uuid, status)
       console.log(res)
       window.location.reload();
     } catch (error) {
@@ -34,8 +34,8 @@ export default function UbahStatus({ uuid, token } : { uuid: string, token: stri
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent position="popper">
-          <SelectItem value="4">Diterima</SelectItem>
-          <SelectItem value="5">Ditolak</SelectItem>
+          <SelectItem value="Diterima">Diterima</SelectItem>
+          <SelectItem value="Ditolak">Ditolak</SelectItem>
         </SelectContent>
       </Select>
       <DialogFooter className="sm:justify-end">

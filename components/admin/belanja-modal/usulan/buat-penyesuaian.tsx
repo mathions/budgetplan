@@ -2,13 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
-import { rabToDipa } from "@/lib/service-admin";
+import { rabToApproved } from "@/lib/service-admin";
 
-export default function BuatDipa({ uuid, token } : { uuid: string, token: string }) {
+export default function BuatPenyesuaian({ uuid, token } : { uuid: string, token: string }) {
 
   const buatDipa = async () => {
     try {
-      const res = await rabToDipa(token, uuid)
+      const res = await rabToApproved(token, uuid)
       console.log(res)
       window.location.reload();
     } catch (error) {

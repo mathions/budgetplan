@@ -245,7 +245,7 @@ export async function getFilesAbt(token: string, uuid:string){
   }
 }
 
-export async function editStatusBelmod(token:string, uuid:string, status:string){
+export async function ubahStatusBelmod(token:string, uuid:string, status:string){
   const res = await fetch(`${url}/a/proposal/${uuid}?_method=PATCH`, {
     method: 'POST',
     headers: {
@@ -253,7 +253,7 @@ export async function editStatusBelmod(token:string, uuid:string, status:string)
       'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
-      status_id: status,
+      status: status,
   }),
   });
   const jsonResponse = await res.json();

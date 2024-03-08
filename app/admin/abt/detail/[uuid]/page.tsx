@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getBrafaksAbt, getDetailAbt } from "@/lib/service-admin";
+import { getFilesAbt, getDetailAbt } from "@/lib/service-admin";
 import DownloadAbt from "@/components/admin/abt/detail/download-abt";
 import { Button } from "@/components/ui/button";
 import UbahStatus from "@/components/admin/abt/detail/ubah-status";

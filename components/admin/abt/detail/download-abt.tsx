@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { getBrafaksAbt } from "@/lib/service-admin";
+import { getFilesAbt } from "@/lib/service-admin";
 import { FileTextIcon } from "@radix-ui/react-icons";
 import { useState } from 'react';
 
@@ -11,7 +11,7 @@ export default function DownloadPDF ({ uuid, token } : { uuid: string, token: st
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await getBrafaksAbt(token,uuid);
+      const response = await getFilesAbt(token,uuid);
       console.log(response)
       // Convert the response to Blob
       const pdfBlob = await response.blob();

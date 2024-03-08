@@ -1,5 +1,6 @@
 "use client"
 
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createBelMod } from "@/lib/service-admin";
@@ -42,8 +43,9 @@ export default function FormBelanjaModal({ token } : { token: string }) {
           <Input type="text" name="year" required onChange={(e) => setYear(e.target.value)} />
         </div>
         <div className="flex justify-end">
-          <Button onClick={handleClick} disabled={isLoading}>
-              {isLoading ? 'Loading...' : 'Buat'}
+          <Button onClick={handleClick} disabled={isLoading} className="w-[96px]">
+            {isLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
+            Mulai
           </Button>
         </div>
         <div className=" flex justify-end text-destructive">

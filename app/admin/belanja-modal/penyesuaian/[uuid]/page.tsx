@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import { getItemsApproved, getDetailProposal } from "@/lib/service-admin";
 import Breadcrumbs from "@/components/breadcrumbs";
-import Proposal from "@/components/admin/belanja-modal/dipa/proposal";
+import Proposal from "@/components/admin/belanja-modal/penyesuaian/proposal";
 
 export default async function Dipa ({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;

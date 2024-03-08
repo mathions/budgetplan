@@ -34,7 +34,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
 
   const addRow = (output_number:string, output:string, code_number: string, code: string, account_number: string, account: string) => {
     const newNoUrut = String(itemsData.length + 1);
-    const newRow = { no_urut: newNoUrut, output_number: output_number, output: output, code_number: code_number, code: code, account_number: account_number, account: account, uraian: '', jumlah: '', harga_satuan: '', total_harga: '0' };
+    const newRow = { no_urut: newNoUrut, output_number: output_number, output: output, code_number: code_number, code: code, account_number: account_number, account: account, uraian: '', jumlah: '', harga_satuan: '', harga_total: '0' };
     setItemsData([...itemsData, newRow]);
   };
 
@@ -124,14 +124,14 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
       if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
         groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
       }
-      groupedItems[item.output_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].total += parseInt(item.harga_total, 10);
       groupedItems[item.output_number].name = item.output;
-      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.harga_total, 10);
       groupedItems[item.output_number].codes[item.code_number].name = item.code;
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.total_harga, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.harga_total, 10);
       groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
-      total += parseInt(item.total_harga, 10);
+      total += parseInt(item.harga_total, 10);
     });
   }
   showProposal();
@@ -259,7 +259,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                                   <TableCell><Input value={item.uraian} type="text" className="border-foreground/30" name="uraian" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
                                   <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>   
                                   <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-6" name="harga_satuan" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">$</div></TableCell>      
-                                  <TableCell className="relative"><Input value={item.total_harga} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="total_harga" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
+                                  <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
                                   <TableCell className="flex justify-end">
                                     {index !== 0 && (
                                     <Button variant="ghost" onClick={() => deleteRow(item.no_urut)}><Cross2Icon/></Button>
