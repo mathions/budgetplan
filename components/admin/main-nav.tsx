@@ -99,7 +99,7 @@ export default function MainNav () {
           </SheetContent>
       </Sheet>
       <div className="hidden md:flex">
-        <nav className="flex items-center text-sm h-10 px-[2px] bg-muted rounded-full space-x-1">
+        <nav className="flex items-center text-sm h-10 px-[2px] bg-background border border-border rounded-full space-x-1">
           {routes.map((route, i) => (
             <Link
             key={i}
