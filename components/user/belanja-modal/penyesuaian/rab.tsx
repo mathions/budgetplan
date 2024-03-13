@@ -49,7 +49,7 @@ export default function Rab ({ items } : { items: [Item] }) {
           <TableRow>
             <TableCell className="text-center font-semibold">6023</TableCell>
             <TableCell className="font-semibold" colSpan={3}>Pengelolaan Keuangan BMN dan Umum</TableCell>
-            <TableCell className="font-semibold">Rp {total}</TableCell>
+            <TableCell className="font-semibold">Rp {total.toLocaleString('id-ID')}</TableCell>
           </TableRow>
           
           {Object.keys(groupedItems).map((outputNumber) => (
@@ -57,7 +57,7 @@ export default function Rab ({ items } : { items: [Item] }) {
               <TableRow key={`output_${outputNumber}`}>
                 <TableCell className="text-center font-semibold">{outputNumber}</TableCell>
                 <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].name}</TableCell>
-                <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].total}`}</TableCell>
+                <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].total.toLocaleString('id-ID')}`}</TableCell>
               </TableRow>
 
               {Object.keys(groupedItems[outputNumber].codes).map((codeNumber) => (
@@ -65,14 +65,14 @@ export default function Rab ({ items } : { items: [Item] }) {
                   <TableRow key={`code_${codeNumber}`}>
                     <TableCell className="font-semibold text-center">{codeNumber}</TableCell>
                     <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].codes[codeNumber].name}</TableCell>
-                    <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</TableCell>
+                    <TableCell className="font-semibold">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total.toLocaleString('id-ID')}`}</TableCell>
                   </TableRow>
                   {Object.keys(groupedItems[outputNumber].codes[codeNumber].accounts).map((accountNumber) => (
                     <>
                       <TableRow key={`account_${accountNumber}`}>
                         <TableCell></TableCell>
                         <TableCell className="font-medium" colSpan={3}>{`${accountNumber} - ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name}`}</TableCell>
-                        <TableCell className="font-medium">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</TableCell>
+                        <TableCell className="font-medium">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total.toLocaleString('id-ID')}`}</TableCell>
                       </TableRow>
                       {groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].items.map((item) => (
                         <TableRow key={item.no_urut}>

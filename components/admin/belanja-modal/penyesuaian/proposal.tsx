@@ -207,7 +207,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                   <TableRow>
                     <TableCell className="text-center font-semibold">6023</TableCell>
                     <TableCell className="font-semibold" colSpan={3}>Pengelolaan Keuangan BMN dan Umum</TableCell>
-                    <TableCell className="font-semibold"><p className="pl-2">Rp {total}</p></TableCell>
+                    <TableCell className="font-semibold"><p className="mr-4 text-end">Rp {total.toLocaleString('id-ID')}</p></TableCell>
                   </TableRow>
                   
                   {Object.keys(groupedItems).map((outputNumber) => (
@@ -215,7 +215,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                     <TableRow key={`output_${outputNumber}`}>
                       <TableCell className="text-center font-semibold">{outputNumber}</TableCell>
                       <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].name}</TableCell>
-                      <TableCell className="font-semibold"><p className="pl-2">{`Rp ${groupedItems[outputNumber].total}`}</p></TableCell>
+                      <TableCell className="font-semibold"><p className="mr-4 text-end">{`Rp ${groupedItems[outputNumber].total.toLocaleString('id-ID')}`}</p></TableCell>
                     </TableRow>
 
                       {Object.keys(groupedItems[outputNumber].codes).map((codeNumber) => (
@@ -223,7 +223,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                           <TableRow key={`code_${codeNumber}`}>
                             <TableCell className="text-center font-semibold">{codeNumber}</TableCell>
                             <TableCell className="font-semibold" colSpan={3}>{groupedItems[outputNumber].codes[codeNumber].name}</TableCell>
-                            <TableCell className="font-semibol"><p className="pl-2">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total}`}</p></TableCell>
+                            <TableCell className="font-semibol"><p className="mr-4 text-end">{`Rp ${groupedItems[outputNumber].codes[codeNumber].total.toLocaleString('id-ID')}`}</p></TableCell>
                             <TableCell>
                               <Dialog>
                                 <DialogTrigger asChild>
@@ -265,7 +265,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                               <TableRow key={`code_${codeNumber}_account_${accountNumber}`}>
                                 <TableCell></TableCell>
                                 <TableCell colSpan={3}>{`${accountNumber} - ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name}`}</TableCell>
-                                <TableCell><p className="pl-2">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total}`}</p></TableCell>
+                                <TableCell><p className="mr-4 text-end">{`Rp ${groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].total.toLocaleString('id-ID')}`}</p></TableCell>
                                 <TableCell className="flex justify-between">
                                   <Button variant="ghost" onClick={() => addRow(outputNumber, groupedItems[outputNumber].name, codeNumber, groupedItems[outputNumber].codes[codeNumber].name, accountNumber, groupedItems[outputNumber].codes[codeNumber].accounts[accountNumber].name)}><PlusIcon/></Button>
                                     {Object.keys(groupedItems[outputNumber].codes[codeNumber].accounts).length !== 1 && (
@@ -280,7 +280,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                                   <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>   
                                   <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_satuan" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>      
                                   {/* <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell> */}
-                                  <TableCell className="font-medium"><p className="pl-2">{`Rp ${item.harga_total}`}</p></TableCell>
+                                  <TableCell className="font-medium"><p className="mr-4 text-end">{`Rp ${item.harga_total.toLocaleString('id-ID')}`}</p></TableCell>
                                   <TableCell className="flex justify-end">
                                     {index !== 0 && (
                                     <Button variant="ghost" onClick={() => deleteRow(item.no_urut)}><Cross2Icon/></Button>
