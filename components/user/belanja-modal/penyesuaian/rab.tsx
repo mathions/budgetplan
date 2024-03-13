@@ -79,8 +79,8 @@ export default function Rab ({ items } : { items: [Item] }) {
                           <TableCell> </TableCell>
                           <TableCell>{item.uraian}</TableCell>
                           <TableCell className="text-center">{item.jumlah}</TableCell>   
-                          <TableCell className="">Rp {item.harga_satuan}</TableCell>
-                          <TableCell className="">Rp {item.harga_total}</TableCell>
+                          <TableCell className="">Rp {item.harga_satuan.toLocaleString('id-ID')}</TableCell>
+                          <TableCell className="">Rp {item.harga_total.toLocaleString('id-ID')}</TableCell>
                         </TableRow>
                       ))}
                     </>
