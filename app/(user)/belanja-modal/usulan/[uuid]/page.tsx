@@ -41,9 +41,9 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
             <CardTitle>{proposal?.office}</CardTitle>
             <CardDescription>Tahun Anggaran {proposal?.year}</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
           <div className="space-y-3">
-            <p className="text-sm font-medium leading-none">Status</p>
+            <p className="text-sm font-semibold leading-none">Status</p>
             <p>{proposal?.status}</p>
           </div>
             <Proposal uuid={uuid} token={token} files={files} items={items}  />

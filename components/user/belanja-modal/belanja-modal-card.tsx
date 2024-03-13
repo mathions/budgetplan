@@ -22,12 +22,12 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-medium leading-none">
-              Pengajuan usulan anggaran telah dibuka
+              Pengajuan Usulan Kebutuhan Belanja Modal
             </p>
             <p className="text-sm text-muted-foreground">
               {data?.created_at}
             </p>
-            <Button asChild variant="ghost" className="flex justify-start h-12 border hover:bg-primary/20 hover:text-primary">
+            <Button asChild variant="ghost" className="flex justify-start h-12 ">
               <Link href={`/belanja-modal/usulan/${data?.uuid}`}>
                 <FileTextIcon className="mr-4 h-4 w-4" />Usulan
               </Link>
@@ -41,7 +41,7 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-medium leading-none">
-              Usulan anggaran diterima
+              Usulan Anggaran Diterima
             </p>
             <p className="text-sm text-muted-foreground">
               3 hari yang lalu
@@ -55,13 +55,13 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-medium leading-none">
-              Terdapat penyesuaian RAB
+              Terdapat Penyesuaian RAB
             </p>
             <p className="text-sm text-muted-foreground">
               3 hari yang lalu
             </p>
             <Button asChild variant="outline" className="flex justify-start h-12">
-              <Link href={`/belanja-modal/dipa/${data?.uuid}`}>
+              <Link href={`/belanja-modal/penyesuaian/${data?.uuid}`}>
                 <FileTextIcon className="mr-4 h-4 w-4" />Penyesuaian
               </Link>
             </Button>

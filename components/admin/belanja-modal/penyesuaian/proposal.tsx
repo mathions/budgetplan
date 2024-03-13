@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { Item, GroupedItems } from "@/lib/definitions"
-import { postBrafaks, postItems } from "@/lib/service";
 import { useState } from "react";
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
-import { postItemsDipa } from "@/lib/service-admin";
+import { postItemsApproved } from "@/lib/service-admin";
 import Link from "next/link";
 
 export default function Proposal ({ items, uuid, token, office, year } : { items: [Item]; uuid: string, token: string, office: string, year: string }) {
@@ -29,12 +28,33 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
     setItemsData(editData);
   };
 
+  const onChangeNumber = (e: React.ChangeEvent<HTMLInputElement>, no_urut: string) => {
+    const { name, value } = e.target;
+    const numericValue = parseFloat(value);
+    const editData = itemsData.map((item) =>
+      item.no_urut === no_urut && name ? { ...item, [name]: numericValue } : item
+    );
+
+    // Calculate harga_total when either jumlah or harga_satuan changes
+    const newDataWithTotal = editData.map(item => {
+        const harga_satuan = item.harga_satuan;
+        const jumlah = item.jumlah;
+        const harga_total = isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah;
+        return {
+            ...item,
+            harga_total: harga_total
+        };
+    });
+
+    setItemsData(newDataWithTotal);
+};
+
   const groupedItems: GroupedItems = {};
   let total = 0;
 
   const addRow = (output_number:string, output:string, code_number: string, code: string, account_number: string, account: string) => {
     const newNoUrut = String(itemsData.length + 1);
-    const newRow = { no_urut: newNoUrut, output_number: output_number, output: output, code_number: code_number, code: code, account_number: account_number, account: account, uraian: '', jumlah: '', harga_satuan: '', harga_total: '0' };
+    const newRow = { no_urut: newNoUrut, output_number: output_number, output: output, code_number: code_number, code: code, account_number: account_number, account: account, uraian: '', jumlah: 0, harga_satuan: 0, harga_total: 0 };
     setItemsData([...itemsData, newRow]);
   };
 
@@ -124,14 +144,14 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
       if (!groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number]) {
         groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number] = { name: "", total: 0, items: [] };
       }
-      groupedItems[item.output_number].total += parseInt(item.harga_total, 10);
+      groupedItems[item.output_number].total += item.harga_total;
       groupedItems[item.output_number].name = item.output;
-      groupedItems[item.output_number].codes[item.code_number].total += parseInt(item.harga_total, 10);
+      groupedItems[item.output_number].codes[item.code_number].total += item.harga_total;
       groupedItems[item.output_number].codes[item.code_number].name = item.code;
-      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += parseInt(item.harga_total, 10);
+      groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].total += item.harga_total;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].name = item.account;
       groupedItems[item.output_number].codes[item.code_number].accounts[item.account_number].items.push(item);
-      total += parseInt(item.harga_total, 10);
+      total += item.harga_total;
     });
   }
   showProposal();
@@ -148,7 +168,7 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
     });
 
     try {
-      const res = await postItemsDipa(token, uuid, newItemsData)
+      const res = await postItemsApproved(token, uuid, newItemsData)
       console.log(res)
       
     } catch (error) {
@@ -257,9 +277,10 @@ export default function Proposal ({ items, uuid, token, office, year } : { items
                                 <TableRow key={item.no_urut}>
                                   <TableCell> </TableCell>
                                   <TableCell><Input value={item.uraian} type="text" className="border-foreground/30" name="uraian" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
-                                  <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>   
-                                  <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-6" name="harga_satuan" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">$</div></TableCell>      
-                                  <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
+                                  <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>   
+                                  <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_satuan" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>      
+                                  {/* <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChange(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell> */}
+                                  <TableCell className="font-medium"><p className="pl-2">{`Rp ${item.harga_total}`}</p></TableCell>
                                   <TableCell className="flex justify-end">
                                     {index !== 0 && (
                                     <Button variant="ghost" onClick={() => deleteRow(item.no_urut)}><Cross2Icon/></Button>

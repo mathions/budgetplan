@@ -22,7 +22,7 @@ import { useState } from "react"
 
 const rekapFormSchema = z.object({
   tahun: z.string(),
-  satuan_kerja: z.string(),
+  wilayah: z.string(),
   komponen: z.string(),
 })
 
@@ -36,10 +36,8 @@ const defaultValues: Partial<RekapFormValues> = {
 
 export function FormRekap() {
 
-  const [showTable, setShowTable] = useState(false);
 
   const handleClick = () => {
-    setShowTable(!showTable);
   };
   
   const form = useForm<RekapFormValues>({
@@ -74,7 +72,7 @@ export function FormRekap() {
               <FormLabel>Tahun Anggaran</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Pilih tahun anggaran" />
                   </SelectTrigger>
                 </FormControl>
@@ -90,20 +88,22 @@ export function FormRekap() {
         />
         <FormField
           control={form.control}
-          name="satuan_kerja"
+          name="wilayah"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Satuan Kerja</FormLabel>
+              <FormLabel>Wilayah</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih satuan kerja" />
+                  <SelectTrigger className="bg-background">
+                    <SelectValue placeholder="Pilih wilayah" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="kbri paris">KBRI Paris</SelectItem>
-                  <SelectItem value="kbri berlin">KBRI Berlin</SelectItem>
-                  <SelectItem value="kbri stockholm">KBRI Stockholm</SelectItem>
+                  <SelectItem value="semua">Semua Wilayah</SelectItem>
+                  <SelectItem value="eropa">Eropa</SelectItem>
+                  <SelectItem value="amerika">Amerika</SelectItem>
+                  <SelectItem value="asia">Asia</SelectItem>
+                  <SelectItem value="afrika">Afrika</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -118,11 +118,12 @@ export function FormRekap() {
               <FormLabel>Komponen</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Pilih komponen" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="semua">Semua Komponen</SelectItem>
                   <SelectItem value="055">[055] Kendaraan Bermotor Perwakilan RI</SelectItem>
                   <SelectItem value="056">[056] Perangkat Pengolah Data dan Komunikasi Perwakilan</SelectItem>
                   <SelectItem value="057">[057] Perangkat Fasilitas Perkantoran Perwakilan</SelectItem>
@@ -133,10 +134,11 @@ export function FormRekap() {
             </FormItem>
           )}
         />
-    
-        <Button type="submit" >Generate Data</Button>
+        <div className="space-x-3 flex justify-end">
+          <Button type="submit" variant="outline" className="w-[96px]">Hasilkan</Button>
+          <Button className="w-[96px]">Ekspor</Button>
+        </div>
       </form>
-      {showTable && <div className="space-y-4 mt-4"><div>Ini Tabel</div> <div> <Button>Export to Excel</Button></div></div>}
     </Form>
   )
 }

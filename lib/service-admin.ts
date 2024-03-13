@@ -4,7 +4,7 @@ import { AbtTable, BelmodTable } from "./definitions";
 const url = 'https://api.budgetplan.masuk.id/api/v1';
 
 export async function createBelMod(token:string, year:string) {
-  const res = await fetch(`${url}/a/year/create`, {
+  const res = await fetch(`${url}/a/year`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -14,6 +14,8 @@ export async function createBelMod(token:string, year:string) {
         year: year,
     }),
   });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
   return res;
 }
 
@@ -157,7 +159,7 @@ export async function rabToApproved(token: string, uuid:string){
 }
 
 export async function getItemsApproved(token: string, uuid:string){
-  const res = await fetch(`${url}/a/${uuid}/approved`, {
+  const res = await fetch(`${url}/a/proposal/${uuid}/approved`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

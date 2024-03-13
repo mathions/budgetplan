@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import { getItems, getProposal } from "@/lib/service";
+import { getItemsApproved, getProposal } from "@/lib/service";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import Rab from "@/components/user/belanja-modal/penyesuaian/rab";
@@ -12,7 +12,7 @@ export default async function Dipa({ params }: {params: { uuid: string } }) {
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
   const proposal = await getProposal(token);
-  const items = await getItems(token, uuid);
+  const items = await getItemsApproved(token, uuid);
   console.log(proposal)
   if(session == null){
     return (

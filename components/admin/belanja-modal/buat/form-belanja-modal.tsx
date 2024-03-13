@@ -18,16 +18,9 @@ export default function FormBelanjaModal({ token } : { token: string }) {
 
     try {
       const res = await createBelMod(token, year)
-      const jsonResponse = await res.json();
-      console.log(jsonResponse)
-      console.log(res)
-      if (res.status === 201) {
-          return setError(jsonResponse?.message)
-      } else {
-          return setError(jsonResponse?.error)
-      }
+      setError('Usulan kebutuhan belanja modal untuk tahun anggaran berhasil dibuat')
     } catch (error) {
-      setError('Maaf, ada permsalahan teknis');
+      setError('Maaf, ada permasalahan teknis');
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +41,7 @@ export default function FormBelanjaModal({ token } : { token: string }) {
             Mulai
           </Button>
         </div>
-        <div className=" flex justify-end text-destructive">
+        <div className=" flex justify-end">
           {error && <p>{error}</p>}
         </div>
       </div>

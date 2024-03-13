@@ -4,7 +4,7 @@ import { getItemsApproved, getDetailProposal } from "@/lib/service-admin";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Proposal from "@/components/admin/belanja-modal/penyesuaian/proposal";
 
-export default async function Dipa ({ params }: {params: { uuid: string } }) {
+export default async function Penyesuaian ({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;

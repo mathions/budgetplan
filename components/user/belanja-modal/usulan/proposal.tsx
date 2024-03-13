@@ -27,15 +27,36 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
     setItemsData(editData);
   };
 
+  // const onChangeNumber = (e: React.ChangeEvent<HTMLInputElement>, no_urut: string) => {
+  //   const { name, value } = e.target;
+  //   const numericValue = parseFloat(value);
+  //   const editData = itemsData.map((item) =>
+  //     item.no_urut === no_urut && name ? { ...item, [name]: numericValue } : item
+  //   );
+  //   setItemsData(editData);
+  // };
+
   const onChangeNumber = (e: React.ChangeEvent<HTMLInputElement>, no_urut: string) => {
     const { name, value } = e.target;
     const numericValue = parseFloat(value);
     const editData = itemsData.map((item) =>
       item.no_urut === no_urut && name ? { ...item, [name]: numericValue } : item
     );
-    setItemsData(editData);
-  };
 
+    // Calculate harga_total when either jumlah or harga_satuan changes
+    const newDataWithTotal = editData.map(item => {
+        const harga_satuan = item.harga_satuan;
+        const jumlah = item.jumlah;
+        const harga_total = isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah;
+        return {
+            ...item,
+            harga_total: harga_total
+        };
+    });
+
+    setItemsData(newDataWithTotal);
+};
+  
   const groupedItems: GroupedItems = {};
   let total = 0;
 
@@ -180,7 +201,7 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
     try {
       const res = await editStatusBelmod(token, uuid)
       console.log(res)
-      setError('Finalisasi berhasil')
+      setError('Usulan berhasil diajukan')
       window.location.reload();
     } catch (error) {
       setError('Error');
@@ -193,7 +214,7 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
   return (
     <>
       <div className="space-y-3">
-        <p className="text-sm font-medium leading-none">
+        <p className="text-sm font-semibold leading-none">
           Dokumen Brafaks
         </p>
         <div className="w-full rounded-md border p-4">
@@ -210,9 +231,14 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
         {/* <p>{files[files.length - 1]?.name}</p> */}
       </div>
       <div className="space-y-3">
-        <p className="text-sm font-medium leading-none">
-          Rencana Anggaran Biaya
-        </p>
+        <div className="flex justify-between">
+          <p className="text-sm font-semibold leading-none">
+            Rencana Anggaran Biaya
+          </p>
+          {/* <p className="text-sm">
+            Kurs : USD/IDR <span className="font-semibold">15.000</span>
+          </p> */}
+        </div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -301,8 +327,9 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
                               <TableCell> </TableCell>
                               <TableCell><Input value={item.uraian} type="text" className="border-foreground/30" name="uraian" onChange={(e) => onChange(e, item.no_urut)}></Input></TableCell>
                               <TableCell><Input value={item.jumlah} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" name="jumlah" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>   
-                              <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-6" name="harga_satuan" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">$</div></TableCell>      
-                              <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>
+                              <TableCell className="relative"><Input value={item.harga_satuan} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_satuan" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell>      
+                              {/* <TableCell className="relative"><Input value={item.harga_total} type="number" className="border-foreground/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none peer block w-full pl-8" name="harga_total" onChange={(e) => onChangeNumber(e, item.no_urut)}></Input><div className="absolute left-3 top-1/2 -translate-y-1/2 ml-2">Rp</div></TableCell> */}
+                              <TableCell className="font-medium"><p className="pl-2">{`Rp ${item.harga_total}`}</p></TableCell>
                               <TableCell className="flex justify-end">
                                 {index !== 0 && (
                                   <Button variant="ghost" onClick={() => deleteRow(item.no_urut)}><Cross2Icon/></Button>
@@ -325,11 +352,11 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
       </div>
       <div className="flex justify-end">
         <div className="space-x-3">
-          <Button onClick={saveClick} disabled={isLoading} variant="outline">
+          <Button onClick={saveClick} disabled={isLoading} variant="outline" className="w-[96px]">
             {isLoading ? 'Loading...' : 'Simpan'}
           </Button>
-          <Button onClick={finalClick} disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Finalisasi'}
+          <Button onClick={finalClick} disabled={isLoading} className="w-[96px]">
+            {isLoading ? 'Loading...' : 'Ajukan'}
           </Button>
         </div>
       </div>

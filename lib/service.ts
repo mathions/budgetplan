@@ -149,6 +149,23 @@ export async function editStatusBelmod(token:string, uuid:string){
   }
 }
 
+export async function getItemsApproved(token: string, uuid: string) {
+  const res = await fetch(`${url}/proposal/${uuid}/approved`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse?.data?.items;
+  } else {
+    return jsonResponse;
+  }
+}
+
 export async function postAbt(token: string, data:any){
   const res = await fetch(`${url}/abt/create`, {
     method: 'POST',

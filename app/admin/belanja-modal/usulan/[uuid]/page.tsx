@@ -16,6 +16,7 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
   const token = session?.user?.token;
   const proposal = await getDetailProposal(token, uuid)
   const items = await getItems(token, uuid)
+  console.log(items)
   const files = await getListFiles(token, uuid)
   console.log(files)
   if(session == null){

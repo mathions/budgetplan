@@ -68,7 +68,7 @@ export const columns: ColumnDef<BelmodTable>[] = [
           <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} >Usulan</Link>
         </Button>
         <Button asChild variant="ghost" className=" h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
-          <Link href={`/admin/belanja-modal/dipa/${row.getValue("uuid")}`}>Penyesuaian</Link>
+          <Link href={`/admin/belanja-modal/penyesuaian/${row.getValue("uuid")}`}>Penyesuaian</Link>
         </Button>
       </div>,
     enableSorting: false,
