@@ -37,9 +37,9 @@ export default function UbahStatus({ uuid, token } : { uuid: string, token: stri
           <SelectValue placeholder="status" />
         </SelectTrigger>
         <SelectContent position="popper">
-          <SelectItem value="3">Diproses</SelectItem>
-          <SelectItem value="4">Diterima</SelectItem>
-          <SelectItem value="5">Ditolak</SelectItem>
+          <SelectItem value="Diproses">Diproses</SelectItem>
+          <SelectItem value="Diterima">Diterima</SelectItem>
+          <SelectItem value="Ditolak">Ditolak</SelectItem>
         </SelectContent>
       </Select>
       <DialogFooter className="sm:justify-end">

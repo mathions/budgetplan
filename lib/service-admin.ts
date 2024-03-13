@@ -275,7 +275,7 @@ export async function editStatusAbt(token:string, uuid:string, status:string){
       'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
-      status_id: status,
+      status: status,
   }),
   });
   const jsonResponse = await res.json();
