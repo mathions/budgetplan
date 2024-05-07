@@ -26,16 +26,14 @@ export default async function LoginPage() {
         <div className="h-[500px] w-[360px] md:w-[750px] bg-white flex flex-row rounded-[24px]">
           <div className="basis-[360px] p-9 ">
             <div className="h-full flex flex-col justify-around">
-              <div>
-                <Image src="/logo_kemlu.webp" alt="logo" width={150} height={47}/>
-              </div>
-              <h1 className="text-3xl font-bold text-center">budgetplan</h1>
+              <h1 className="text-4xl font-semibold text-left">Login</h1>
+              <h3 className="text-base text-muted-foreground">Silahkan masuk ke akun Anda</h3>
               <LoginForm />
             </div>
           </div>
           <div className="hidden md:flex basis-[390px] p-2">
             <div className="bg-black h-full flex items-end rounded-[24px] ">
-              <Image src="/decorative.png" alt="decorative" 	width={384} height={377} className="rounded-[24px]"/>
+              <Image src="/decorative.png" alt="decorative" width={384} height={377} className="rounded-[24px]"/>
             </div>
           </div>
         </div>

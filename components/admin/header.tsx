@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
 import MainNav from "./main-nav";
-import { ModeToggle } from "@/components/mode-toggle";
-import { UserNav } from "@/components/user/user-nav";
+import { ModeToggle } from "@/components/header/mode-toggle";
+import { Nav } from "@/components/header/profile";
 import Link from "next/link";
 import { Icons } from "../icons";
 
-export default function Header () {
-  
+export default function Header() {
   return (
     <header className="sticky top-0 z-40 w-full flex justify-start md:justify-center border-b bg-bsc">
       <div className="container flex justify-end md:justify-between h-16 max-w-screen-2xl items-center">
@@ -21,7 +20,7 @@ export default function Header () {
         </div>
         <div className="flex items-center space-x-2 justify-end">
           <ModeToggle />
-          <UserNav />
+          <Nav />
         </div>
       </div>
       <div className="absolute top-0 z-50">
@@ -30,5 +29,5 @@ export default function Header () {
         </div>
       </div>
     </header>
-  )
+  );
 }
