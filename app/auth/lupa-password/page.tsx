@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 
-export default function LupaPasswordn() {
+export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Card className="w-full max-w-sm h-fit">
