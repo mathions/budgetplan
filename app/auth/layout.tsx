@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Navbar from "@/components/header/user/header";
+import Navbar from "@/components/header/auth/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -17,10 +17,12 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative flex h-full flex-col bg-bg">
+    <div className="relative flex h-screen flex-col bg-bg">
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Navbar />
-        <div className="w-full h-full">{children}</div>
+        <div className="w-screen h-full my-auto flex justify-center items-center">
+          {children}
+        </div>
         <Toaster />
       </ThemeProvider>
     </div>

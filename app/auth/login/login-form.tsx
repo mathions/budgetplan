@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { signIn } from "next-auth/react"
+import Link from "next/link"
 
 export default function LoginForm() {
 
@@ -56,6 +57,9 @@ export default function LoginForm() {
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <Input id="password" type="password" disabled={isLoading} />
+            <div className="flex w-full justify-start">
+              <Button variant="link" asChild className="p-0"><Link href="/auth/lupa-password">Lupa password?</Link></Button>
+            </div>
           </div>
           <div className="grid">
             <Button disabled={isLoading} type="submit">

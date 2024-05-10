@@ -39,9 +39,9 @@ export default function Nav() {
               asChild
               key={i}
               className={cn(
-                "bg-background text-grey-700 hover:bg-grey-100",
+                "bg-background text-textweak hover:bg-strokeweak hover:text-textstrong",
                 pathname.includes(route.href)
-                  ? "bg-primary text-white hover:bg-primary/90"
+                  ? "bg-primary text-background hover:bg-primary/80 hover:text-background"
                   : ""
               )}
             >
@@ -71,9 +71,9 @@ export default function Nav() {
                 key={i}
                 href={route.href}
                 className={cn(
-                  "mx-[-0.65rem] flex items-center gap-3 rounded-md px-4 py-3 text-muted-foreground hover:text-foreground",
+                  "mx-[-0.65rem] flex items-center gap-3 rounded-lg px-4 py-3 hover:bg-strokeweak",
                   pathname.includes(route.href)
-                    ? "mx-[-0.65rem] flex items-center gap-3 rounded-md bg-muted px-4 py-3 text-foreground hover:text-foreground"
+                    ? "mx-[-0.65rem] flex items-center gap-3 rounded-lg bg-primary text-background px-4 py-3"
                     : ""
                 )}
               >

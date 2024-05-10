@@ -11,7 +11,7 @@ export default async function BelanjaModal () {
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
   return (
-    <>
+    <div className="w-full mx-auto px-4 md:px-10 max-w-screen-xl">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Beranda', href: '/beranda' },
@@ -24,6 +24,6 @@ export default async function BelanjaModal () {
           <BelanjaModalCard token={token}/>
         </Suspense>
       </div>
-    </>
+      </div>
   )
 }

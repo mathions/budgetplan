@@ -13,10 +13,16 @@
 
 @layer base {
   :root {
+    --bg: 228 33% 97%;
+    --textstrong: 229 40% 17%;
+    --textweak: 229 16% 41%;
+    --strokestrong: 230 23% 74%;
+    --strokeweak: 228 25% 92%;
+    --fill: 228 33% 97%;
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 229 40% 17%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 229 40% 17%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 230 65% 57%;
@@ -30,29 +36,25 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
-    --input: 229 17% 62%;
-    --ring: 230, 65%, 57%;
+    --input: 230 23% 74%;
+    --ring: 230 65% 57%;
     --radius: 0.5rem;
-    --brand-1000: 230 65% 57%;
-    --brand-800: 230 65% 66%;
-    --brand-200: 229 64% 91%;
-    --brand-50: 231 64% 98%;
-    --grey-900: 229 40% 17%;
-    --grey-800: 230 23% 26%;
-    --grey-700: 229 16% 41%;
-    --grey-500: 229 17% 62%;
-    --grey-100: 228 25% 92%;
-    --grey-50: 228 33% 97%;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    --bg: 233 18% 9%;
+    --textstrong: 228 33% 97%;
+    --textweak: 228 25% 92%;
+    --strokestrong: 229 17% 62%;
+    --strokeweak: 229 16% 41%;
+    --fill: 229 40% 17%;
+    --background: 230 14% 13%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --card: 230 14% 13%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 237 97% 80%;
     --primary-foreground: 240 5.9% 10%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -63,17 +65,10 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --input: 229 17% 62%;
     --ring: 240 4.9% 83.9%;
-    --brand-1000: 230 65% 85%;
-    --brand-800: 230 50% 88%;
-    --brand-200: 229 11% 97%;
-    --brand-50: 231 3% 99%;
-    --grey-900: 229 57% 24%;
-    --grey-800: 230 38% 32%;
-    --grey-700: 229 27% 48%;
-    --grey-500: 229 20% 68%;
-    --grey-100: 228 4% 94%;
-    --grey-50: 228 2% 98%;
   }
 }
+
+
+

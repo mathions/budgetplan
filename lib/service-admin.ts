@@ -1,8 +1,8 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { AbtTable, BelmodTable } from "./definitions";
 
-// const url = 'https://api.budgetplan.masuk.id/api/v1';
-const url = 'http://192.168.1.2:3000/api/v1';
+const url = 'https://api.budgetplan.masuk.id/api/v1';
+// const url = 'http://192.168.1.2:3000/api/v1';
 
 export async function createBelMod(token:string, year:string) {
   const res = await fetch(`${url}/a/year`, {

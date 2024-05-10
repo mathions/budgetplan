@@ -6,10 +6,10 @@ import Provider from "./context/AuthContext";
 const plus_jakarta_sans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "budgetplan",
+  title: "Budgetplan",
   description: "budgetplan",
   icons: {
-    icon: "/logo.svg",
+    icon: "/icon.svg",
   },
 };
 
