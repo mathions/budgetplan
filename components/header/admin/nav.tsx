@@ -14,24 +14,24 @@ export default function Nav() {
   const routes = [
     {
       href: "/admin",
-      nav: "dashboard",
+      nav: "wg7u89qd",
       label: "Dashboard",
       icon: Category,
     },
     {
-      href: "admin/belanja-modal",
+      href: "/admin/belanja-modal",
       nav: "belanja-modal",
       label: "Belanja Modal",
       icon: Shop,
     },
     {
-      href: "admin/abt",
+      href: "/admin/abt",
       nav: "abt",
       label: "ABT",
       icon: ShopAdd,
     },
     {
-      href: "admin/rekapitulasi",
+      href: "/admin/rekapitulasi",
       nav: "rekapitulasi",
       label: "Rekapitulasi",
       icon: DocumentText,
@@ -47,9 +47,9 @@ export default function Nav() {
               asChild
               key={i}
               className={cn(
-                "bg-background text-grey-700 hover:bg-grey-100",
-                pathname.includes(route.href)
-                  ? "bg-primary text-white hover:bg-primary/90"
+                "bg-background text-textweak hover:bg-strokeweak hover:text-textstrong",
+                pathname === route.href || pathname.includes(route.nav)
+                  ? "bg-primary text-background hover:bg-primary/80 hover:text-background"
                   : ""
               )}
             >
@@ -79,9 +79,9 @@ export default function Nav() {
                 key={i}
                 href={route.href}
                 className={cn(
-                  "mx-[-0.65rem] flex items-center gap-3 rounded-md px-4 py-3 text-muted-foreground hover:text-foreground",
+                  "mx-[-0.65rem] flex items-center gap-3 rounded-lg px-4 py-3 hover:bg-strokeweak",
                   pathname === route.href || pathname.includes(route.nav)
-                    ? "mx-[-0.65rem] flex items-center gap-3 rounded-md bg-muted px-4 py-3 text-foreground hover:text-foreground"
+                    ? "mx-[-0.65rem] flex items-center gap-3 rounded-lg bg-primary text-background px-4 py-3 hover:bg-primary/80"
                     : ""
                 )}
               >

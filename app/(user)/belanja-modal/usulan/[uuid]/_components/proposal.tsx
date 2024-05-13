@@ -213,6 +213,9 @@ export default function Proposal ({ files, items, uuid, token } : { files: any, 
 
   return (
     <>
+    <div>
+      <h4>Dokumen Brafaks</h4>
+    </div>
       <div className="space-y-3">
         <p className="text-sm font-semibold leading-none">
           Dokumen Brafaks

@@ -32,18 +32,11 @@ export function DataTableToolbar<TData>({
         {table.getColumn("status") && (
           <DataTableFacetedFilter
             column={table.getColumn("status")}
-            title="Status"
+            title=""
             options={statuses}
           />
         )}
       </div>
-      <Button asChild variant="default"
-        className="h-10 lg:flex ml-2">
-          <Link href="/abt/buat">
-            {/* <PlusIcon className="mr-2 h-4 w-4"/> */}
-            Buat Pengajuan
-          </Link>
-      </Button>
     </div>
   )
 }

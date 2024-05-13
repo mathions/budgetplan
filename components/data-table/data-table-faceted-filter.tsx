@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
+import { Setting4 } from "iconsax-react"
 import { Column } from "@tanstack/react-table"
 
 import { cn } from "@/lib/utils"
@@ -44,11 +45,11 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-10 border-dashed">
-          <PlusCircledIcon className="mr-2 h-4 w-4" />
+          <Setting4 className="h-4 w-4" />
           {title}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[210px] p-0" align="start">
+      <PopoverContent className="w-[210px] p-0" align="end">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>

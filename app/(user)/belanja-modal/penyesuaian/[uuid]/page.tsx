@@ -3,7 +3,7 @@ import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import { getItemsApproved, getProposal } from "@/lib/service";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
-import Rab from "@/components/user/belanja-modal/penyesuaian/rab";
+import Rab from "@/app/(user)/belanja-modal/penyesuaian/[uuid]/_components/rab";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

@@ -10,7 +10,7 @@ import { Notif } from "../notification";
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 first:flex h-16 justify-center items-center px-4 pt-3 pb-1 md:px-8">
-      <div className="flex justify-between bg-background w-full rounded-xl px-2 md:px-6 py-2 gap-6 shadow">
+      <div className="flex justify-between bg-background w-full rounded-2xl px-2 md:px-6 py-2 gap-6 shadow">
         <div className="hidden md:flex align-center">
           <Link href="/beranda" className="w-[218px] flex align-center">
             <Image src={logo} width={218} height={32} alt="logo"></Image>
@@ -20,9 +20,9 @@ export default function Header() {
         <Nav />
         <div className="flex w-full justify-end items-center gap-2 md:ml-auto md:gap-3 mr-2 md:mr-0">
           <div className="flex gap-1">
-            <ModeToggle />
+            {/* <ModeToggle />
             <Language/>
-            <Notif/>
+            <Notif/> */}
           </div>
           <Profile />
         </div>

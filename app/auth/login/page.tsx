@@ -1,28 +1,22 @@
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import LoginForm from "./login-form"
+} from "@/components/ui/card";
+import LoginForm from "./login-form";
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <Card className="w-full max-w-sm h-fit">
       <CardHeader>
-        <CardTitle className="text-4xl">Login</CardTitle>
-        <CardDescription>
-          Silahkan masuk ke akun anda
-        </CardDescription>
+        <CardTitle>Login</CardTitle>
+        <CardDescription>Silahkan masuk ke akun anda</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <LoginForm/>
+        <LoginForm />
       </CardContent>
     </Card>
-  )
+  );
 }

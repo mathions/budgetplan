@@ -14,15 +14,15 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
   const path = perihal?.path
   console.log(perihal)
   return (
-    <>
+    <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Beranda', href: '/beranda' },
           { label: 'ABT', href: '/abt' },
-          { label: 'Detail', href: `/abt/detail/${uuid}`, active: true }
+          { label: 'Detail Pengajuan', href: `/abt/detail/${uuid}`, active: true }
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Detail Pengajuan ABT</h1>
+      <h3>Detail Pengajuan ABT</h3>
       <div className="my-6">
         <Card className="w-full">
           <CardHeader>
@@ -65,6 +65,6 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
           </CardContent>
         </Card>  
       </div>
-    </>
+    </div>
   );
 }

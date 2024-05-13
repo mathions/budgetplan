@@ -1,29 +1,34 @@
-
-import { getServerSession } from "next-auth"
-import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import Breadcrumbs from "@/components/breadcrumbs"
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
-import BelanjaModalCard from "@/components/user/belanja-modal/belanja-modal-card";
-import { BelmodCardSkeleton } from "@/components/user/skeletons";
+import BelanjaModalCard from "@/app/(user)/belanja-modal/_components/belanja-modal-card";
+import { CardSkeleton } from "./_components/skeleton";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-
-export default async function BelanjaModal () {
-  const session: any = await getServerSession(authOptions)
+export default async function BelanjaModal() {
+  const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
   return (
-    <div className="w-full mx-auto px-4 md:px-10 max-w-screen-xl">
+    <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Beranda', href: '/beranda' },
-          { label: 'Belanja Modal', href: '/belanja-modal', active: true },
+          { label: "Beranda", href: "/beranda" },
+          { label: "Belanja Modal", href: "/belanja-modal", active: true },
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Belanja Modal</h1>
+      <div className="flex justify-between items-end">
+        <h3>Belanja Modal</h3>
+        <Button variant="link" asChild className="p-0 h-fit">
+          <Link href="/belanja-modal/tahun-sebelumnya">Lihat lainnya</Link>
+        </Button>
+      </div>
       <div className="my-6">
-        <Suspense fallback={<BelmodCardSkeleton/>}>
-          <BelanjaModalCard token={token}/>
+        <Suspense fallback={<CardSkeleton />}>
+          <BelanjaModalCard token={token} />
         </Suspense>
       </div>
-      </div>
-  )
+    </div>
+  );
 }
