@@ -7,5 +7,8 @@ export function mainMiddleware(request: NextRequest) {
   return res;
 }
 
-export default withAuth(mainMiddleware, ['/beranda', 'belanja-modal', '/belanja-modal', '/abt', 
-'/admin', '/admin/belanja-modal', '/admin/abt' ]);
+export default withAuth(mainMiddleware, [
+'/beranda', 'belanja-modal', '/belanja-modal', '/abt', 
+'/admin', '/admin/belanja-modal', '/admin/abt',
+'/super-admin', '/super-admin/akun-penguna', '/super-admin/akun-belanja', '/super-admin/mata-uang'
+]);

@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Category, Shop, ShopAdd, HambergerMenu, DocumentText } from "iconsax-react";
+import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
+import { Button } from "../../ui/button";
+import { SafeHome, HambergerMenu, Profile2User, Note, Money } from "iconsax-react";
 import Image from "next/image";
 import logo from "@/public/logo.svg";
 
@@ -13,28 +13,28 @@ export default function Nav() {
   const pathname = usePathname();
   const routes = [
     {
-      href: "/admin",
-      nav: "dashboard",
-      label: "Dashboard",
-      icon: Category,
+      href: "/super-admin",
+      nav: "beranda",
+      label: "Beranda",
+      icon: SafeHome,
     },
     {
-      href: "/admin/belanja-modal",
-      nav: "belanja-modal",
-      label: "Belanja Modal",
-      icon: Shop,
+      href: "/super-admin/akun-pengguna",
+      nav: "akun-pengguna",
+      label: "Akun Pengguna",
+      icon: Profile2User,
     },
     {
-      href: "/admin/abt",
-      nav: "abt",
-      label: "ABT",
-      icon: ShopAdd,
+      href: "/super-admin/akun-belanja",
+      nav: "akun-belanja",
+      label: "Akun Belanja",
+      icon: Note,
     },
     {
-      href: "/admin/rekapitulasi",
-      nav: "rekapitulasi",
-      label: "Rekapitulasi",
-      icon: DocumentText,
+      href: "/super-admin/mata-uang",
+      nav: "mata-uang",
+      label: "Mata Uang",
+      icon: Money,
     },
   ];
 
