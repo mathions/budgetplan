@@ -32,7 +32,10 @@ export default function FormAbt({ token } : { token: string }) {
       data.set('file', file)
       data.set('perihal', perihal)
       data.set('year', "2024")
+      console.log(data)
+      console.log(file)
       const res = await postAbt(token, data)
+
       console.log(res)
       console.log('Success');
     } catch (error) {

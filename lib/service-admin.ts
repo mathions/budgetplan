@@ -287,3 +287,38 @@ export async function editStatusAbt(token:string, uuid:string, status:string){
     return jsonResponse;
   }
 }
+
+export async function getKurs(token:string, uuid:string) {
+  noStore()
+  const res = await fetch(`${url}/a/kurs/${uuid}`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function getCurrency(token:string) {
+  const res = await fetch(`${url}/a/currency`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}

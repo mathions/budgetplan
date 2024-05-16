@@ -58,3 +58,25 @@ export interface GroupedItems {
     }
   }
 }
+
+//SUPER ADMIN
+export type User = {
+  uuid: string;
+  username: string;
+  name: string;
+  role: string;
+  office: string;
+  office_code: string;
+  area: string;
+  image: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Account = {
+  uuid: string;
+  account_code: string;
+  account_name: string;
+  createdAt: string;
+  updatedAt: string;
+}

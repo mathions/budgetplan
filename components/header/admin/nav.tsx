@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Category, Shop, ShopAdd, HambergerMenu, DocumentText } from "iconsax-react";
+import { Category, Shop, ShopAdd, HambergerMenu, DocumentText, DollarSquare } from "iconsax-react";
 import Image from "next/image";
 import logo from "@/public/logo.svg";
 
@@ -23,6 +23,12 @@ export default function Nav() {
       nav: "belanja-modal",
       label: "Belanja Modal",
       icon: Shop,
+    },
+    {
+      href: "/admin/kurs",
+      nav: "kurs",
+      label: "Kurs",
+      icon: DollarSquare,
     },
     {
       href: "/admin/abt",

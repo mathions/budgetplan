@@ -1,9 +1,9 @@
 import { getToken } from "next-auth/jwt";
 import { NextFetchEvent, NextMiddleware, NextRequest, NextResponse } from "next/server";
 
-const onlyAdminPage = ['/admin', '/admin/belanja-modal', '/admin/abt', '/admin/rekapitulasi'];
 const onlyUserPage = ['/beranda', '/belanja-modal', '/abt']
-const onlySuperAdminPage = ['/super-admin']
+const onlyAdminPage = ['/admin', '/admin/belanja-modal', '/admin/abt', '/admin/rekapitulasi'];
+const onlySuperAdminPage = ['/super-admin', '/super-admin/akun-pengguna', '/super-admin/kode-akun', '/super-admin/mata-uang']
 
 export default function withAuth(
   middleware: NextMiddleware,

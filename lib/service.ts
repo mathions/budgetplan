@@ -174,6 +174,7 @@ export async function postAbt(token: string, data:any){
     },
     body: data,
   });
+  console.log(data)
   console.log(res)
   const jsonResponse = await res.json();
   console.log(jsonResponse)

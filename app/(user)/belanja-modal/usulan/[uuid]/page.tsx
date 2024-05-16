@@ -56,7 +56,7 @@ export default async function Usulan({ params }: { params: { uuid: string } }) {
         </div>
       </div>
       <div className="my-6 space-y-4">
-        <Brafaks/>
+        <Brafaks uuid={uuid} token={token} files={files}/>
         <RAB/>
         <Card className="w-full p-8">
           <Proposal uuid={uuid} token={token} files={files} items={items} />

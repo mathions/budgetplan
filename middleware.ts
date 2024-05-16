@@ -10,5 +10,5 @@ export function mainMiddleware(request: NextRequest) {
 export default withAuth(mainMiddleware, [
 '/beranda', 'belanja-modal', '/belanja-modal', '/abt', 
 '/admin', '/admin/belanja-modal', '/admin/abt',
-'/super-admin', '/super-admin/akun-penguna', '/super-admin/akun-belanja', '/super-admin/mata-uang'
+'/super-admin', '/super-admin/akun-penguna', '/super-admin/kode-akun', '/super-admin/mata-uang', 
 ]);

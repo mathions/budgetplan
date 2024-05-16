@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Instagram, Facebook, Youtube } from "iconsax-react";
+import { ArrowRight} from "iconsax-react";
 
 export const metadata: Metadata = {
   title: "Beranda",
@@ -31,9 +31,8 @@ export default function Beranda() {
             Budgetplan memfasilitasi proses pengajuan anggaran <br /> dari
             satuan kerja kepada biro umum
           </div>
-          <div className="flex md:hidden text-xl text-center text-textweak">
-            Budgetplan memfasilitasi proses <br /> pengajuan anggaran dari{" "}
-            <br />
+          <div className="flex md:hidden text-base text-center text-textweak">
+            Budgetplan memfasilitasi proses  pengajuan anggaran <br />dari
             satuan kerja kepada biro umum
           </div>
           <div className="flex gap-4 my-4">
@@ -60,11 +59,11 @@ export default function Beranda() {
         <div className="md:basis-1/2 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <div className="tracking-wide text-textweak">BELANJA MODAL</div>
-            <div className="text-[36px] md:text-[48px] text-textstrong font-bold leading-tight">
-              Pengajuan usulan <br /> belanja modal
-            </div>
-            <div className="text-base text-textweak">
-              Satuan kerja mengirimkan usulan kebutuhan belanja modal kepada
+            <h2 className="font-bold">
+              Penyampaian usulan<br/> belanja modal
+            </h2>
+            <div className="text-base text-textweak md:w-9/12">
+              Satuan kerja menyampaikan usulan kebutuhan belanja modal kepada
               biro umum satu tahun sebelum pelaksanaan anggaran.
             </div>
           </div>
@@ -101,13 +100,13 @@ export default function Beranda() {
             <div className="tracking-wide text-textweak">
               ANGGARAN BIAYA TAMBAHAN
             </div>
-            <div className="text-[36px] md:text-[48px] text-textstrong font-bold leading-tight">
+            <h2 className="font-bold">
               Pengajuan ABT
-            </div>
-            <div className="text-base text-textweak">
+            </h2>
+            <div className="text-base text-textweak md:w-9/12">
               Satuan kerja dapat mengajukan Anggaran Biaya Tambahan (ABT)
               apabila terdapat kebutuhan mendesak dan membutuhkan penambahan
-              anggaran.
+              anggaran belanja modal.
             </div>
           </div>
           <div>
@@ -140,9 +139,9 @@ export default function Beranda() {
           style={{ backgroundImage: "url('/image/perlin-10.png')" }}
         >
           <div className="p-14 md:p-28">
-            <div className="text-background font-bold text-[48px] leading-tight">
+            <h2 className="text-background font-bold ">
               Ingin mengajukan <br /> anggaran?
-            </div>
+            </h2>
             <div className="flex gap-4 mt-6">
               <Button
                 asChild
@@ -162,50 +161,7 @@ export default function Beranda() {
         </div>
       </div>
       {/* Footer */}
-      <div className="py-20 px-16 bg-textstrong">
-        <div className="md:grid grid-cols-3 py-8">
-          <div className="">
-            <Link href="/beranda">
-              <Image
-                src="/logo-bp-grey.svg"
-                height={32}
-                width={218}
-                alt="logo budgetplan"
-              ></Image>
-            </Link>
-          </div>
-          <div className="text-strokeweak font-semibold flex gap-8 justify-center">
-            <Link
-              href="/belanja-modal"
-              className="hover:text-fill hover:underline hover:underline-offset-4"
-            >
-              Belanja Modal
-            </Link>
-            <Link
-              href="/abt"
-              className="hover:text-fill hover:underline hover:underline-offset-4"
-            >
-              Anggaran Biaya Tambahan
-            </Link>
-          </div>
-          <div className="text-strokestrong flex justify-end gap-2">
-            <Link href="" className="hover:text-fill">
-              <Instagram />
-            </Link>
-            <Link href="" className="hover:text-fill">
-              <Facebook />
-            </Link>
-            <Link href="" className="hover:text-fill">
-              <Youtube />
-            </Link>
-          </div>
-        </div>
-        <div className="py-8 border-t border-strokestrong">
-          <div className="text-strokestrong text-center">
-            Hak Cipta © 2024 Kementerian Luar Negeri. All right reserved.{" "}
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 }

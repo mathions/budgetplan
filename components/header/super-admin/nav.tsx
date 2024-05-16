@@ -25,9 +25,9 @@ export default function Nav() {
       icon: Profile2User,
     },
     {
-      href: "/super-admin/akun-belanja",
-      nav: "akun-belanja",
-      label: "Akun Belanja",
+      href: "/super-admin/kode-akun",
+      nav: "kode-akun",
+      label: "Kode Akun",
       icon: Note,
     },
     {
