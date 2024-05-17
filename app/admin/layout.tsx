@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Navbar from "@/components/header/admin/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-
-const inter = Inter({ subsets: ["latin"] });
+import Footer from "@/components/header/admin/footer";
 
 export const metadata: Metadata = {
   title: "Budgetplan",
@@ -25,6 +23,7 @@ export default function Layout({
         <Navbar />
         <div className="w-full h-full">{children}</div>
         <Toaster />
+        <Footer />
       </ThemeProvider>
     </div>
   );

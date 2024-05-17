@@ -32,28 +32,31 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const FormSchema = z.object({
-  file: z.instanceof(File, {message: "Belum ada dokumen brafaks terpilih."}),
-  perihal: z.string({
-    required_error: "Perihal belum terisi.",
+  initial: z.string({
+    required_error: "Mata uang perlu dipilih",
+  }),
+  value: z.string({
+    required_error: "Nilai tukar perlu diisi",
   }),
 });
 
-export function AddKurs({ token, currency } : { token:string, currency: any }) {
+export function AddKurs({ token, currency }: { token: string; currency: any }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  console.log(currency)
+  console.log(currency);
   const year = new Date().getFullYear().toString();
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const formdata = new FormData()
-    formdata.set('file', data.file)
-    formdata.set('perihal', data.perihal)
-    formdata.set('year', year)
-    const res = await postAbt(token, formdata)
-    console.log(res)
+    const formdata = new FormData();
+    formdata.set("file", data.initial);
+    formdata.set("perihal", data.value);
+    formdata.set("year", year);
+    const res = await postAbt(token, formdata);
+    console.log(res);
   }
 
   return (
@@ -64,45 +67,53 @@ export function AddKurs({ token, currency } : { token:string, currency: any }) {
           Tambah Kurs
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[480px] space-y-4">
         <DialogHeader>
           <h4>Tambah Kurs</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="perihal"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Perihal</FormLabel>
-                  <FormControl>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="initial"
+                render={({ field }) => (
+                  <FormItem className="col-span-1 flex flex-col">
+                    <FormLabel>Mata Uang</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} >
+                      <FormControl>
+                        <SelectTrigger className="h-10 text-base">
+                          <SelectValue placeholder="Pilih mata uang" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Euro">Euro</SelectItem>
+                        <SelectItem value="Poundsterling">Poundsterling</SelectItem>
+                        <SelectItem value="Yen">Yen</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem className="col-span-1 flex flex-col">
+                    <FormLabel>Nilai Tukar</FormLabel>
                     <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="file"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Dokumen Brafaks</FormLabel>
-                  <Input
-                    accept=".pdf"
-                    type="file"
-                    onChange={(e) =>
-                      field.onChange(e.target.files ? e.target.files[0] : null)
-                    }
-                  />
-                  <FormControl></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormControl></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className="flex justify-start gap-4">
-              <Button type="submit">Buat Pengajuan</Button>
+              <Button type="submit">Tambah Kurs</Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>
               </DialogClose>

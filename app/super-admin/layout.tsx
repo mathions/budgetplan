@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Navbar from "@/components/header/super-admin/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import Footer from "@/components/header/super-admin/footer";
 
 export const metadata: Metadata = {
   title: "Budgetplan",
@@ -22,6 +23,7 @@ export default function Layout({
         <Navbar />
         <div className="w-full h-full">{children}</div>
         <Toaster />
+        <Footer />
       </ThemeProvider>
     </div>
   );

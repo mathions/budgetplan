@@ -28,8 +28,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   options: {
     label: string
     value: string
-    icon?: React.ComponentType<{ className?: string }>
-    classname: string
+    // icon?: React.ComponentType<{ className?: string }>
   }[]
 }
 
@@ -45,7 +44,7 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-10 border-dashed">
-          <Setting4 className="h-4 w-4 mr-2" />
+          {/* <Setting4 className="h-4 w-4" /> */}
           {title}
         </Button>
       </PopoverTrigger>
@@ -81,15 +80,11 @@ export function DataTableFacetedFilter<TData, TValue>({
                       )}
                     >
                       <CheckIcon className={cn("h-4 w-4")} />
-                    </div>
-                    <div className="flex w-[150px]">
-                      <div className={option.class}>
-                        {option.icon && (
-                          <option.icon className={option.classname} />
-                          )}
-                        <span>{option.label}</span>
                       </div>
-                    </div>
+                    {/* {option.icon && (
+                      <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                    )} */}
+                    <span>{option.label}</span>
                     {facets?.get(option.value) && (
                       <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
                         {facets.get(option.value)}

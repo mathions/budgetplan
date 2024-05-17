@@ -1,19 +1,32 @@
-import { ChevronRightIcon } from "@radix-ui/react-icons";
-import { FormRekap } from "./form-rekap";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Breadcrumbs from "@/components/breadcrumbs";
+import { Suspense } from "react";
+import { Table } from "./_components/table";
+import { TableSkeleteon } from "./_components/skeleton";
 
 
-export default function Rekapitulasi () {
+export default async function Rekapitulasi () {
+  const session: any = await getServerSession(authOptions);
+  const token = session?.user?.token;
+
   return (
-    <>
-      <div className="flex items-center space-x-2 mb-4">
-        <div className="text-foreground/70 text-[14px]">Dashboard</div>
-        <div className="text-foreground/70 "><ChevronRightIcon/></div>
-        <div className="text-[14px]">Rekapitulasi</div>
+    <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: "Dashboard", href: "/admin" },
+          { label: "Rekapitulasi", href: "/admin/rekapitulasi", active: true },
+        ]}
+      />
+      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
+        <h3>Rekapitulasi</h3>
+        {/* <MulaiPengusulan /> */}
       </div>
-      <h2 className="text-3xl font-bold tracking-tight">Rekapitulasi</h2>
-      <div className="my-6">
-        <FormRekap />
+      <div className="py-6">
+        <Suspense fallback={<TableSkeleteon/>}>
+          <Table token={token} />
+        </Suspense>
       </div>
-    </>
-  )
+    </div>
+  );
 }

@@ -46,7 +46,7 @@ export const columns: ColumnDef<BelmodTable>[] = [
             {status.icon && (
               <status.icon className={status.classname} />
             )}
-            <span>{status.label}</span>
+            <span className="text-sm">{status.label}</span>
           </div>
         </div>
       )
@@ -58,18 +58,19 @@ export const columns: ColumnDef<BelmodTable>[] = [
   {
     accessorKey: "uuid",
     enableResizing: false,
-    size: 200,
+    size: 100,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title=""/>
     ),
     cell: ({ row }) => 
       <div className="text-xs flex w-full gap-2 justify-start">
-        <Button asChild variant="ghost" className=" h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
+        {/* <Button asChild variant="ghost" className=" h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
           <Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`} >Usulan</Link>
         </Button>
         <Button asChild variant="ghost" className=" h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
           <Link href={`/admin/belanja-modal/penyesuaian/${row.getValue("uuid")}`}>Penyesuaian</Link>
-        </Button>
+        </Button> */}
+        <Button variant="link" asChild><Link href={`/admin/belanja-modal/usulan/${row.getValue("uuid")}`}>Detail</Link></Button>
       </div>,
     enableSorting: false,
   },
