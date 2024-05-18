@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -50,7 +49,6 @@ export default function LoginForm() {
         redirect: false,
         username: data.username,
         password: data.password,
-        callbackUrl: "/beranda",
       });
       console.log(res);
       if (!res?.error) {
