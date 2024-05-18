@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { PasswordInput } from "@/components/password-input";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -38,7 +37,7 @@ export default function LoginForm() {
     },
   });
 
-  const { push } = useRouter();
+  const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
@@ -53,7 +52,7 @@ export default function LoginForm() {
       console.log(res);
       if (!res?.error) {
         setIsLoading(false);
-        push("/beranda");
+        router.push("/beranda");
       } else {
         setIsLoading(false);
         if (res.status === 401) {
