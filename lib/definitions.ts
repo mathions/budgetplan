@@ -80,3 +80,9 @@ export type Account = {
   createdAt: string;
   updatedAt: string;
 }
+
+export type Currency = {
+  uuid: string;
+  name: string;
+  initial: string;
+}

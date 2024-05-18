@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Account } from "@/lib/definitions"
 import { Trash } from "iconsax-react"
+import { DeleteAccount } from "../delete-account"
+import { UpdateAccount } from "../update-account"
 
 export const columns: ColumnDef<Account>[] = [
   {
@@ -33,10 +35,8 @@ export const columns: ColumnDef<Account>[] = [
     ),
     cell: ({ row }) => 
       <div className="flex w-full gap-2 justify-start">
-        <Button asChild variant="secondary" size="icon" className="h-10 w-10">
-          <Trash className="h-8 w-8 "/>
-          {/* <Link href={`/super-admin/akun-pengguna/${row.getValue("uuid")}`} >Detail</Link> */}
-        </Button>
+        <UpdateAccount number={row.getValue("account_code")} name={row.getValue("account_name")} uuid={row.getValue("uuid")} />
+        <DeleteAccount uuid={row.getValue("uuid")}/>
       </div>,
     enableSorting: false,
   },

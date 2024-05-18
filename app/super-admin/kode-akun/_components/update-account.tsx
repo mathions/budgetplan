@@ -22,20 +22,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { updateKurs } from "@/lib/service-admin";
+import { postCurrency } from "@/lib/service-super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
 const FormSchema = z.object({
-  name: z.string({
-    required_error: "Mata uang perlu dipilih",
+  account_number: z.string({
+    required_error: "Kode akun belum terisi.",
   }),
-  value: z.string({
-    required_error: "Nilai tukar perlu diisi",
-  }),
+  account_name: z.string({
+      required_error: "Uraian akun belum terisi.",
+    }),
 });
 
-export function UpdateKurs({ name, value, uuid }: { name: string, value:string, uuid:string }) {
+export function UpdateAccount({ number, name, uuid }: { number: string, name:string, uuid:string }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
@@ -44,34 +44,34 @@ export function UpdateKurs({ name, value, uuid }: { name: string, value:string, 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: name,
-      value: value,
+      account_number: number,
+      account_name: name,
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsLoading(true);
-    try {
-      const res = await updateKurs(token, uuid, data);
-      console.log(res);
-      if (res.status === 200) {
-        setIsLoading(false);
-        setOpen(false);
-        window.location.reload();
-        toast({
-          title: "Kurs berhasil diubah.",
-        });
-      } else {
-        setIsLoading(false);
-        setOpen(false);
-        toast({
-          title: "Gagal mengubah kurs",
-          variant: "destructive",
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    // setIsLoading(true);
+    // try {
+    //   const res = await updateCurrency(token, data);
+    //   console.log(res);
+    //   if (res.status === 201) {
+    //     setIsLoading(false);
+    //     setOpen(false);
+    //     window.location.reload();
+    //     toast({
+    //       title: "Mata uang berhasil ditambahkan",
+    //     });
+    //   } else {
+    //     setIsLoading(false);
+    //     setOpen(false);
+    //     toast({
+    //       title: "Gagal menambahkan mata uang",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   return (
@@ -84,19 +84,18 @@ export function UpdateKurs({ name, value, uuid }: { name: string, value:string, 
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] space-y-4">
         <DialogHeader>
-          <h4>Ubah Kurs</h4>
+          <h4>Ubah Mata Uang</h4>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="name"
+              name="account_number"
               render={({ field }) => (
-                <FormItem className="flex flex-col space-y-3">
-                  <FormLabel>Mata Uang</FormLabel>
+                <FormItem className="flex flex-col">
+                  <FormLabel>Kode Akun</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled/>
+                    <Input {...field}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,18 +103,17 @@ export function UpdateKurs({ name, value, uuid }: { name: string, value:string, 
             />
             <FormField
               control={form.control}
-              name="value"
+              name="account_name"
               render={({ field }) => (
-                <FormItem className="flex flex-col space-y-3">
-                  <FormLabel>Nilai Tukar</FormLabel>
+                <FormItem className="flex flex-col">
+                  <FormLabel>Uraian AKun</FormLabel>
                   <FormControl>
-                    <Input {...field}  type="number" className="text-right pl-2"/>
+                    <Input {...field} autoCapitalize="on" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            </div>
             <div className="flex justify-start gap-4 pt-4">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (

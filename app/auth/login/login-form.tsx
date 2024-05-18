@@ -115,38 +115,6 @@ export default function LoginForm() {
           </Button>
         </form>
       </Form>
-
-      {/* <form onSubmit={onSubmit}>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input id="username" type="username" disabled={isLoading} />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <PasswordInput
-              id="password"
-              value={password}
-              disabled={isLoading}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password"
-            />
-            <div className="flex w-full justify-start">
-              <Button variant="link" asChild className="p-0">
-                <Link href="/auth/lupa-password">Lupa password?</Link>
-              </Button>
-            </div>
-          </div>
-          <div className="grid">
-            <Button disabled={isLoading} type="submit">
-              {isLoading && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Login
-            </Button>
-          </div>
-        </div>
-      </form> */}
     </div>
   );
 }

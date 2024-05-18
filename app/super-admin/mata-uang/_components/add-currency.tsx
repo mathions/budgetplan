@@ -1,5 +1,4 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,7 +8,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Add, Edit } from "iconsax-react";
+import { AddSquare } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,50 +21,48 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { updateKurs } from "@/lib/service-admin";
+import { postCurrency } from "@/lib/service-super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
 const FormSchema = z.object({
   name: z.string({
-    required_error: "Mata uang perlu dipilih",
+    required_error: "Mata uang belum terisi.",
   }),
-  value: z.string({
-    required_error: "Nilai tukar perlu diisi",
-  }),
+  initial: z
+    .string({
+      required_error: "Kode belum terisi.",
+    })
+    .min(3, { message: "Kode harus terdiri dari 3 karakter." })
+    .max(3, { message: "Kode harus terdiri dari 3 karakter." }),
 });
 
-export function UpdateKurs({ name, value, uuid }: { name: string, value:string, uuid:string }) {
-  const { data: session }: { data: any } = useSession();
-  const token = session?.user?.token;
+export function AddCurrency() {
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OGQyMzUyMi02YTQ4LTRjNGEtYjI3Yi05YmM2M2RhYTYzNDYiLCJ1c2VybmFtZSI6InVtdW0iLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNzE1OTkzNDQ0LCJleHAiOjE3MTYwNzk4NDR9.OFVl9xqRUWP8HwUU7w1xM-mSQ_i-74AsdLw9m9gKzwA"
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      name: name,
-      value: value,
-    },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
     try {
-      const res = await updateKurs(token, uuid, data);
+      const res = await postCurrency(token, data);
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 201) {
         setIsLoading(false);
         setOpen(false);
         window.location.reload();
         toast({
-          title: "Kurs berhasil diubah.",
+          title: "Mata uang berhasil ditambahkan",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
         toast({
-          title: "Gagal mengubah kurs",
+          title: "Gagal menambahkan mata uang",
           variant: "destructive",
         });
       }
@@ -77,26 +74,25 @@ export function UpdateKurs({ name, value, uuid }: { name: string, value:string, 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="link" className="p-2">
-          <Edit className="h-6 w-6" />
-          
+        <Button variant="default">
+          <AddSquare className="mr-2 h-5 w-5" />
+          Tambah Mata Uang
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] space-y-4">
         <DialogHeader>
-          <h4>Ubah Kurs</h4>
+          <h4>Tambah Mata Uang</h4>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex flex-col space-y-3">
+                <FormItem className="flex flex-col">
                   <FormLabel>Mata Uang</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled/>
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,24 +100,23 @@ export function UpdateKurs({ name, value, uuid }: { name: string, value:string, 
             />
             <FormField
               control={form.control}
-              name="value"
+              name="initial"
               render={({ field }) => (
-                <FormItem className="flex flex-col space-y-3">
-                  <FormLabel>Nilai Tukar</FormLabel>
+                <FormItem className="flex flex-col">
+                  <FormLabel>Kode</FormLabel>
                   <FormControl>
-                    <Input {...field}  type="number" className="text-right pl-2"/>
+                    <Input {...field} autoCapitalize="on" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            </div>
             <div className="flex justify-start gap-4 pt-4">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Ubah
+                Tambah
               </Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>

@@ -8,13 +8,13 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Trash } from "iconsax-react";
+import { Add, Trash } from "iconsax-react";
 import { toast } from "@/components/ui/use-toast";
+import { deleteAccount } from "@/lib/service-super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
-import { deleteKurs } from "@/lib/service-admin";
 
-export function DeleteKurs({ uuid }: { uuid:string }) {
+export function DeleteAccount({ uuid }: { uuid:string }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
@@ -23,20 +23,20 @@ export function DeleteKurs({ uuid }: { uuid:string }) {
   async function handleDelete() {
     setIsLoading(true);
     try {
-      const res = await deleteKurs(token, uuid);
+      const res = await deleteAccount(token, uuid);
       console.log(res);
       if (res.status === 200) {
         setIsLoading(false);
         setOpen(false);
         window.location.reload();
         toast({
-          title: "Kurs berhasil dihapus",
+          title: "Kode akun berhasil dihapus",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
         toast({
-          title: "Gagal menghapus kurs",
+          title: "Gagal menghapus kode akun",
           variant: "destructive",
         });
       }
@@ -54,7 +54,7 @@ export function DeleteKurs({ uuid }: { uuid:string }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px] space-y-4">
         <DialogHeader>
-          <h4>Hapus kurs?</h4>
+          <h4>Hapus kode akun?</h4>
         </DialogHeader>
         <div className="flex justify-start gap-4">
           <Button disabled={isLoading} onClick={handleDelete} variant="destructive">

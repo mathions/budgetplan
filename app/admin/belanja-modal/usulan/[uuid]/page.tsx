@@ -29,7 +29,7 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
     )
   }
   return (
-    <>
+    <div className="mx-auto px-4 md:px-20 py-8">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Dashboard', href: '/admin' },
@@ -37,7 +37,7 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
           { label: 'Usulan', href: '/admin/belanja-modal/usulan', active: true },
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Usulan</h1>
+      <h3>Penyampaian Usulan</h3>
       <div className="py-6">
         <Card className="w-full">
           <CardHeader>
@@ -87,6 +87,6 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
           </CardContent>
         </Card>
       </div>
-    </>
+    </div>
   );
 }

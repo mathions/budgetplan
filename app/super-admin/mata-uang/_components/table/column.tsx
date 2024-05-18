@@ -2,14 +2,17 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { User } from "@/lib/definitions"
-import { DeleteKurs } from "../delete-kurs"
-import { UpdateKurs } from "../update-kurs"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { Currency } from "@/lib/definitions"
+import { Trash } from "iconsax-react"
+import { DeleteCurrency } from "../delete-currency"
+import { UpdateCurrency } from "../update-currency"
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Currency>[] = [
   {
     accessorKey: "name",
-    size: 200,
+    size: 300,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Mata Uang" />
     ),
@@ -17,32 +20,23 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "initial",
-    size: 200,
+    size: 100,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Kode" />
-    ),
+      ),
     cell: ({ row }) => <div className="ml-4">{row.getValue("initial")}</div>
   },
   {
-    accessorKey: "value",
-    size: 200,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Nilai Tukar" />
-    ),
-    cell: ({ row }) => <div className="ml-4">{row.getValue("value")}</div>
-  },
-  
-  {
     accessorKey: "uuid",
     enableResizing: false,
-    size: 200,
+    size: 100,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title=""/>
     ),
     cell: ({ row }) => 
-      <div className="text-xs flex w-full justify-center gap-2">
-        <UpdateKurs name={row.getValue("name")} value={row.getValue("value")} uuid={row.getValue("uuid")}/>
-        <DeleteKurs uuid={row.getValue("uuid")}/>
+      <div className="flex w-full justify-start gap-2">
+        <UpdateCurrency name1={row.getValue("name")} initial1={row.getValue("initial")} uuid={row.getValue("uuid")}/>
+        <DeleteCurrency uuid={row.getValue("uuid")}/>
       </div>,
     enableSorting: false,
   },

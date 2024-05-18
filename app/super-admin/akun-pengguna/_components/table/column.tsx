@@ -5,6 +5,8 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { User } from "@/lib/definitions"
+import { DeleteUser } from "../delete_user"
+import { UpdateUser } from "../update_user"
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -27,7 +29,7 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "office",
     size: 250,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Satuan Kerja" />
+      <DataTableColumnHeader column={column} title="Perwakilan" />
       ),
     cell: ({ row }) => <div className="ml-4">{row.getValue("office")}</div>
   },
@@ -48,9 +50,9 @@ export const columns: ColumnDef<User>[] = [
     ),
     cell: ({ row }) => 
       <div className="text-xs flex w-full gap-2 justify-start">
-        <Button asChild variant="link">
-          <Link href={`/super-admin/akun-pengguna/${row.getValue("uuid")}`} >Detail</Link>
-        </Button>
+        {/* <UpdateAccount number={row.getValue("account_code")} name={row.getValue("account_name")} uuid={row.getValue("uuid")} /> */}
+        <UpdateUser username1={row.getValue("username")} role1={row.getValue("role")} name1={row.getValue("name")} office1={row.getValue("office")} office_code1={row.getValue("office_code")} area1={row.getValue("area")} uuid={row.getValue("uuid")}/>
+        <DeleteUser uuid={row.getValue("uuid")}/>
       </div>,
     enableSorting: false,
   },

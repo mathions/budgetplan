@@ -8,13 +8,18 @@ import { Input } from "@/components/ui/input"
 
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import Link from "next/link"
+import { AddKurs } from "../add-kurs"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
+  currency: any
+  uuid: string
 }
 
 export function DataTableToolbar<TData>({
   table,
+  currency,
+  uuid,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -36,6 +41,7 @@ export function DataTableToolbar<TData>({
             options={statuses}
           />
         )} */}
+        <AddKurs currency={currency} uuid={uuid}/>
       </div>
     </div>
   )
