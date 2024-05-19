@@ -53,7 +53,7 @@ export default function LoginForm() {
       if (!res?.error) {
         setIsLoading(false);
         router.refresh();
-        router.push("/beranda");
+        router.push('/beranda');
       } else {
         setIsLoading(false);
         if (res.status === 401) {
