@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useSession } from "next-auth/react";
 
 const FormSchema = z.object({
   username: z.string().min(1, {
@@ -29,6 +30,12 @@ const FormSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { data: session }: { data: any } = useSession();
+  if (session) {
+    const router = useRouter();
+    router.push("/admin");
+  }
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
