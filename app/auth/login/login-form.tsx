@@ -37,7 +37,7 @@ export default function LoginForm() {
     },
   });
 
-  const router = useRouter();
+  const { push } = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
@@ -52,7 +52,7 @@ export default function LoginForm() {
       console.log(res);
       if (!res?.error) {
         setIsLoading(false);
-        router.push("/beranda");
+        push("/beranda");
       } else {
         setIsLoading(false);
         if (res.status === 401) {
