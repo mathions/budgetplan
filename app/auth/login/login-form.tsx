@@ -31,10 +31,7 @@ const FormSchema = z.object({
 
 export default function LoginForm() {
   const { data: session }: { data: any } = useSession();
-  if (session) {
-    const router = useRouter();
-    router.push("/admin");
-  }
+
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -45,6 +42,9 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+  if (session) {
+    router.push("/admin");
+  }
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
