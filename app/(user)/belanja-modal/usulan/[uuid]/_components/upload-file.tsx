@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
 import { postFiles } from "@/lib/service";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,35 +32,49 @@ const FormSchema = z.object({
 });
 
 export function UploadFile({ uuid, token }: { uuid: string; token: string }) {
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true);
     const formdata = new FormData();
     formdata.set("file", data.file);
-    const res = await postFiles(token, uuid, formdata);
-    console.log(res);
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+    try {
+      const res = await postFiles(token, uuid, formdata);
+      if (res.ok) {
+        setIsLoading(false);
+        setOpen(false);
+        router.refresh();
+        toast({
+          title: "Berkas berhasil diunggah",
+        });
+      } else {
+        setIsLoading(false);
+        setOpen(false);
+        toast({
+          title: "Gagal mengunggah berkas",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary">
           <ExportCurve className="mr-2 h-5 w-5" />
           Unggah Berkas
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
+      <DialogContent className="sm:max-w-[480px] space-y-4">
         <DialogHeader>
           <h4>Unggah Berkas</h4>
         </DialogHeader>

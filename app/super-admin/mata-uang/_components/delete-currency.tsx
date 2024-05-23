@@ -1,4 +1,6 @@
 "use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,19 +16,20 @@ import { useState } from "react";
 import { Icons } from "@/components/icons";
 
 export function DeleteCurrency({ uuid }: { uuid:string }) {
-  const tkn = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OGQyMzUyMi02YTQ4LTRjNGEtYjI3Yi05YmM2M2RhYTYzNDYiLCJ1c2VybmFtZSI6InVtdW0iLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNzE1OTkzNDQ0LCJleHAiOjE3MTYwNzk4NDR9.OFVl9xqRUWP8HwUU7w1xM-mSQ_i-74AsdLw9m9gKzwA"
+  const { data: session }: { data: any } = useSession();
+  const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
 
   async function handleDelete() {
     setIsLoading(true);
     try {
-      const res = await deleteCurrency(tkn, uuid);
-      console.log(res);
-      if (res.status === 200) {
+      const res = await deleteCurrency(token, uuid);
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
         toast({
           title: "Mata uang berhasil dihapus",
         });

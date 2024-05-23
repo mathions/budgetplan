@@ -1,5 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { useRouter} from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,6 +20,7 @@ export function DeleteKurs({ uuid }: { uuid:string }) {
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   async function handleDelete() {
     setIsLoading(true);
@@ -28,7 +30,7 @@ export function DeleteKurs({ uuid }: { uuid:string }) {
       if (res.status === 200) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
         toast({
           title: "Kurs berhasil dihapus",
         });

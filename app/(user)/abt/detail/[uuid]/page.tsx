@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getDetailAbt } from "@/lib/service";
 import { Label } from "@/components/ui/label";
 import DownloadAbt from "@/components/user/abt/detail/download-abt";
+import { PdfViewer } from "./pdf-viewer";
 
 export default async function Detail({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -62,6 +63,7 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
             </div>
             </div>
             <DownloadAbt uuid={uuid} token={token} path={path}/>
+            <PdfViewer uuid={uuid} token={token}/>
           </CardContent>
         </Card>  
       </div>

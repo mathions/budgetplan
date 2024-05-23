@@ -20,7 +20,7 @@ export default async function BelanjaModal() {
       />
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
         <h3> Belanja Modal</h3>
-        <MulaiPengusulan />
+        <MulaiPengusulan token={token}/>
       </div>
       <div className="py-6">
         <Suspense fallback={<TableBelmodSkeleton />}>

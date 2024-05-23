@@ -1,32 +1,27 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
 import { postAbt } from "@/lib/service";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
-  DialogTitle,
   DialogClose,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Add } from "iconsax-react";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
-
+import { Icons } from "@/components/icons";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -40,24 +35,47 @@ const FormSchema = z.object({
   }),
 });
 
-export function CreateABT({ token } : { token: string }) {
+export function CreateABT() {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { data: session }: { data: any } = useSession();
+  const token = session?.user?.token;
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  const year = new Date().getFullYear().toString();
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true);
     const formdata = new FormData()
     formdata.set('file', data.file)
     formdata.set('perihal', data.perihal)
-    formdata.set('year', year)
-    const res = await postAbt(token, formdata)
-    console.log(res)
+    try {
+      const res = await postAbt(token, formdata);
+      console.log(res);
+      if (res.ok) {
+        setIsLoading(false);
+        setOpen(false);
+        router.refresh();
+        toast({
+          title: "ABT berhasil diajukan.",
+        });
+      } else {
+        setIsLoading(false);
+        setOpen(false);
+        toast({
+          title: "Gagal mengajukan ABT",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">
           <Add className="mr-2 h-5 w-5" />
@@ -102,7 +120,12 @@ export function CreateABT({ token } : { token: string }) {
               )}
             />
             <div className="flex justify-start gap-4">
-              <Button type="submit">Buat Pengajuan</Button>
+              <Button disabled={isLoading} type="submit">
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Buat Pengajuan
+              </Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>
               </DialogClose>

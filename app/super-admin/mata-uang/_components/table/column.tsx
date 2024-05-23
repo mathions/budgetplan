@@ -2,10 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { Currency } from "@/lib/definitions"
-import { Trash } from "iconsax-react"
 import { DeleteCurrency } from "../delete-currency"
 import { UpdateCurrency } from "../update-currency"
 

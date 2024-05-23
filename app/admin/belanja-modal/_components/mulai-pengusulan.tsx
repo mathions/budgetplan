@@ -42,6 +42,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { createYear } from "@/lib/service-admin";
 
 const FormSchema = z.object({
   year: z.string({
@@ -52,114 +54,140 @@ const FormSchema = z.object({
   }),
 });
 
-export function MulaiPengusulan() {
+export function MulaiPengusulan({ token }: { token: string }) {
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const dl = format(new Date(data.deadline), "yyyy-MM-dd");
+    setIsLoading(true);
+    try {
+      const res = await createYear(token, data.year, dl);
+      console.log(res);
+      if (res.status === 201) {
+        setIsLoading(false);
+        setOpen(false);
+        window.location.reload();
+        toast({
+          title: "Kurs berhadil ditambahkan.",
+        });
+      } else {
+        setIsLoading(false);
+        setOpen(false);
+        toast({
+          title: "Gagal menambahkan kurs",
+          description: res.message,
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const currentYear = new Date().getFullYear();
-  const year = [
-    { label: `${currentYear}`, value: `${currentYear}` },
-    { label: `${currentYear + 1}`, value: `${currentYear + 1}` },
-    { label: `${currentYear + 2}`, value: `${currentYear + 2}` },
-  ] as const;
+  const year: { label: string; value: string }[] = Array.from(
+    { length: 5 },
+    (_, index) => {
+      const label = `${currentYear + index}`;
+      return { label, value: label };
+    }
+  );
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">
           <Add className="mr-2 h-5 w-5" />
           Mulai Pengusulan
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] space-y-2">
         <DialogHeader>
           <h4>Mulai Pengusulan</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Tahun Anggaran</FormLabel>
-                  <Select onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih tahun" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {year.map((year) => (
-                        <SelectItem
-                          value={year.label}
-                          key={year.value}
-                          onSelect={() => {
-                            form.setValue("year", year.value);
-                          }}
-                        >
-                          {year.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="deadline"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Deadline Penyampaian Usulan</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="year"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col space-y-2">
+                    <FormLabel>Tahun Anggaran</FormLabel>
+                    <Select onValueChange={field.onChange}>
                       <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pilih tanggal</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih tahun" />
+                        </SelectTrigger>
                       </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date: any) =>
-                          date < new Date() || date > new Date("2100-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                      <SelectContent>
+                        {year.map((year) => (
+                          <SelectItem
+                            value={year.label}
+                            key={year.value}
+                            onSelect={() => {
+                              form.setValue("year", year.value);
+                            }}
+                          >
+                            {year.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="deadline"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col space-y-3">
+                    <FormLabel>Deadline Penyampaian Usulan</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd-MMM-yyyy") // Modified date format
+                            ) : (
+                              <span>Pilih tanggal</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-auto p-0"
+                        align="start"
+                        side="top"
+                      >
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date: any) =>
+                            date < new Date() || date > new Date("2100-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className="flex justify-start gap-4">
               <Button type="submit">Mulai Pengusulan</Button>
               <DialogClose asChild>

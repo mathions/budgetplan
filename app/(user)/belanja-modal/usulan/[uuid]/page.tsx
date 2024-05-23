@@ -1,34 +1,22 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import Proposal from "@/app/(user)/belanja-modal/usulan/[uuid]/_components/proposal";
-import { getFilesPath, getItems, getProposal } from "@/lib/service";
 import Breadcrumbs from "@/components/breadcrumbs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DirectInbox, Send2 } from "iconsax-react";
-import Brafaks from "./_components/brafaks";
-import RAB from "./_components/rab";
+import { CardSkeleton } from "./_components/skeleton";
+import { Suspense } from "react";
+import SuspensePage from "./_components/suspense-page";
 
 export default async function Usulan({ params }: { params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
-  const proposal = await getProposal(token);
-  const files = await getFilesPath(token, uuid);
-  const items = await getItems(token, uuid);
-  console.log(proposal);
-  console.log(files);
 
   if (!session) {
     return redirect("/auth/login");
   }
+
   return (
     <div className="mx-auto px-4 md:px-20 py-8">
       <Breadcrumbs
@@ -56,11 +44,9 @@ export default async function Usulan({ params }: { params: { uuid: string } }) {
         </div>
       </div>
       <div className="my-6 space-y-4">
-        <Brafaks uuid={uuid} token={token} files={files}/>
-        <RAB/>
-        <Card className="w-full p-8">
-          <Proposal uuid={uuid} token={token} files={files} items={items} />
-        </Card>
+        <Suspense fallback={<CardSkeleton />}>
+          <SuspensePage uuid={uuid} token={token}/>
+        </Suspense>
       </div>
     </div>
   );

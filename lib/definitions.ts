@@ -39,6 +39,21 @@ export type Item = {
   harga_total: number;
 }
 
+export interface GrupItem{
+  [code_number: string]: {
+    name: string;
+    total: number;
+    accounts: {
+      [account_number: string]: {
+        number: string;
+        name: string;
+        total: number;
+        items: Item[];
+      };
+    };
+  };
+}
+
 export interface GroupedItems {
   [output_number: string]: {
     name: string;
@@ -57,6 +72,25 @@ export interface GroupedItems {
       };
     }
   }
+}
+
+export type Akun = {
+  no_urut: number;
+  account_number: string;
+  account_name: string;
+}
+
+export type MataUang = {
+  name: string;
+  initial: string;
+  kurs: number;
+}
+
+export type Kurs = {
+  uuid: string;
+  name: string;
+  initial: string;
+  value: number;
 }
 
 //SUPER ADMIN

@@ -2,22 +2,20 @@ import { unstable_noStore as noStore } from "next/cache";
 import { AbtTable, BelmodTable } from "./definitions";
 
 const url = "https://api.budgetplan.masuk.id/api/v1";
-// const url = 'http://192.168.1.2:3000/api/v1';
 
-export async function createBelMod(token: string, year: string) {
+export async function createYear(token: string, year: string, deadline:string) {
   const res = await fetch(`${url}/a/year`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify({
       year: year,
+      deadline: deadline,
     }),
   });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse);
-  return res;
+  return res.json();
 }
 
 export async function getProposal(token: string): Promise<BelmodTable[]> {
@@ -108,17 +106,16 @@ export async function getFiles(token: string, uuid: string, fileuuid: string) {
 }
 
 export async function getYear(token: string) {
-  noStore();
   const res = await fetch(`${url}/a/year`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
   console.log(jsonResponse);
-  if (res.status === 200) {
+  if (res.ok) {
     return jsonResponse.data;
   } else {
     return jsonResponse;
@@ -341,7 +338,7 @@ export async function postKurs(
   });
   const jsonResponse = await res.json();
   console.log(jsonResponse);
-  if (res.status === 201) {
+  if (res.ok) {
     return res;
   } else {
     return jsonResponse;

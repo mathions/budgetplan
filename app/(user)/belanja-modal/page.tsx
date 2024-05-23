@@ -6,10 +6,16 @@ import BelanjaModalCard from "@/app/(user)/belanja-modal/_components/belanja-mod
 import { CardSkeleton } from "./_components/skeleton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function BelanjaModal() {
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
+  console.log(session)
+  if (session?.user?.role !== "user") {
+    redirect('auth/login');
+  }
+
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs

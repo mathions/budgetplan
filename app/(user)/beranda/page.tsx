@@ -4,11 +4,11 @@ import Image from "next/image";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight} from "iconsax-react";
+import { ArrowRight, Data, MessageText1, TickCircle } from "iconsax-react";
 
-export const metadata: Metadata = {
-  title: "Beranda",
-};
+// export const metadata: Metadata = {
+//   title: "Beranda",
+// };
 
 export default function Beranda() {
   return (
@@ -32,8 +32,8 @@ export default function Beranda() {
             satuan kerja kepada biro umum
           </div>
           <div className="flex md:hidden text-base text-center text-textweak">
-            Budgetplan memfasilitasi proses  pengajuan anggaran <br />dari
-            satuan kerja kepada biro umum
+            Budgetplan memfasilitasi proses pengajuan anggaran <br />
+            dari satuan kerja kepada biro umum
           </div>
           <div className="flex gap-4 my-4">
             <Button asChild>
@@ -55,14 +55,16 @@ export default function Beranda() {
       </div>
 
       {/* Belanja Modal */}
-      <div className="bg-background flex flex-col-reverse md:flex-row p-14 md:p-28">
+      <div className="bg-background flex flex-col-reverse gap-8 md:gap-16 md:flex-row px-6 pb-6 pt-16 md:p-28 md:pb-14">
         <div className="md:basis-1/2 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <div className="tracking-wide text-textweak">BELANJA MODAL</div>
-            <h2 className="font-bold">
-              Penyampaian usulan<br/> belanja modal
-            </h2>
-            <div className="text-base text-textweak md:w-9/12">
+          <div className="flex flex-col gap-3 md:w-9/12 ">
+            <div className="bg-primary/15 px-3 py-2 w-fit rounded-md">
+              <div className="text-sm font-semibold tracking-wide text-textstrong">
+                BELANJA MODAL
+              </div>
+            </div>
+            <h3 className="">Penyampaian usulan belanja modal</h3>
+            <div className="text-base text-textweak">
               Satuan kerja menyampaikan usulan kebutuhan belanja modal kepada
               biro umum satu tahun sebelum pelaksanaan anggaran.
             </div>
@@ -76,34 +78,38 @@ export default function Beranda() {
           </div>
         </div>
         <div className="md:basis-1/2">
-          <Image
-            src="/image/logo-kemlu-bw.png"
-            width={480}
-            height={192}
-            alt="Logo Kemlu"
-          ></Image>
+          <div className="bg-primary/5 rounded-xl p-6 h-full">
+            <Image
+              src="/image/logo-kemlu-bw.png"
+              width={480}
+              height={192}
+              alt="Logo Kemlu"
+            ></Image>
+          </div>
         </div>
       </div>
 
       {/* ABT */}
-      <div className="flex flex-col md:flex-row p-14 md:p-28">
+      <div className="bg-background flex flex-col gap-8 md:gap-16 md:flex-row px-6 pt-6 pb-16 md:px-28 md:pt-14 md:pb-28">
         <div className="md:basis-1/2">
+          <div className="bg-primary/5 rounded-xl p-6 h-full">
           <Image
             src="/image/logo-kemlu-bw.png"
             width={480}
             height={192}
             alt="Logo Kemlu"
           ></Image>
+          </div>
         </div>
         <div className="md:basis-1/2 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <div className="tracking-wide text-textweak">
-              ANGGARAN BIAYA TAMBAHAN
+          <div className="flex flex-col gap-3 md:w-9/12">
+            <div className="bg-primary/15 px-3 py-2 w-fit rounded-md">
+              <div className="text-sm font-semibold tracking-wide text-textstrong">
+                ABT
+              </div>
             </div>
-            <h2 className="font-bold">
-              Pengajuan ABT
-            </h2>
-            <div className="text-base text-textweak md:w-9/12">
+            <h3>Pengajuan anggaran biaya tambahan</h3>
+            <div className="text-base text-textweak">
               Satuan kerja dapat mengajukan Anggaran Biaya Tambahan (ABT)
               apabila terdapat kebutuhan mendesak dan membutuhkan penambahan
               anggaran belanja modal.
@@ -118,27 +124,45 @@ export default function Beranda() {
           </div>
         </div>
       </div>
-      {/* Komentar Pengguna */}
-      <div className="p-14 md:p-28 bg-background"></div>
 
       {/* Keunggulan */}
-      <div className="p-14 md:p-28 bg-textstrong">
-        <div>
-          Selalu terhubung dengan Biro Umum
-        </div>
-        <div className="md:flex ">
-          <div></div>
-          <div></div>
-          <div></div>
+      <div className="px-8 py-16 md:p-28 bg-textstrong space-y-8 md:space-y-16">
+        <h3 className="text-strokeweak text-center">Selalu terhubung dengan <span className="text-background">Biro Umum</span></h3>
+        <div className="grid md:grid-cols-3 gap-6 md:gap-12 px-4 md:px-12">
+          <div className="bg-[#333852] border border-strokewak text-white space-y-4 rounded-xl px-4 py-9">
+            <div className="flex justify-center">
+              <Data className="h-9 w-9"/>
+            </div>
+            <div className="space-y-2 text-center">
+              <h5>Database</h5>
+              <div>Setiap pengajuan akan tersimpan di database</div>
+            </div>
+          </div>
+          <div className="bg-[#333852] border border-strokewak text-white space-y-4 rounded-xl px-4 py-9">
+            <div className="flex justify-center">
+              <TickCircle className="h-9 w-9"/>
+            </div>
+            <div className="space-y-2 text-center">
+              <h5>Status Pengajuan</h5>
+              <div>Status pengajuan dapat dipantau melalui sistem</div>
+            </div>
+          </div>
+          <div className="bg-[#333852] border border-strokewak text-white space-y-4 rounded-xl px-4 py-9">
+            <div className="flex justify-center">
+              <MessageText1 className="h-9 w-9"/>
+            </div>
+            <div className="space-y-2 text-center">
+              <h5>Umpan Balik</h5>
+              <div>Terdapat umpan balik apabila terdapat kekurangan pada pengajuan</div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* CTA */}
       <div className=" bg-primary">
-        <div
-          style={{ backgroundImage: "url('/image/perlin-10.png')" }}
-        >
-          <div className="p-14 md:p-28">
+        <div style={{ backgroundImage: "url('/image/perlin-10.png')" }}>
+          <div className="p-12 md:p-28">
             <h2 className="text-background font-bold ">
               Ingin mengajukan <br /> anggaran?
             </h2>
@@ -161,7 +185,6 @@ export default function Beranda() {
         </div>
       </div>
       {/* Footer */}
-
     </div>
   );
 }

@@ -62,15 +62,6 @@ export default function Proposal({
     setItemsData(editData);
   };
 
-  // const onChangeNumber = (e: React.ChangeEvent<HTMLInputElement>, no_urut: string) => {
-  //   const { name, value } = e.target;
-  //   const numericValue = parseFloat(value);
-  //   const editData = itemsData.map((item) =>
-  //     item.no_urut === no_urut && name ? { ...item, [name]: numericValue } : item
-  //   );
-  //   setItemsData(editData);
-  // };
-
   const onChangeNumber = (
     e: React.ChangeEvent<HTMLInputElement>,
     no_urut: string
@@ -94,7 +85,6 @@ export default function Proposal({
         harga_total: harga_total,
       };
     });
-
     setItemsData(newDataWithTotal);
   };
 

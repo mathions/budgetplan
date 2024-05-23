@@ -109,8 +109,7 @@ export async function deleteAccount(token: string, uuid:string){
 
 // MATA UANG
 export async function getCurrency(token: string){
-  noStore();
-  const res = await fetch(`${url}/a/currency`, {
+  const res = await fetch(`${url}/sa/currency`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -118,16 +117,11 @@ export async function getCurrency(token: string){
     }
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse.data)
-  if (res.status === 200) {
-    return jsonResponse.data;
-  } else {
-    return jsonResponse;
-  }
+  return jsonResponse.data;
 }
 
 export async function postCurrency(token: string, data:any){
-  const res = await fetch(`${url}/a/currency`, {
+  const res = await fetch(`${url}/sa/currency`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -135,27 +129,15 @@ export async function postCurrency(token: string, data:any){
     },
     body: JSON.stringify(data),
   });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 201) {
-    return res;
-  } else {
-    return res;
-  }
+  return res;
 }
 
 export async function deleteCurrency(token: string, uuid:string){
-  const res = await fetch(`${url}/a/currency/${uuid}/?_method=DELETE`, {
+  const res = await fetch(`${url}/sa/currency/${uuid}/?_method=DELETE`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
     },
   });
-  const jsonResponse = await res.json();
-  console.log(res)
-  if (res.status === 200) {
-    return res;
-  } else {
-    return res;
-  }
+  return res;
 }

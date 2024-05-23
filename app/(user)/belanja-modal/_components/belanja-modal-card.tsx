@@ -16,14 +16,14 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
     <Card className="w-full">
       <div className="p-6 md:p-8">
         <div className="space-y-4 md:space-y-6">
-          <h4>Penyampaian Usulan Kebutuhan Belanja Modal</h4>
+          {/* <h4>Penyampaian Usulan Kebutuhan Belanja Modal</h4> */}
           <div className="flex justify-between">
-            <div className="space-y-1">
-              <div className="text-xl text-textstrong font-semibold">
-                {data?.office}KBRI Kuala Lumpur
-              </div>
-              <div className="text-xl text-textweak">
-                Tahun Anggaran {data?.year} 2025
+            <div className="space-y-2">
+              <h4 className="leading-none">
+                {data?.office}
+              </h4>
+              <div className="text-base md:text-xl text-textweak">
+                Tahun Anggaran {data?.year}
               </div>
             </div>
             <div>status</div>

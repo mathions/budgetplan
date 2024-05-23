@@ -14,7 +14,6 @@ export async function login(data: { username: string, password: string}) {
         password: data.password,
     }),
   });
-
   const jsonResponse = await res.json();  console.log(res)
   console.log(jsonResponse)
   if (jsonResponse.success === true) {
@@ -24,7 +23,7 @@ export async function login(data: { username: string, password: string}) {
   }
 };
 
-
+// BELANJA MODAL
 export async function getProposal(token: string){
   const res = await fetch(`${url}/proposal/latest`, {
     method: 'GET',
@@ -42,6 +41,7 @@ export async function getProposal(token: string){
   }
 }
 
+// RAB
 export async function getItems(token: string, uuid: string) {
   noStore()
   const res = await fetch(`${url}/proposal/${uuid}`, {
@@ -52,7 +52,6 @@ export async function getItems(token: string, uuid: string) {
     }
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
   if (res.status === 200) {
     return jsonResponse?.data?.items;
   } else {
@@ -72,15 +71,47 @@ export async function postItems(token: string, uuid:string, data:any){
   }),
   });
   const jsonResponse = await res.json();
-  console.log(data)
   console.log(jsonResponse)
-  if (res.status === 200) {
-    return jsonResponse;
+  if (res.ok) {
+    return res;
   } else {
     return jsonResponse;
   }
 }
 
+export async function getAccount(token: string) {
+  const res = await fetch(`${url}/list-accounts`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return jsonResponse?.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function getKurs(token: string, uuid:string) {
+  const res = await fetch(`${url}/proposal/${uuid}/kurs`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return jsonResponse?.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+// BRAFAKS
 export async function getFilesPath(token: string, uuid: string) {
   noStore()
   const res = await fetch(`${url}/proposal/${uuid}`, {
@@ -91,7 +122,6 @@ export async function getFilesPath(token: string, uuid: string) {
     }
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
   if (res.status === 200) {
     return jsonResponse?.data?.files;
   } else {
@@ -107,13 +137,8 @@ export async function postFiles(token: string, uuid:string, data: any){
     },
     body: data
   });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 200) {
-    return jsonResponse;
-  } else {
-    return jsonResponse;
-  }
+  console.log(res)
+  return res;
 }
 
 export async function getFiles(token: string, uuid:string){
@@ -130,6 +155,28 @@ export async function getFiles(token: string, uuid:string){
   } else {
     return res;
   }
+}
+
+export async function getFile(token: string, uuidProposal:string, uuidFile:string){
+  const res = await fetch(`${url}/proposal/${uuidProposal}/files/${uuidFile}`, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    }
+  });
+  console.log(res)
+  return res;
+}
+
+export async function deleteFile(token: string, uuidProposal:string, uuidFile:string){
+  const res = await fetch(`${url}/proposal/${uuidProposal}/files/${uuidFile}?_method=DELETE`, {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    }
+  });
+  console.log(res)
+  return res;
 }
 
 export async function editStatusBelmod(token:string, uuid:string){
@@ -166,6 +213,8 @@ export async function getItemsApproved(token: string, uuid: string) {
   }
 }
 
+
+// ANGGARAN BIAYA TAMBAHAN
 export async function postAbt(token: string, data:any){
   const res = await fetch(`${url}/abt/create`, {
     method: 'POST',
@@ -174,15 +223,8 @@ export async function postAbt(token: string, data:any){
     },
     body: data,
   });
-  console.log(data)
-  console.log(res)
-  const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 201) {
-    return res;
-  } else {
-    return res;
-  }
+  console.log(res.json())
+  return res;
 }
 
 export async function getAbt(token:string): Promise<AbtTable[]>  {
@@ -229,10 +271,6 @@ export async function getFilesAbt(token: string, uuid:string){
     }
   });
   console.log(res)
-  if (res.status === 200) {
-    return res;
-  } else {
-    return res;
-  }
+  return res;
 }
 

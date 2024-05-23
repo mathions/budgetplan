@@ -42,9 +42,11 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+  
   if (session) {
     router.push("/admin");
   }
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {

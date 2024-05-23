@@ -1,15 +1,9 @@
 "use client";
+
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { postKurs } from "@/lib/service-admin";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogClose,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { AddSquare } from "iconsax-react";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
@@ -17,6 +11,13 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogClose,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -41,6 +42,7 @@ import {
 } from "@/components/ui/popover";
 import { Currency } from "@/lib/definitions";
 import { Icons } from "@/components/icons";
+import CurrencyInput from 'react-currency-input-field';
 
 const FormSchema = z.object({
   name: z.string({
@@ -60,6 +62,7 @@ export function AddKurs({
 }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currencyUuid, setCurrencyUuid] = useState("");
@@ -73,10 +76,10 @@ export function AddKurs({
     try {
       const res = await postKurs(token, uuid, currencyUuid, data);
       console.log(res);
-      if (res.status === 201) {
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
         toast({
           title: "Kurs berhadil ditambahkan.",
         });
@@ -102,18 +105,18 @@ export function AddKurs({
           Tambah Kurs
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
+      <DialogContent className="sm:max-w-[480px] space-y-4">
         <DialogHeader>
           <h4>Tambah Kurs</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-4">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col space-y-3">
+                  <FormItem className="flex flex-col space-y-2">
                     <FormLabel>Mata Uang</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -166,7 +169,6 @@ export function AddKurs({
                         </Command>
                       </PopoverContent>
                     </Popover>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -175,14 +177,15 @@ export function AddKurs({
                 control={form.control}
                 name="value"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col space-y-3">
+                  <FormItem className="flex flex-col space-y-2">
                     <FormLabel>Nilai Tukar</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        type="number"
-                        className="text-right pl-2"
-                      />
+                      <CurrencyInput
+                        className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-0"
+                        onValueChange={(e) => field.onChange(e)}
+                        groupSeparator="."
+                        decimalSeparator=","
+                        prefix="Rp "/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
