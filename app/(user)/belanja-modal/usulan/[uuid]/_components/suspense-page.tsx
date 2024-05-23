@@ -22,9 +22,6 @@ export default async function SuspensePage({
     <div className="space-y-6">
       <Brafaks uuid={uuid} token={token} files={files} />
       <RAB uuid={uuid} token={token} items={items} account={account} currency={currency} kurs={kurs}/>
-      <Card className="w-full p-8">
-        <Proposal uuid={uuid} token={token} files={files} items={items} />
-      </Card>
     </div>
   );
 }

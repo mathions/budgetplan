@@ -5,8 +5,6 @@ import Berkas from "./berkas";
 
 export default function Brafaks({ uuid, token, files } : { uuid: string, token: string, files: any }) {
 
-  console.log(files)
-
   return (
     <Card className="p-8 space-y-6">
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
