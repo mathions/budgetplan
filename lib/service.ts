@@ -33,9 +33,25 @@ export async function getProposal(token: string){
     }
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse.data)
   if (res.status === 200) {
     return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function updateStatus(token:string, uuid:string){
+  const res = await fetch(`${url}/proposal/${uuid}/finalize?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.ok) {
+    return res;
   } else {
     return jsonResponse;
   }
@@ -111,6 +127,22 @@ export async function getKurs(token: string, uuid:string) {
   }
 }
 
+export async function updateKurs(token: string, uuidProposal:string, uuidKurs:string) {
+  const res = await fetch(`${url}/proposal/${uuidProposal}/kurs/${uuidKurs}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
 // BRAFAKS
 export async function getFilesPath(token: string, uuid: string) {
   noStore()
@@ -177,23 +209,6 @@ export async function deleteFile(token: string, uuidProposal:string, uuidFile:st
   });
   console.log(res)
   return res;
-}
-
-export async function editStatusBelmod(token:string, uuid:string){
-  const res = await fetch(`${url}/proposal/${uuid}/finalize?_method=PATCH`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse.data)
-  if (res.status === 200) {
-    return jsonResponse.data;
-  } else {
-    return jsonResponse;
-  }
 }
 
 export async function getItemsApproved(token: string, uuid: string) {

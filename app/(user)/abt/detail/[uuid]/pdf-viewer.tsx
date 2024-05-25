@@ -28,7 +28,7 @@ export function PdfViewer ({ uuid, token} : { uuid: string, token: string}) {
         }
     };
     fetchData();
-  }, []);
+  }, [token, uuid]);
 
   if (isLoading) return <p>Loading...</p>
   if (!data) return <p>No profile data</p>

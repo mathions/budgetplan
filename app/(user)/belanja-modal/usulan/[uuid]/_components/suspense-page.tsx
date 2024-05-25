@@ -1,8 +1,6 @@
 import { getAccount, getFilesPath, getItems, getProposal, getKurs } from "@/lib/service";
 import Brafaks from "./brafaks";
 import RAB from "./rab";
-import { Card } from "@/components/ui/card";
-import Proposal from "./proposal";
 
 export default async function SuspensePage({
   uuid,

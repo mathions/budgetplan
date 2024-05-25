@@ -2,11 +2,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { DirectInbox, Send2 } from "iconsax-react";
 import { CardSkeleton } from "./_components/skeleton";
 import { Suspense } from "react";
 import SuspensePage from "./_components/suspense-page";
+import { Ajukan } from "./_components/ajukan";
 
 export default async function Usulan({ params }: { params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -33,14 +32,7 @@ export default async function Usulan({ params }: { params: { uuid: string } }) {
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
         <h3>Penyampaian Usulan</h3>
         <div className="flex gap-4">
-          <Button variant="secondary">
-            <DirectInbox className="mr-2 w-5 h-5" />
-            Simpan
-          </Button>
-          <Button variant="default">
-            <Send2 className="mr-2 w-5 h-5" />
-            Ajukan
-          </Button>
+          <Ajukan uuid={uuid} token={token} />
         </div>
       </div>
       <div className="my-6 space-y-4">

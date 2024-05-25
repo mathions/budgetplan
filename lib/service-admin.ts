@@ -72,37 +72,16 @@ export async function getItems(token: string, uuid: string) {
   }
 }
 
-export async function getListFiles(token: string, uuid: string) {
-  const res = await fetch(`${url}/a/proposal/${uuid}/files`, {
+export async function getFile(token: string, uuidProposal: string, uuidFile: string) {
+  const res = await fetch(`${url}/a/proposal/${uuidProposal}/files/${uuidFile}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse);
-  if (res.status === 200) {
-    return jsonResponse;
-  } else {
-    return res;
-  }
-}
-
-export async function getFiles(token: string, uuid: string, fileuuid: string) {
-  const res = await fetch(`${url}/a/proposal/${uuid}/files/${fileuuid}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/pdf",
+      // "Content-Type": "application/pdf",
     },
   });
   console.log(res);
-  if (res.status === 200) {
-    return res;
-  } else {
-    return res;
-  }
+  return res;
 }
 
 export async function getYear(token: string) {

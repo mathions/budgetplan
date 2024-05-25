@@ -1,12 +1,15 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { Roboto_Mono } from "next/font/google";
+
+const roboto_mono = Roboto_Mono({ subsets: ['latin'] })
 
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  <div className={`relative w-full overflow-auto ${roboto_mono.className}`}>
     <table
       ref={ref}
       className={cn("w-full caption-bottom", className)}
@@ -73,7 +76,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "border border-strokeweak h-10 px-2 text-left align-middle font-semibold text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      "border border-strokeweak h-10 px-2 text-center align-middle font-semibold text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       className
     )}
     {...props}
