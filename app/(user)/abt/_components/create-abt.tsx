@@ -27,10 +27,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { File } from "buffer";
+
 
 const FormSchema = z.object({
-  file: z.instanceof(File, {message: "Belum ada dokumen brafaks terpilih."}),
+  file: typeof window === 'undefined' ? z.any() : z.instanceof(File, {message: "Belum ada dokumen brafaks terpilih."}),
   perihal: z.string({
     required_error: "Perihal belum terisi.",
   }),
