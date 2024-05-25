@@ -4,7 +4,7 @@ import Table from "@/app/(user)/abt/_components/list-abt";
 import { TableAbtSkeleton } from "@/components/user/skeletons";
 import { CreateABT } from "./_components/create-abt";
 
-export default function Abt() {
+export default function AbtPage() {
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs
