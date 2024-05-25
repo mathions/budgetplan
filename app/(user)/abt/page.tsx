@@ -1,4 +1,3 @@
-
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
 import Table from "@/app/(user)/abt/_components/list-abt";
