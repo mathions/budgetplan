@@ -27,6 +27,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { File } from "buffer";
 
 const FormSchema = z.object({
   file: z.instanceof(File, {message: "Belum ada dokumen brafaks terpilih."}),
