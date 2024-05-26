@@ -1,13 +1,8 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Add, Trash } from "iconsax-react";
 import { toast } from "@/components/ui/use-toast";
 import { deleteAccount } from "@/lib/service-super-admin";
@@ -19,7 +14,8 @@ export function DeleteAccount({ uuid }: { uuid:string }) {
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
+  
   async function handleDelete() {
     setIsLoading(true);
     try {
@@ -28,7 +24,7 @@ export function DeleteAccount({ uuid }: { uuid:string }) {
       if (res.status === 200) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
         toast({
           title: "Kode akun berhasil dihapus",
         });
@@ -52,11 +48,11 @@ export function DeleteAccount({ uuid }: { uuid:string }) {
           <Trash className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Hapus kode akun?</h4>
         </DialogHeader>
-        <div className="flex justify-start gap-4">
+        <div className="flex justify-start gap-4 pt-2">
           <Button disabled={isLoading} onClick={handleDelete} variant="destructive">
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -64,7 +60,7 @@ export function DeleteAccount({ uuid }: { uuid:string }) {
             Hapus
           </Button>
           <DialogClose asChild>
-            <Button variant="secondary" className="border-destructive text-destructive">Batal</Button>
+            <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">Batal</Button>
           </DialogClose>
         </div>
       </DialogContent>

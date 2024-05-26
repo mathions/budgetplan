@@ -1,26 +1,15 @@
 "use client";
+
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Add, AddSquare } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { postAccount } from "@/lib/service-super-admin";
 import { useState } from "react";
@@ -40,6 +29,7 @@ export function AddAccount() {
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -53,7 +43,8 @@ export function AddAccount() {
       if (res.status === 200) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
+        form.reset();
         toast({
           title: "Kode akun berhasil ditambahkan",
         });
@@ -75,15 +66,15 @@ export function AddAccount() {
       <DialogTrigger asChild>
         <Button variant="default">
           <AddSquare className="h-5 w-5" />
-          <span className="hidden md:flex ml-2">Tambah Kode Akun</span>
+          <span className="hidden md:flex ml-2">Tambah</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Tambah Kode Akun</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <FormField
               control={form.control}
               name="account_number"
@@ -91,7 +82,7 @@ export function AddAccount() {
                 <FormItem className="flex flex-col">
                   <FormLabel>Kode Akun</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,7 +101,7 @@ export function AddAccount() {
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4 pt-4">
+            <div className="flex justify-start gap-4 pt-2">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

@@ -82,12 +82,12 @@ export function UpdateCurrency({ name1, initial1, uuid }: { name1: string, initi
           <Edit className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Ubah Mata Uang</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <FormField
               control={form.control}
               name="name"
@@ -114,7 +114,7 @@ export function UpdateCurrency({ name1, initial1, uuid }: { name1: string, initi
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4 pt-4">
+            <div className="flex justify-start gap-4 pt-2">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

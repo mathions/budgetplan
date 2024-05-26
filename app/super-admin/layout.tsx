@@ -21,7 +21,7 @@ export default function Layout({
     <div className="relative flex h-full flex-col bg-bg">
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Navbar />
-          <div className="w-full h-full">{children}</div>
+          <div className="w-full min-h-screen">{children}</div>
         <Toaster />
         <Footer />
       </ThemeProvider>

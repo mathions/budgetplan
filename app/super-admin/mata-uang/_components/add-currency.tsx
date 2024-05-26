@@ -2,26 +2,13 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { AddSquare } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { postCurrency } from "@/lib/service-super-admin";
 import { useState } from "react";
@@ -58,12 +45,14 @@ export function AddCurrency() {
         setIsLoading(false);
         setOpen(false);
         router.refresh();
+        form.reset();
         toast({
           title: "Mata uang berhasil ditambahkan",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
+        form.reset();
         toast({
           title: "Gagal menambahkan mata uang",
           variant: "destructive",
@@ -79,15 +68,15 @@ export function AddCurrency() {
       <DialogTrigger asChild>
         <Button variant="default">
           <AddSquare className="mr-2 h-5 w-5" />
-          Tambah Mata Uang
+          Tambah
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Tambah Mata Uang</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <FormField
               control={form.control}
               name="name"
@@ -114,7 +103,7 @@ export function AddCurrency() {
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4 pt-4">
+            <div className="flex justify-start gap-4 pt-2">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

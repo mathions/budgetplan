@@ -7,7 +7,7 @@ export default async function Page() {
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <div className="w-full py-12 space-y-12">
-        <h1 className="text-center">Pengelola</h1>
+        {/* <h1 className="text-center">Pengelola</h1> */}
         <div className="grid md:grid-cols-3 gap-4">
           <Link href="/super-admin/akun-pengguna" className="h-fit">
             <Card className="p-6 space-y-2">

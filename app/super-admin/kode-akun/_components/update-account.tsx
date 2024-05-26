@@ -1,26 +1,13 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Add, Edit } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { postCurrency } from "@/lib/service-super-admin";
 import { useState } from "react";
@@ -82,12 +69,12 @@ export function UpdateAccount({ number, name, uuid }: { number: string, name:str
           
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <h4>Ubah Mata Uang</h4>
+          <h4>Ubah Kode Akun</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <FormField
               control={form.control}
               name="account_number"
@@ -95,7 +82,7 @@ export function UpdateAccount({ number, name, uuid }: { number: string, name:str
                 <FormItem className="flex flex-col">
                   <FormLabel>Kode Akun</FormLabel>
                   <FormControl>
-                    <Input {...field}/>
+                    <Input type="number" {...field}/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,7 +101,7 @@ export function UpdateAccount({ number, name, uuid }: { number: string, name:str
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4 pt-4">
+            <div className="flex justify-start gap-4 pt-2">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

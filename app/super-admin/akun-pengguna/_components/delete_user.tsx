@@ -52,11 +52,11 @@ export function DeleteUser({ uuid }: { uuid:string }) {
           <Trash className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Hapus akun pengguna?</h4>
         </DialogHeader>
-        <div className="flex justify-start gap-4">
+        <div className="flex justify-start gap-4 pt-2">
           <Button disabled={isLoading} onClick={handleDelete} variant="destructive">
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -64,7 +64,7 @@ export function DeleteUser({ uuid }: { uuid:string }) {
             Hapus
           </Button>
           <DialogClose asChild>
-            <Button variant="secondary" className="border-destructive text-destructive">Batal</Button>
+            <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">Batal</Button>
           </DialogClose>
         </div>
       </DialogContent>
