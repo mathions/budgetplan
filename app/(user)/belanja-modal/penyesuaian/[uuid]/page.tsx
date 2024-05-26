@@ -1,56 +1,35 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
-import { getItemsApproved, getProposal } from "@/lib/service";
 import Breadcrumbs from "@/components/breadcrumbs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
-import Rab from "@/app/(user)/belanja-modal/penyesuaian/[uuid]/_components/rab";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Suspense } from "react";
+import SuspensePage from "./_components/suspense-page";
+import { CardSkeleton } from "./_components/skeleton";
+import { redirect } from "next/navigation";
 
 export default async function Dipa({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
-  const proposal = await getProposal(token);
-  const items = await getItemsApproved(token, uuid);
-  console.log(proposal)
-  if(session == null){
-    return (
-      <>
-        <div className="w-full mt-24 flex-row flex justify-center align-middle">
-          <Button asChild variant="link"><Link href="/login">Unauthenticated! Please login again</Link></Button>
-        </div>
-      </>
-    )
+
+  if (!session) {
+    return redirect("/auth/login");
   }
+
   return (
-    <>
+    <div className="mx-auto px-4 md:px-20 py-8">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Beranda', href: '/beranda' },
           { label: 'Belanja Modal', href: '/belanja-modal' },
-          { label: 'Penyesuaian', href: `/belanja-modal/dipa/${uuid}`, active: true }
+          { label: 'Penyesuaian', href: `/belanja-modal/penyesuaian/${uuid}`, active: true }
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Penyesuaian</h1>
-      <div className="my-6">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>{proposal?.office}</CardTitle>
-            <CardDescription>Tahun Anggaran {proposal?.year}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <p className="text-sm font-semibold leading-none">
-                Rencana Anggaran Biaya
-              </p>
-              <div className="rounded-md border">
-                <Rab items={items} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <h3>Penyesuaian RAB</h3>
+      <div className="my-6 space-y-4">
+        <Suspense fallback={<CardSkeleton />}>
+          <SuspensePage uuid={uuid} token={token}/>
+        </Suspense>
       </div>
-    </>
+    </div>
   );
 }

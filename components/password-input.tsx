@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState} from "react" 
-import { Eye, EyeSlash } from "iconsax-react"
+import { Eye, EyeSlash, Lock1 } from "iconsax-react"
 import { Button } from "@/components/ui/button"
 import { Input, InputProps } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
@@ -13,9 +13,10 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
 
 		return (
 			<div className="relative">
+				<Lock1 className="h-4 w-4 absolute left-4 top-[14px]"/>
 				<Input
 					type={showPassword ? "text" : "password"}
-					className={cn("hide-password-toggle pr-10", className)}
+					className={cn("hide-password-toggle pl-10 pr-10", className)}
 					ref={ref}
 					{...props}
 				/>

@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Breadcrumbs from "@/components/breadcrumbs";
-import { BeriKeputusan } from "./_components/beri-keputusan";
 import { Suspense } from "react";
 import { CardSkeleton } from "./_components/skeleton";
 import SuspensePage from "./_components/suspense-page";
@@ -22,13 +21,10 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Dashboard', href: '/admin' },
           { label: 'Belanja Modal', href: '/admin/belanja-modal'},
-          { label: 'Usulan', href: '/admin/belanja-modal/usulan', active: true },
+          { label: 'Detail', href: '/admin/belanja-modal/detail', active: true },
         ]}
       />
-      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-        <h3>Penyampaian Usulan</h3>
-        <BeriKeputusan token={token} uuid={uuid}/>
-      </div>
+      <h3>Detail</h3>
       <div className="my-6">
         <Suspense fallback={<CardSkeleton />}>
           <SuspensePage uuid={uuid} token={token}/>

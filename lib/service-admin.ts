@@ -3,6 +3,7 @@ import { AbtTable, BelmodTable } from "./definitions";
 
 const url = "https://api.budgetplan.masuk.id/api/v1";
 
+// BELANJA MODAL
 export async function createYear(token: string, year: string, deadline:string) {
   const res = await fetch(`${url}/a/year`, {
     method: "POST",
@@ -54,6 +55,25 @@ export async function getDetailProposal(token: string, uuid: string) {
   }
 }
 
+export async function updateStatus(token:string, uuid:string, data:any){
+  const res = await fetch(`${url}/a/proposal/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
+// RAB
 export async function getItems(token: string, uuid: string) {
   noStore();
   const res = await fetch(`${url}/a/proposal/${uuid}`, {
@@ -72,6 +92,7 @@ export async function getItems(token: string, uuid: string) {
   }
 }
 
+// BRAFAKS
 export async function getFile(token: string, uuidProposal: string, uuidFile: string) {
   const res = await fetch(`${url}/a/proposal/${uuidProposal}/files/${uuidFile}`, {
     method: "GET",
@@ -119,49 +140,43 @@ export async function getDetailYear(token: string, uuid: string) {
   }
 }
 
-export async function rabToApproved(token: string, uuid: string) {
-  const res = await fetch(`${url}/a/proposal/${uuid}/rab-to-approved`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse);
-  if (res.status === 201) {
-    return jsonResponse;
-  } else {
-    return jsonResponse;
-  }
-}
-
-export async function getItemsApproved(token: string, uuid: string) {
+// PENYESUAIAN
+export async function getPenyesuaian(token: string, uuid: string) {
   const res = await fetch(`${url}/a/proposal/${uuid}/approved`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
   console.log(jsonResponse);
-  if (res.status === 200) {
-    return jsonResponse?.data?.items;
+  return jsonResponse;
+}
+
+export async function postSalinRab(token: string, uuid: string) {
+  const res = await fetch(`${url}/a/proposal/${uuid}/rab-to-approved`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse);
+  if (res.ok) {
+    return res;
   } else {
     return jsonResponse;
   }
 }
 
-export async function postItemsApproved(
-  token: string,
-  uuid: string,
-  data: any
-) {
+export async function postItemsPenyesuaian(token: string, uuid: string, data: any ) {
   const res = await fetch(`${url}/a/proposal/${uuid}/approved`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify({
       data: data,
@@ -169,13 +184,31 @@ export async function postItemsApproved(
   });
   const jsonResponse = await res.json();
   console.log(jsonResponse);
-  if (res.status === 201) {
-    return jsonResponse;
+  if (res.ok) {
+    return res;
   } else {
     return jsonResponse;
   }
 }
 
+export async function postFinalisasi(token: string, uuid: string) {
+  const res = await fetch(`${url}/a/proposal/${uuid}/finalize?_method=PATCH`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse);
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
+// ABT
 export async function getAbt(token: string): Promise<AbtTable[]> {
   const res = await fetch(`${url}/a/abt/`, {
     method: "GET",
@@ -220,36 +253,10 @@ export async function getFilesAbt(token: string, uuid: string) {
     },
   });
   console.log(res);
-  if (res.status === 200) {
-    return res;
-  } else {
-    return res;
-  }
+  return res;
 }
 
-export async function ubahStatusBelmod(
-  token: string,
-  uuid: string,
-  status: string
-) {
-  const res = await fetch(`${url}/a/proposal/${uuid}?_method=PATCH`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      status: status,
-    }),
-  });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse.data);
-  if (res.status === 200) {
-    return jsonResponse.data;
-  } else {
-    return jsonResponse;
-  }
-}
+
 
 export async function editStatusAbt(
   token: string,

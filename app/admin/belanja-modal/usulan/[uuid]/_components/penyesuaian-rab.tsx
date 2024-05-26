@@ -23,56 +23,59 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { CaretSortIcon } from "@radix-ui/react-icons";
+import { Salin } from "./salin"
+import { postItemsPenyesuaian } from "@/lib/service-admin";
 
 
-export default function RAB({
+export default function PenyesuaianRAB({
   items,
   uuid,
   token,
   account,
   currency,
-  kurs,
 }: {
   items: [Item];
   uuid: string;
   token: string;
-  account: [Akun];
+  account: Akun[];
   currency: any;
-  kurs: [Kurs];
 }) {
   const [itemsData, setItemsData] = useState<Item[]>(items);
   const grupItem: GrupItem = {};
   const router = useRouter();
   const [isSaveLoading, setIsSaveLoading] = useState(false);
-  const [isExportLoading, setIsExportLoading] = useState(false);
 
   let total = 0;
   let totalSarana = 0;
 
-  itemsData.forEach((item) => {
-    if (!grupItem[item.code_number]) {
-      grupItem[item.code_number] = { name: "", total: 0, accounts: {} };
-    }
-    if (!grupItem[item.code_number].accounts[item.account_number]) {
-      grupItem[item.code_number].accounts[item.account_number] = {
-        number: "",
-        name: "",
-        total: 0,
-        items: [],
-      };
-    }
-    grupItem[item.code_number].total += item.harga_total;
-    grupItem[item.code_number].name = item.code;
-    grupItem[item.code_number].accounts[item.account_number].total += item.harga_total;
-    grupItem[item.code_number].accounts[item.account_number].number = item.account_number;
-    grupItem[item.code_number].accounts[item.account_number].name = item.account;
-    grupItem[item.code_number].accounts[item.account_number].items.push(item);
+  if (Array.isArray(itemsData)) {
+    itemsData.forEach((item) => {
+      if (!grupItem[item.code_number]) {
+        grupItem[item.code_number] = { name: "", total: 0, accounts: {} };
+      }
+      if (!grupItem[item.code_number].accounts[item.account_number]) {
+        grupItem[item.code_number].accounts[item.account_number] = {
+          number: "",
+          name: "",
+          total: 0,
+          items: [],
+        };
+      }
+      grupItem[item.code_number].total += item.harga_total;
+      grupItem[item.code_number].name = item.code;
+      grupItem[item.code_number].accounts[item.account_number].total += item.harga_total;
+      grupItem[item.code_number].accounts[item.account_number].number = item.account_number;
+      grupItem[item.code_number].accounts[item.account_number].name = item.account;
+      grupItem[item.code_number].accounts[item.account_number].items.push(item);
 
-    total += item.harga_total;
-    if(item.code_number !== "058") {
-      totalSarana += item.harga_total;
-    }
-  });
+      total += item.harga_total;
+      if(item.code_number !== "058") {
+        totalSarana += item.harga_total;
+      }
+    });
+  } else {
+    console.error('itemsData is not an array');
+  }
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -119,7 +122,7 @@ export default function RAB({
     console.log(newItemsData);
     setIsSaveLoading(true);
     try {
-      const res = await postItems(token, uuid, newItemsData);
+      const res = await postItemsPenyesuaian(token, uuid, newItemsData);
       console.log(res);
       if (res.ok) {
         setIsSaveLoading(false);
@@ -287,162 +290,16 @@ export default function RAB({
     )
   }
 
-  const ChangeCurrency = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const FormSchema = z.object({
-      name: z.string({
-        required_error: "Mata uang perlu dipilih",
-      }),
-    });
-    const form = useForm<z.infer<typeof FormSchema>>({
-      resolver: zodResolver(FormSchema),
-    });
-    const [open, setOpen] = useState(false);
-    const [kursUuid, setKursUuid] = useState("");
-    async function onSubmit(data: z.infer<typeof FormSchema>) {
-      setIsLoading(true);
-      try {
-        const res = await updateKurs(token, uuid, kursUuid);
-        console.log(res);
-        if (res.ok) {
-          setIsLoading(false);
-          setOpen(false);
-          router.refresh();
-
-          toast({
-            title: "Mata uang berhasil diubah",
-          });
-        } else {
-          setIsLoading(false);
-          setOpen(false);
-          toast({
-            title: "Gagal mengubah mata uang",
-            description: res.message,
-            variant: "destructive",
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    return(
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="secondary" className="">Ubah Mata Uang</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[480px]">
-          <div className="space-y-6">
-            <DialogHeader>
-              <h4>Ubah Mata Uang</h4>
-            </DialogHeader>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col space-y-2">
-                        <FormLabel>Mata Uang</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                role="combobox"
-                                className={cn(
-                                  "justify-between",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value
-                                  ? kurs.find(
-                                      (kurs) => kurs.name === field.value
-                                    )?.name
-                                  : "Pilih mata uang"}
-                                <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="p-0">
-                            <Command>
-                              <CommandInput placeholder="Cari mata uang..." />
-                              <CommandEmpty>
-                                Mata uang tidak ditemukan.
-                              </CommandEmpty>
-                              <CommandGroup>
-                                {kurs.map((kurs) => (
-                                  <CommandItem
-                                    value={kurs.name}
-                                    key={kurs.uuid}
-                                    onSelect={() => {
-                                      form.setValue("name", kurs.name);
-                                      setKursUuid(kurs.uuid);
-                                    }}
-                                  >
-                                    <CheckIcon
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        kurs.name === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {kurs.name}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex justify-start gap-4">
-                  <Button disabled={isLoading} type="submit">
-                    {isLoading && (
-                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                    )}
-                    Ubah Mata Uang
-                  </Button>
-                  <DialogClose asChild>
-                    <Button variant="secondary">Batal</Button>
-                  </DialogClose>
-                </div>
-              </form>
-            </Form>
-          </div>
-        </DialogContent>
-      </Dialog>
-    )
-  }
-
   useEffect(() => {
-    const newDataWithTotal = itemsData.map((item) => {
-      const harga_satuan = item.harga_satuan;
-      const jumlah = item.jumlah;
-      const kurs  = currency?.kurs;
-      const harga_total =
-        isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah * kurs;
-      return {
-        ...item,
-        harga_total: harga_total,
-      };
-    });
-    setItemsData(newDataWithTotal);
-  }, [currency]);
+    setItemsData(items);
+  }, [items]);
 
   return (
     <Card className="p-8 space-y-6">
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
         <h4>Rencana Anggaran Biaya</h4>
         <div className="flex gap-4">
-          <ChangeCurrency/>
-          <Button variant="secondary" disabled={isExportLoading} onClick={saveItem}>{isExportLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
-            Ekspor
-          </Button>
+          <Salin uuid={uuid} token={token}/>
           <Button variant="secondary" disabled={isSaveLoading} onClick={saveItem}>{isSaveLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
             <DirectInbox className="mr-2 w-5 h-5" />Simpan
           </Button>

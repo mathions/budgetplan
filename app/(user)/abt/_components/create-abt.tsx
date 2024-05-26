@@ -60,13 +60,15 @@ export function CreateABT() {
         setOpen(false);
         router.refresh();
         toast({
-          title: "ABT berhasil diajukan.",
+          title: "Pengajuan ABT berhasil dibuat",
         });
+        form.reset();
       } else {
         setIsLoading(false);
         setOpen(false);
         toast({
-          title: "Gagal mengajukan ABT",
+          title: "Gagal membuat pengajuan ABT",
+          description: res?.message,
           variant: "destructive",
         });
       }
@@ -83,43 +85,45 @@ export function CreateABT() {
           Buat Pengajuan
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Buat Pengajuan ABT</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="perihal"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Perihal</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="file"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Dokumen Brafaks</FormLabel>
-                  <Input
-                    accept=".pdf"
-                    type="file"
-                    onChange={(e) =>
-                      field.onChange(e.target.files ? e.target.files[0] : null)
-                    }
-                  />
-                  <FormControl></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-2">
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="perihal"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Perihal</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="file"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Dokumen Brafaks</FormLabel>
+                    <Input
+                      accept=".pdf"
+                      type="file"
+                      onChange={(e) =>
+                        field.onChange(e.target.files ? e.target.files[0] : null)
+                      }
+                    />
+                    <FormControl></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className="flex justify-start gap-4">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (

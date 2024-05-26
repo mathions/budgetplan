@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { getProposal } from "@/lib/service";
 import { DocumentUpload, TableDocument } from "iconsax-react";
@@ -45,7 +39,7 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
               </Card>
             </Link>
             <Link
-              href={`/belanja-modal/usulan/${data?.uuid}`}
+              href={`/belanja-modal/penyesuaian/${data?.uuid}`}
               className="w-fit h-fit"
             >
               <Card className="p-6 space-y-2">

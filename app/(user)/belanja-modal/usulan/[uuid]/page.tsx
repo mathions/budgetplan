@@ -2,9 +2,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { redirect } from "next/navigation";
-import { CardSkeleton } from "./_components/skeleton";
 import { Suspense } from "react";
 import SuspensePage from "./_components/suspense-page";
+import { CardSkeleton } from "./_components/skeleton";
 import { Ajukan } from "./_components/ajukan";
 
 export default async function Usulan({ params }: { params: { uuid: string } }) {

@@ -1,22 +1,18 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Breadcrumbs from "@/components/breadcrumbs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getFilesAbt, getDetailAbt } from "@/lib/service-admin";
-import DownloadAbt from "@/components/admin/abt/detail/download-abt";
-import { Button } from "@/components/ui/button";
-import UbahStatus from "@/components/admin/abt/detail/ubah-status";
-import Link from "next/link";
+import { BeriKeputusan } from "./_components/beri-keputusan";
+import { Suspense } from "react";
+import { CardSkeleton } from "./_components/skeleton";
+import SuspensePage from "./_components/suspense-page";
 
 export default async function Detail({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
-  const detail = await getDetailAbt(token, uuid)
-  console.log(detail)
-  
+
   return (
-    <>
+    <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Dashboard', href: '/admin' },
@@ -24,38 +20,15 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
           { label: 'Detail', href: `/admin/abt/detail/${uuid}`, active: true }
         ]}
       />
-      <h1 className="text-3xl font-bold tracking-tight">Detail Pengajuan ABT</h1>
-      <div className="my-6">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>{detail?.office}</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-sm font-semibold leading-none">Perihal</p>
-                <p className="">{detail?.perihal}</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm font-semibold leading-none">Tanggal Pengajuan</p>
-                <p className="">{detail?.created_at}</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm font-semibold leading-none">Status</p>
-                <p className="">{detail?.status}</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm font-semibold leading-none">Brafaks</p>
-                <DownloadAbt uuid={uuid} token={token}/>
-              </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" className="w-[96px]" asChild><Link href='/admin/abt'>Kembali</Link></Button>
-                <UbahStatus uuid={uuid} token={token}/>
-              </div>
-            </div>
-          </CardContent>
-        </Card>  
+      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
+        <h3>Detail Pengajuan ABT</h3>
+        <BeriKeputusan token={token} uuid={uuid}/>
       </div>
-    </>
+      <div className="my-6">
+        <Suspense fallback={<CardSkeleton />}>
+          <SuspensePage uuid={uuid} token={token}/>
+        </Suspense>
+      </div>
+    </div>
   );
 }

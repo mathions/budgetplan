@@ -211,23 +211,19 @@ export async function deleteFile(token: string, uuidProposal:string, uuidFile:st
   return res;
 }
 
-export async function getItemsApproved(token: string, uuid: string) {
+// PENYESUAIAN
+export async function getPenyesuaian(token: string, uuid: string) {
   const res = await fetch(`${url}/proposal/${uuid}/approved`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 200) {
-    return jsonResponse?.data?.items;
-  } else {
-    return jsonResponse;
-  }
+  console.log(jsonResponse);
+  return jsonResponse;
 }
-
 
 // ANGGARAN BIAYA TAMBAHAN
 export async function postAbt(token: string, data:any){
@@ -238,8 +234,13 @@ export async function postAbt(token: string, data:any){
     },
     body: data,
   });
-  console.log(res.json())
-  return res;
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if(res.ok){
+    return res;
+  } else {
+    return jsonResponse;
+  }
 }
 
 export async function getAbt(token:string): Promise<AbtTable[]>  {

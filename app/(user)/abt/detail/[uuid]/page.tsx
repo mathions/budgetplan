@@ -1,19 +1,20 @@
 import { getServerSession } from "next-auth"
 import { authOptions }from "@/app/api/auth/[...nextauth]/route"
 import Breadcrumbs from "@/components/breadcrumbs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getDetailAbt } from "@/lib/service";
-import { Label } from "@/components/ui/label";
-import DownloadAbt from "@/components/user/abt/detail/download-abt";
-import { PdfViewer } from "./pdf-viewer";
+import { Suspense } from "react";
+import SuspensePage from "./_components/suspense-page";
+import { CardSkeleton } from "./_components/skeleton";
+import { redirect } from "next/navigation";
 
 export default async function Detail({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
   const session: any = await getServerSession(authOptions)
   const token = session?.user?.token;
-  const perihal = await getDetailAbt(token, uuid)
-  const path = perihal?.path
-  console.log(perihal)
+
+  if (!session) {
+    return redirect("/auth/login");
+  }
+
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs
@@ -25,47 +26,9 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
       />
       <h3>Detail Pengajuan ABT</h3>
       <div className="my-6">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>{perihal?.office}</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Perihal
-              </p>
-              <p className="">
-                {perihal?.perihal}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Tanggal Pengajuan
-              </p>
-              <p className="">
-                {perihal?.created_at}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Status
-              </p>
-              <p className="">
-                {perihal?.status}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-semibold leading-none">
-                Brafaks
-              </p>
-              <Label></Label>
-            </div>
-            </div>
-            <DownloadAbt uuid={uuid} token={token} path={path}/>
-            <PdfViewer uuid={uuid} token={token}/>
-          </CardContent>
-        </Card>  
+        <Suspense fallback={<CardSkeleton />}>
+          <SuspensePage uuid={uuid} token={token}/>
+        </Suspense>
       </div>
     </div>
   );
