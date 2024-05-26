@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import SuspensePage from "./_components/suspense-page";
 import { CardSkeleton } from "./_components/skeleton";
 import { redirect } from "next/navigation";
+import Batal from "./_components/batal";
 
 export default async function Detail({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -24,7 +25,11 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
           { label: 'Detail Pengajuan', href: `/abt/detail/${uuid}`, active: true }
         ]}
       />
-      <h3>Detail Pengajuan ABT</h3>
+      
+      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
+        <h3>Detail Pengajuan ABT</h3>
+        <Batal uuid={uuid} token={token}/>
+      </div>
       <div className="my-6">
         <Suspense fallback={<CardSkeleton />}>
           <SuspensePage uuid={uuid} token={token}/>

@@ -18,35 +18,28 @@ export default async function SuspensePage({
   console.log(detail)
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{detail?.office}</CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-sm font-semibold leading-none">Perihal</p>
-            <p className="">{detail?.perihal}</p>
+    <Card className="p-8 space-y-6">
+      <div className="space-y-2">
+        <div>
+          <div className="text-textweak">Perihal</div>
+          <h4>{detail?.perihal}</h4>
+        </div>
+        <div>
+          <div className="text-textweak">Perwakilan</div>
+          <div className="font-semibold text-xl">{detail?.office}</div>
+        </div>
+        <div className="flex gap-12">
+          <div>
+            <div className="text-textweak">Status</div>
+            <div className="font-semibold">{detail?.status}</div>
           </div>
-          <div className="space-y-2">
-            <p className="text-sm font-semibold leading-none">Tanggal Pengajuan</p>
-            <p className="">{detail?.created_at}</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-semibold leading-none">Status</p>
-            <p className="">{detail?.status}</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-semibold leading-none">Brafaks</p>
-            <DownloadAbt uuid={uuid} token={token}/>
-          </div>
-          <PdfViewer uuid={uuid} token={token}/>
-          <div className="flex justify-end space-x-2">
-            <Button variant="outline" className="w-[96px]" asChild><Link href='/admin/abt'>Kembali</Link></Button>
-            <UbahStatus uuid={uuid} token={token}/>
+          <div>
+            <div className="text-textweak">Tanggal Pengajuan</div>
+            <div className="font-semibold">{detail?.created_at}</div>
           </div>
         </div>
-      </CardContent>
+      </div>
+      <PdfViewer uuid={uuid} token={token}/>
     </Card>  
   );
 }

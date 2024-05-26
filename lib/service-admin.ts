@@ -256,27 +256,19 @@ export async function getFilesAbt(token: string, uuid: string) {
   return res;
 }
 
-
-
-export async function editStatusAbt(
-  token: string,
-  uuid: string,
-  status: string
-) {
+export async function updateStatusAbt(token:string, uuid:string, data:any){
   const res = await fetch(`${url}/a/abt/${uuid}?_method=PATCH`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      status: status,
-    }),
+    body: JSON.stringify(data),
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse.data);
-  if (res.status === 200) {
-    return jsonResponse.data;
+  console.log(jsonResponse)
+  if (res.ok) {
+    return res;
   } else {
     return jsonResponse;
   }

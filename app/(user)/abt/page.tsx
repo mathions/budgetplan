@@ -1,10 +1,15 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
-import Table from "@/app/(user)/abt/_components/list-abt";
+import ListAbt from "@/app/(user)/abt/_components/list-abt";
 import { TableAbtSkeleton } from "@/components/user/skeletons";
 import { CreateABT } from "./_components/create-abt";
 
-export default function AbtPage() {
+export default async function AbtPage() {
+  const session: any = await getServerSession(authOptions);
+  const token = session?.user?.token;
+
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-10 py-8">
       <Breadcrumbs
@@ -20,7 +25,7 @@ export default function AbtPage() {
 
       <div className="my-6">
         <Suspense fallback={<TableAbtSkeleton />}>
-          <Table/>
+          <ListAbt token={token}/>
         </Suspense>
       </div>
     </div>

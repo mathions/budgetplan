@@ -34,7 +34,7 @@ export function PdfViewer ({ uuid, token} : { uuid: string, token: string}) {
   if (!data) return <p>No profile data</p>
   
   return (
-    <div className="h-[800px]">
+    <div className="h-[600px]">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
         <Viewer fileUrl={data} plugins={[defaultLayoutPluginInstance]} />;
       </Worker>

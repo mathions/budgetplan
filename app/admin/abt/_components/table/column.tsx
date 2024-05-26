@@ -72,10 +72,10 @@ export const columns: ColumnDef<AbtTable>[] = [
     <DataTableColumnHeader column={column} title="" />
   ),
   cell: ({ row }) => 
-    <div className="text-xs">
-      <Button asChild variant="ghost" className="h-8 px-4 py-2 rounded-full bg-pmr/10 text-pmr hover:bg-pmr/20 hover:text-pmr">
-        <Link href={`/admin/abt/detail/${row.getValue("uuid")}`} className="text-sm">Lihat Detail</Link>
-        </Button>
+    <div>
+      <Button asChild variant="link">
+        <Link href={`/admin/abt/detail/${row.getValue("uuid")}`}>Detail</Link>
+      </Button>
     </div>,
   enableSorting: false,
 },

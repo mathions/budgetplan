@@ -243,7 +243,7 @@ export async function postAbt(token: string, data:any){
   }
 }
 
-export async function getAbt(token:string): Promise<AbtTable[]>  {
+export async function getAbt(token:string){
   noStore()
   const res = await fetch(`${url}/abt`, {
     method: 'GET',
@@ -290,3 +290,17 @@ export async function getFilesAbt(token: string, uuid:string){
   return res;
 }
 
+export async function deleteAbt(token: string, uuid:string){
+  const res = await fetch(`${url}/abt/${uuid}/cancel?_method=DELETE`, {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    }
+  });
+  console.log(res.json())
+  if (res.ok) {
+    return res;
+  } else {
+    return res.json();
+  }
+}

@@ -96,7 +96,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <h4>Berikan Keputusan</h4>
+          <h4>Beri Keputusan</h4>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
