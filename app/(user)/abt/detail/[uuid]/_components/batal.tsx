@@ -29,7 +29,7 @@ export default function Batal({ uuid, token }: { uuid:string, token:string }) {
       if (res.ok) {
         setIsLoading(false);
         setOpen(false);
-        <router className="prefetch"></router>('/abt');
+        router.push("/abt");
         router.refresh();
         toast({
           title: "Pengajuan ABT berhasil dibatalkan",
