@@ -1,14 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,27 +12,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { createYear } from "@/lib/service-admin";
@@ -105,12 +79,12 @@ export function MulaiPengusulan({ token }: { token: string }) {
           Mulai Pengusulan
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-2">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Mulai Pengusulan</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-2">
             <div className="space-y-4">
               <FormField
                 control={form.control}

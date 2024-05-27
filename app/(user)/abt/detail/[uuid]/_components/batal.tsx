@@ -48,14 +48,10 @@ export default function Batal({ uuid, token }: { uuid:string, token:string }) {
     }
   }
 
-  // useEffect(() => {
-  //   router.prefetch('abt')
-  // }, [router])
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="border-destructive text-destructive">
+        <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">
             Batalkan
         </Button>
       </DialogTrigger>
@@ -71,7 +67,7 @@ export default function Batal({ uuid, token }: { uuid:string, token:string }) {
             Konfirmasi
           </Button>
           <DialogClose asChild>
-            <Button variant="secondary" className="border-destructive text-destructive">Tidak</Button>
+            <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">Tidak</Button>
           </DialogClose>
         </div>
       </DialogContent>

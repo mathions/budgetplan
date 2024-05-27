@@ -22,11 +22,19 @@ export const offices = [
 
 export const codes = [
   {
-    value: "Kendaraan Bermotor",
+    value: "055",
     label: "Kendaraan Bermotor",
   },
   {
-    value: "Bangunan",
+    value: "056",
+    label: "Komunikasi",
+  },
+  {
+    value: "057",
+    label: "Perkantoran",
+  },
+  {
+    value: "058",
     label: "Bangunan",
   },
 ]

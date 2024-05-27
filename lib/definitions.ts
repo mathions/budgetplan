@@ -74,6 +74,15 @@ export interface GroupedItems {
   }
 }
 
+export type RabDashboard = {
+  area: string;
+  total: number;
+  kendaraan: number;
+  perangkat: number;
+  peralatan: number;
+  pembangunan: number;
+}
+
 export type Akun = {
   no_urut: number;
   account_number: string;

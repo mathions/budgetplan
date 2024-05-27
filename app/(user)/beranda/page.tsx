@@ -78,9 +78,9 @@ export default function Beranda() {
           </div>
         </div>
         <div className="md:basis-1/2">
-          <div className="bg-primary/5 rounded-xl p-6 h-full">
+          <div className="bg-primary/5 rounded-xl p-6 h-full flex justify-center">
             <Image
-              src="/image/logo-kemlu-bw.png"
+              src="/image/beranda2.png"
               width={480}
               height={192}
               alt="Logo Kemlu"
@@ -92,9 +92,9 @@ export default function Beranda() {
       {/* ABT */}
       <div className="bg-background flex flex-col gap-8 md:gap-16 md:flex-row px-6 pt-6 pb-16 md:px-28 md:pt-14 md:pb-28">
         <div className="md:basis-1/2">
-          <div className="bg-primary/5 rounded-xl p-6 h-full">
+          <div className="bg-primary/5 rounded-xl p-6 h-full flex justify-center">
           <Image
-            src="/image/logo-kemlu-bw.png"
+            src="/image/beranda3.png"
             width={480}
             height={192}
             alt="Logo Kemlu"

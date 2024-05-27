@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import { Table } from "./_components/table";
 import { TableSkeleteon } from "./_components/skeleton";
 
-
 export default async function Rekapitulasi () {
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
@@ -18,10 +17,7 @@ export default async function Rekapitulasi () {
           { label: "Rekapitulasi", href: "/admin/rekapitulasi", active: true },
         ]}
       />
-      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-        <h3>Rekapitulasi</h3>
-        {/* <MulaiPengusulan /> */}
-      </div>
+      <h3>Rekapitulasi</h3>
       <div className="py-6">
         <Suspense fallback={<TableSkeleteon/>}>
           <Table token={token} />

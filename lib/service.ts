@@ -33,6 +33,7 @@ export async function getProposal(token: string){
     }
   });
   const jsonResponse = await res.json();
+  console.log(jsonResponse);
   if (res.status === 200) {
     return jsonResponse.data;
   } else {

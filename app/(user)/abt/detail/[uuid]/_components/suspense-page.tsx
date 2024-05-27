@@ -8,10 +8,21 @@ export default async function SuspensePage({ uuid, token, }: { uuid: string; tok
 
   return (
     <Card className="p-8 space-y-6 ">
-      <div className="space-y-2">
-        <div>{detail?.status}</div>
-        <h4>{detail?.perihal}</h4>
-        <div className="text-textweak">{detail?.created_at}</div>
+      <div className="space-y-4">
+        <div>
+          <div className="text-textweak">Perihal</div>
+          <h3>{detail?.perihal}</h3>
+        </div>
+        <div className="flex gap-16">
+          <div>
+            <div className="text-textweak">Status</div>
+            <div className="font-semibold">{detail?.status}</div>
+          </div>
+          <div>
+            <div className="text-textweak">Tanggal Pengajuan</div>
+            <div className="font-semibold">{detail?.created_at}</div>
+          </div>
+        </div>
       </div>
       <PdfViewer uuid={uuid} token={token} />
     </Card>

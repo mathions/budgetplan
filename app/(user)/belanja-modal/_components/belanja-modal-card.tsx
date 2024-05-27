@@ -20,7 +20,7 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
                 Tahun Anggaran {data?.year}
               </div>
             </div>
-            <div>status</div>
+            <div>{data?.status}</div>
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:gap-6">
             <Link

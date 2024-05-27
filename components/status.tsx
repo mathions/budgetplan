@@ -1,40 +1,81 @@
-import {
-  CheckCircledIcon,
-  CircleIcon,
-  ClockIcon,
-  CrossCircledIcon,
-} from "@radix-ui/react-icons"
-
+import { InfoCircle, CloseCircle, Clock, TickCircle } from "iconsax-react"
 
 export const statuses = [
   {
     value: "Belum Diajukan",
+    label: "Belum Diajukan",
+    icon: InfoCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-red/5 border border-red/20 text-red",
+    classname: "h-4 w-4",
+  },
+  {
+    value: "Diajukan",
     label: "Diajukan",
-    icon: CircleIcon,
-    class: "flex items-center w-fit h-6 rounded-full px-2 bg-status1 text-[#FF7F05]",
-    classname: "mr-2 h-4 w-4",
+    icon: Clock,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-green/5 border border-green/20 text-green",
+    classname: "h-4 w-4 ",
   },
   {
-    value: "Diproses",
-    label: "Diproses",
-    icon: ClockIcon,
-    class: "flex items-center w-fit h-6 rounded-full px-2 bg-status2 text-[#28C76F]",
-    classname: "mr-2 h-4 w-4 ",
+    value: "Butuh Revisi",
+    label: "Butuh Revisi",
+    icon: InfoCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-amber/5 border border-amber/20 text-amber",
+    classname: "h-4 w-4 ",
   },
   {
-    value: "Ditolak",
-    label: "Ditolak",
-    icon: CrossCircledIcon,
-    class: "flex items-center w-fit h-6 rounded-full px-2 bg-status3 text-[#EA5455]",
-    classname: "mr-2 h-4 w-4 ",
+    value: "Sudah Direvisi",
+    label: "Sudah Direvisi",
+    icon: Clock,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-green/5 border border-green/20 text-green",
+    classname: "h-4 w-4 ",
   },
   {
     value: "Diterima",
     label: "Diterima",
-    icon: CheckCircledIcon,
-    class: "flex items-center w-fit h-6 rounded-full px-2 bg-status5 text-[#009BE8]",
-    classname: "mr-2 h-4 w-4 ",
+    icon: TickCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-blue/5 border border-blue/20 text-blue",
+    classname: "h-4 w-4 ",
+  },
+  {
+    value: "Selesai",
+    label: "Selesai",
+    icon: TickCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-blue/5 border border-blue/20 text-blue",
+    classname: "h-4 w-4 ",
   },
 ]
+
+export const statusesAbt = [
+  {
+    value: "Diajukan",
+    label: "Diajukan",
+    icon: InfoCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-amber/5 border border-amber/20 text-amber",
+    classname: "h-4 w-4",
+  },
+  {
+    value: "Diproses",
+    label: "Diproses",
+    icon: Clock,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-green/5 border border-green/20 text-green",
+    classname: "h-4 w-4 ",
+  },
+  {
+    value: "Ditolak",
+    label: "Ditolak",
+    icon: CloseCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1  gap-1 bg-red/5 border border-red/20 text-red",
+    classname: "h-4 w-4 ",
+  },
+  {
+    value: "Diterima",
+    label: "Diterima",
+    icon: TickCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-blue/5 border border-blue/20 text-blue",
+    classname: "h-4 w-4 ",
+  },
+]
+
+
 
 

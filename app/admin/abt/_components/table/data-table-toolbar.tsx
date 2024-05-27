@@ -1,11 +1,8 @@
 "use client"
-import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons"
+
 import { Table } from "@tanstack/react-table"
-
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
-import { statuses } from "./status"
+import { statusesAbt } from "@/components/status"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 
 interface DataTableToolbarProps<TData> {
@@ -32,7 +29,7 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title="Status"
-            options={statuses}
+            options={statusesAbt}
           />
         )}
       </div>

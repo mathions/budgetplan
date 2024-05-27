@@ -3,6 +3,23 @@ import { AbtTable, BelmodTable } from "./definitions";
 
 const url = "https://api.budgetplan.masuk.id/api/v1";
 
+//
+export async function getDashboard(token: string) {
+  const res = await fetch(`${url}/a/general-information/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return jsonResponse.data;
+  } else {
+    return res;
+  }
+}
+
 // BELANJA MODAL
 export async function createYear(token: string, year: string, deadline:string) {
   const res = await fetch(`${url}/a/year`, {
@@ -252,7 +269,6 @@ export async function getFilesAbt(token: string, uuid: string) {
       "Content-Type": "application/pdf",
     },
   });
-  console.log(res);
   return res;
 }
 
@@ -365,6 +381,23 @@ export async function getCurrency(token: string) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse);
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function getRecap(token: string) {
+  const res = await fetch(`${url}/a/recap`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();

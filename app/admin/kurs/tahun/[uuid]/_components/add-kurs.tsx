@@ -81,12 +81,12 @@ export function AddKurs({
           Tambah Kurs
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Tambah Kurs</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-2">
             <div className="space-y-4">
               <FormField
                 control={form.control}

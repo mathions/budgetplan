@@ -1,59 +1,65 @@
 "use client"
 
 import { useState } from "react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger,SelectValue,
-} from "@/components/ui/select"
+import { RabDashboard } from "@/lib/definitions";
+import { Check, ChevronsUpDown } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command"
+import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
-const data = [
-  {
-    area: 'Asia',
-    total: '13000000000',
-    kendaraan: '2700000000',
-    perkantoran: '1200000000',
-    komunikasi: '600000000',
-    bangunan: '8500000000'
-  },
-  {
-    area: 'Eropa',
-    total: '32000000000',
-    kendaraan: '2100000000',
-    perkantoran: '6200000000',
-    komunikasi: '200000000',
-    bangunan: '4500000000'
-  },
-  {
-    area: 'Afrika',
-    total: '32000000000',
-    kendaraan: '2100000000',
-    perkantoran: '6200000000',
-    komunikasi: '200000000',
-    bangunan: '4500000000'
-  }
-]
-
-export default function Rab() {
-  const [selectedArea, setSelectedArea] = useState('Asia');
-
-  const selectedData = data.find(item => item.area === selectedArea);
-
+export default function Rab({ data } : { data: RabDashboard[] }) {
+  const [rabData, setRabData] = useState<RabDashboard[]>(data);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("Semua");
+  const selectedData = data.find(item => item.area === value);
   return (
     <>
       <div className="rounded-xl border bg-card text-card-foreground p-6 space-y-6">
         <div className="flex justify-between">
         <div className=" text-xl font-semibold">Rencana Anggaran Biaya</div>
-            <Select onValueChange={setSelectedArea} >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Pilih wilayah" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Wilayah</SelectLabel>
-              <SelectItem value="Asia">Asia</SelectItem>
-              <SelectItem value="Eropa">Eropa</SelectItem>
-              <SelectItem value="Afrika">Afrika</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-[200px] justify-between"
+              >
+                {value
+                  ? rabData.find((rab) => rab.area === value)?.area
+                  : "Pilih wilayah"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+              <Command>
+                <CommandInput placeholder="Pilih wilayah..." />
+                <CommandEmpty>Wilayah tidak ditemukan.</CommandEmpty>
+                <CommandGroup>
+                  {rabData.map((rab) => (
+                    <CommandItem
+                      key={rab.area}
+                      value={rab.area}
+                      onSelect={() => {
+                        setValue(rab.area)
+                        setOpen(false)
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === rab.area ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {rab.area}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
         </div>
         {selectedData && (
         <div className="space-y-4">
@@ -61,33 +67,32 @@ export default function Rab() {
             <div className="text-textweak">
               Layanan Sarana dan Prasarana Internal
             </div>
-            <h3>{selectedData.total}</h3>
+            <h3>Rp {selectedData.total.toLocaleString("id-ID")}</h3>
           </div>
           <div className="md:grid grid-cols-2 gap-4">
             <div className="col-span-1 space-y-4">
               <div className="border border-strokeweak rounded-xl px-4 py-5 space-y-2">
                 <div className="text-textweak">Kendaraan Bermotor</div>
-                <h5>{selectedData.kendaraan}</h5>
+                <h5>Rp {selectedData.kendaraan.toLocaleString("id-ID")}</h5>
               </div>
               <div className="border border-strokeweak rounded-xl px-4 py-5 space-y-2">
                 <div className="text-textweak">Perangkat Pengolah Data dan Komunikasi</div>
-                <h5>{selectedData.komunikasi}</h5>
+                <h5>Rp {selectedData.perangkat.toLocaleString("id-ID")}</h5>
               </div>
             </div>
             <div className="col-span-1 space-y-4">
               <div className="border border-strokeweak rounded-xl px-4 py-5 space-y-2">
                 <div className="text-textweak">Peralatan Fasilitas Perkantoran</div>
-                <h5>{selectedData.perkantoran}</h5>
+                <h5>Rp {selectedData.peralatan.toLocaleString("id-ID")}</h5>
               </div>
               <div className="border border-strokeweak rounded-xl px-4 py-5 space-y-2">
                 <div className="text-textweak">Pembangunan Gedung dan Bangunan</div>
-                <h5>{selectedData.bangunan}</h5>
+                <h5>Rp {selectedData.pembangunan.toLocaleString("id-ID")}</h5>
               </div>
             </div>
           </div>
         </div>
         )}
-        {selectedArea}
       </div>
     </>
   );

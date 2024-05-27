@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { statuses } from "./status"
+import { statusesAbt } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { AbtTable } from "@/lib/definitions"
@@ -34,7 +34,7 @@ export const columns: ColumnDef<AbtTable>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      const status = statuses.find(
+      const status = statusesAbt.find(
         (status) => status.value === row.getValue("status")
       )
 
@@ -64,9 +64,9 @@ export const columns: ColumnDef<AbtTable>[] = [
     <DataTableColumnHeader column={column} title="" />
   ),
   cell: ({ row }) => 
-    <div className="text-xs">
-      <Button asChild variant="ghost" className="h-8 px-3 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary">
-        <Link href={`/abt/detail/${row.getValue("uuid")}`} className="text-sm">Lihat Detail</Link>
+    <div className="">
+      <Button variant="link">
+        <Link href={`/abt/detail/${row.getValue("uuid")}`}>Detail</Link>
       </Button>
     </div>,
   enableSorting: false,

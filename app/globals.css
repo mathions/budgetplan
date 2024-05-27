@@ -19,6 +19,10 @@
     --strokestrong: 230 23% 74%;
     --strokeweak: 228 25% 92%;
     --fill: 228 33% 97%;
+    --red: 0 58% 50%;
+    --amber: 42 69% 33%;
+    --green: 162 91% 25%;
+    --blue: 224 63% 43%;
     --background: 0 0% 100%;
     --foreground: 229 40% 17%;
     --card: 0 0% 100%;
@@ -48,6 +52,10 @@
     --strokestrong: 229 17% 62%;
     --strokeweak: 229 16% 41%;
     --fill: 229 40% 17%;
+    --red: 0 58% 50%;
+    --amber: 42 69% 33%;
+    --green: 162 91% 25%;
+    --blue: 224 63% 43%;
     --background: 230 14% 13%;
     --foreground: 0 0% 98%;
     --card: 230 14% 13%;

@@ -28,6 +28,10 @@ const config = {
         strokestrong: "hsl(var(--strokestrong))",
         strokeweak: "hsl(var(--strokeweak))",
         fill: "hsl(var(--bg))",
+        red: "hsl(var(--red))",
+        amber: "hsl(var(--amber))",
+        green: "hsl(var(--green))",
+        blue: "hsl(var(--blue))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

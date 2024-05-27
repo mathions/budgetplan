@@ -5,7 +5,7 @@ import { Table } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-import { statuses } from "./status"
+import { statusesAbt } from "@/components/status"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import Link from "next/link"
 
@@ -32,8 +32,8 @@ export function DataTableToolbar<TData>({
         {table.getColumn("status") && (
           <DataTableFacetedFilter
             column={table.getColumn("status")}
-            title=""
-            options={statuses}
+            title="Status"
+            options={statusesAbt}
           />
         )}
       </div>

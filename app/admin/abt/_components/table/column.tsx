@@ -3,12 +3,10 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { statuses } from "./status"
+import { statusesAbt } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { AbtTable } from "@/lib/definitions"
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 export const columns: ColumnDef<AbtTable>[] = [
   {
@@ -42,7 +40,7 @@ export const columns: ColumnDef<AbtTable>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      const status = statuses.find(
+      const status = statusesAbt.find(
         (status) => status.value === row.getValue("status")
       )
 

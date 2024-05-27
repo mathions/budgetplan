@@ -7,11 +7,7 @@ import { YearTableSkeleteon } from "./_components/skeleton";
 import { getCurrency } from "@/lib/service-admin";
 import { AddKurs } from "./_components/add-kurs";
 
-export default async function KursTahun({
-  params,
-}: {
-  params: { uuid: string };
-}) {
+export default async function KursTahun({ params, }: { params: { uuid: string };}) {
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
   const uuid = params.uuid;
@@ -23,12 +19,9 @@ export default async function KursTahun({
           { label: "Kurs", href: "/admin/kurs", active: true },
         ]}
       />
-      <h3>Kurs</h3>
-      <div className="py-6">
         <Suspense fallback={<YearTableSkeleteon />}>
           <KursTable token={token} uuid={uuid} />
         </Suspense>
-      </div>
     </div>
   );
 }
