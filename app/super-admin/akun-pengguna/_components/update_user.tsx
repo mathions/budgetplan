@@ -35,10 +35,13 @@ const FormSchema = z.object({
   area: z.string({
     required_error: "Area belum terisi.",
   }),
+  country: z.string({
+    required_error: "Negara belum terisi.",
+  }),
 });
 
-export function UpdateUser({ username1, role1, name1, office1, office_code1, area1, uuid }: 
-  { username1: string, role1:string, name1:string, office1:string, office_code1:string, area1:string, uuid:string }) {
+export function UpdateUser({ username1, role1, name1, office1, office_code1, country1, area1, uuid }: 
+  { username1: string, role1:string, name1:string, office1:string, office_code1:string, country1:string, area1:string, uuid:string }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
@@ -54,6 +57,7 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
       office: office1,
       office_code: office_code1,
       area: area1,
+      country: country1,
     },
   });
 
@@ -155,6 +159,19 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Kode Perwakilan</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Negara</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

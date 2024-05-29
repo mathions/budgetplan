@@ -115,7 +115,8 @@ export default function RAB({
     const newItemsData = itemsData.map((item) => {
       const { no_urut, output_number, output, code, account, ...rest } = item;
       return rest;
-    });
+    }).filter(item => !(item.uraian === '' || item.jumlah === 0 || item.harga_satuan === 0));
+
     console.log(newItemsData);
     setIsSaveLoading(true);
     try {
