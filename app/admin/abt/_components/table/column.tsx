@@ -27,7 +27,7 @@ export const columns: ColumnDef<AbtTable>[] = [
   },
   {
     accessorKey: "perihal",
-    size: 300,
+    size: 400,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Perihal" />
     ),
@@ -49,12 +49,12 @@ export const columns: ColumnDef<AbtTable>[] = [
       }
 
       return (
-        <div className="flex w-[150px] items-center ml-4">
+        <div className="flex items-center ml-4">
           <div className={status.class}>
             {status.icon && (
               <status.icon className={status.classname} />
             )}
-            <span>{status.label}</span>
+            <span className="text-sm">{status.label}</span>
           </div>
         </div>
       )
@@ -70,7 +70,7 @@ export const columns: ColumnDef<AbtTable>[] = [
     <DataTableColumnHeader column={column} title="" />
   ),
   cell: ({ row }) => 
-    <div>
+    <div className="flex justify-center">
       <Button asChild variant="link">
         <Link href={`/admin/abt/detail/${row.getValue("uuid")}`}>Detail</Link>
       </Button>

@@ -76,11 +76,11 @@ export interface GroupedItems {
 
 export type RabDashboard = {
   area: string;
-  total: number;
   kendaraan: number;
   perangkat: number;
   peralatan: number;
   pembangunan: number;
+  total: number;
 }
 
 export type Akun = {

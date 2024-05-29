@@ -1,30 +1,20 @@
 "use client";
+
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Add, Edit } from "iconsax-react";
+import { Edit } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { postCurrency } from "@/lib/service-super-admin";
+import { updateUser } from "@/lib/service-super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const FormSchema = z.object({
   username: z.string({
@@ -53,6 +43,7 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -67,28 +58,29 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // setIsLoading(true);
-    // try {
-    //   const res = await updateCurrency(token, data);
-    //   console.log(res);
-    //   if (res.status === 201) {
-    //     setIsLoading(false);
-    //     setOpen(false);
-    //     window.location.reload();
-    //     toast({
-    //       title: "Mata uang berhasil ditambahkan",
-    //     });
-    //   } else {
-    //     setIsLoading(false);
-    //     setOpen(false);
-    //     toast({
-    //       title: "Gagal menambahkan mata uang",
-    //       variant: "destructive",
-    //     });
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    setIsLoading(true);
+    try {
+      const res = await updateUser(token, uuid, data);
+      console.log(res);
+      if (res.ok) {
+        setIsLoading(false);
+        setOpen(false);
+        router.refresh();
+        toast({
+          title: "Akun pengguna berhasil diubah",
+        });
+      } else {
+        setIsLoading(false);
+        setOpen(false);
+        toast({
+          title: "Gagal mengubah akun pengguna",
+          description: res.message,
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -98,12 +90,13 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
           <Edit className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[480px] pl-4 pr-2">
+        <DialogHeader className="px-2">
           <h4>Ubah Akun Pengguna</h4>
         </DialogHeader>
+        <ScrollArea className="max-h-[80vh] pr-2">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2 px-2">
           <FormField
               control={form.control}
               name="username"
@@ -182,7 +175,7 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4 pt-4">
+            <div className="flex justify-start gap-4 pt-2">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -195,6 +188,7 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, are
             </div>
           </form>
         </Form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

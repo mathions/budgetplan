@@ -76,6 +76,35 @@ export const statusesAbt = [
   },
 ]
 
+export const Status = ({ statuss }: { statuss: string }) => {
+  const status = statuses.find(
+    (status) => status.value === statuss
+  );
+  if (!status) {
+    return null;
+  }
+  return (
+    <div className={status.class}>
+      {status.icon && <status.icon className={status.classname} />}
+      <span className="text-sm">{status.label}</span>
+    </div>
+  );
+}
+
+export const StatusAbt = ({ statuss }: { statuss: string }) => {
+  const status = statusesAbt.find(
+    (status) => status.value === statuss
+  );
+  if (!status) {
+    return null;
+  }
+  return (
+    <div className={status.class}>
+      {status.icon && <status.icon className={status.classname} />}
+      <span className="text-sm">{status.label}</span>
+    </div>
+  );
+}
 
 
 

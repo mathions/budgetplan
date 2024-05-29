@@ -30,11 +30,10 @@ export async function postUser(token: string, data:any){
     body: JSON.stringify(data),
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 201) {
+  if (res.ok) {
     return res;
   } else {
-    return res;
+    return jsonResponse;
   }
 }
 
@@ -46,11 +45,27 @@ export async function deleteUser(token: string, uuid:string){
     },
   });
   const jsonResponse = await res.json();
-  console.log(res)
-  if (res.status === 200) {
+  if (res.ok) {
     return res;
   } else {
+    return jsonResponse;
+  }
+}
+
+export async function updateUser(token: string, uuid: string, data:any){
+  const res = await fetch(`${url}/sa/user/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
     return res;
+  } else {
+    return jsonResponse;
   }
 }
 
@@ -83,11 +98,10 @@ export async function postAccount(token: string, data:any){
     body: JSON.stringify(data),
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
-  if (res.status === 200) {
+  if (res.ok) {
     return res;
   } else {
-    return res;
+    return jsonResponse;
   }
 }
 
@@ -99,11 +113,27 @@ export async function deleteAccount(token: string, uuid:string){
     },
   });
   const jsonResponse = await res.json();
-  console.log(res)
-  if (res.status === 200) {
+  if (res.ok) {
     return res;
   } else {
+    return jsonResponse;
+  }
+}
+
+export async function updateAccount(token: string, uuid: string, data:any){
+  const res = await fetch(`${url}/sa/account/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
     return res;
+  } else {
+    return jsonResponse;
   }
 }
 
@@ -129,15 +159,42 @@ export async function postCurrency(token: string, data:any){
     },
     body: JSON.stringify(data),
   });
-  return res;
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
 }
 
 export async function deleteCurrency(token: string, uuid:string){
-  const res = await fetch(`${url}/sa/currency/${uuid}/?_method=DELETE`, {
+  const res = await fetch(`${url}/sa/currency/${uuid}?_method=DELETE`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
     },
   });
-  return res;
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function updateCurrency(token: string, uuid: string, data:any){
+  const res = await fetch(`${url}/sa/currency/${uuid}?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
 }

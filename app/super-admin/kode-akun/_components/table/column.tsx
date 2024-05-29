@@ -2,10 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { Account } from "@/lib/definitions"
-import { Trash } from "iconsax-react"
 import { DeleteAccount } from "../delete-account"
 import { UpdateAccount } from "../update-account"
 
@@ -20,7 +17,7 @@ export const columns: ColumnDef<Account>[] = [
   },
   {
     accessorKey: "account_name",
-    size: 300,
+    size: 450,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Uraian Akun" />
       ),
@@ -29,13 +26,13 @@ export const columns: ColumnDef<Account>[] = [
   {
     accessorKey: "uuid",
     enableResizing: false,
-    size: 100,
+    size: 150,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title=""/>
     ),
     cell: ({ row }) => 
-      <div className="flex w-full gap-2 justify-start">
-        <UpdateAccount number={row.getValue("account_code")} name={row.getValue("account_name")} uuid={row.getValue("uuid")} />
+      <div className="flex w-full justify-center gap-4">
+        <UpdateAccount key={row.getValue("uuid")} number={row.getValue("account_code")} name={row.getValue("account_name")} uuid={row.getValue("uuid")} />
         <DeleteAccount uuid={row.getValue("uuid")}/>
       </div>,
     enableSorting: false,

@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { getProposal } from "@/lib/service";
 import { DocumentUpload, TableDocument } from "iconsax-react";
+import { Status } from "@/components/status";
 
 export default async function BelanjaModalCard({ token }: { token: any }) {
   const data = await getProposal(token);
@@ -20,14 +21,14 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
                 Tahun Anggaran {data?.year}
               </div>
             </div>
-            <div>{data?.status}</div>
+            <div><Status statuss={data?.status}/></div>
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:gap-6">
             <Link
               href={`/belanja-modal/usulan/${data?.uuid}`}
               className="w-fit h-fit"
             >
-              <Card className="p-6 space-y-2">
+              <Card className="p-6 space-y-2 hover:shadow-md">
                 <div className="p-4 rounded-full bg-primary/5 w-fit h-fit">
                   <DocumentUpload className="w-[60px] h-[60px] text-primary" />
                 </div>
@@ -42,7 +43,7 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
               href={`/belanja-modal/penyesuaian/${data?.uuid}`}
               className="w-fit h-fit"
             >
-              <Card className="p-6 space-y-2">
+              <Card className="p-6 space-y-2 hover:shadow-md">
                 <div className="p-4 rounded-full bg-primary/5 w-fit h-fit">
                   <TableDocument className="w-[60px] h-[60px] text-primary" />
                 </div>

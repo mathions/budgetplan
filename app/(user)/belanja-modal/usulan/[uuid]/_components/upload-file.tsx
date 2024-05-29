@@ -4,28 +4,15 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { postFiles } from "@/lib/service";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogClose,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Add, ExportCurve } from "iconsax-react";
+import { ExportCurve } from "iconsax-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogClose, DialogTrigger, } from "@/components/ui/dialog";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
+import { Icons } from "@/components/icons";
 
 const FormSchema = z.object({
   file: z.instanceof(File, { message: "Belum ada berkas terpilih." }),
@@ -50,6 +37,7 @@ export function UploadFile({ uuid, token }: { uuid: string; token: string }) {
         setIsLoading(false);
         setOpen(false);
         router.refresh();
+        form.reset();
         toast({
           title: "Berkas berhasil diunggah",
         });
@@ -74,12 +62,12 @@ export function UploadFile({ uuid, token }: { uuid: string; token: string }) {
           Unggah Berkas
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] space-y-4">
+      <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <h4>Unggah Berkas</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <FormField
               control={form.control}
               name="file"
@@ -94,14 +82,19 @@ export function UploadFile({ uuid, token }: { uuid: string; token: string }) {
                     }
                   />
                   <FormControl></FormControl>
+                  <FormDescription>Format yang diterima .pdf, .xlsx, .xls, .dan .zip.</FormDescription>
+                  <FormDescription>Ukuran maksimal 10 mb.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4">
-              {/* <DialogClose asChild>
-              </DialogClose> */}
-                <Button type="submit">Unggah Berkas</Button>
+            <div className="flex justify-start gap-4 pt-2">
+              <Button disabled={isLoading} type="submit">
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Unggah Berkas
+              </Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>
               </DialogClose>

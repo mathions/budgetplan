@@ -476,7 +476,7 @@ export default function PenyesuaianRAB({
               <TableCell>Layanan PraSarana Internal</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
-              <TableCell>Rp</TableCell>
+              <TableCell className="text-right">Rp</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow className="font-semibold">

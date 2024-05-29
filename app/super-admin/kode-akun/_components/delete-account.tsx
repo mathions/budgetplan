@@ -21,7 +21,7 @@ export function DeleteAccount({ uuid }: { uuid:string }) {
     try {
       const res = await deleteAccount(token, uuid);
       console.log(res);
-      if (res.status === 200) {
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
         router.refresh();
@@ -33,6 +33,7 @@ export function DeleteAccount({ uuid }: { uuid:string }) {
         setOpen(false);
         toast({
           title: "Gagal menghapus kode akun",
+          description: res.message,
           variant: "destructive",
         });
       }

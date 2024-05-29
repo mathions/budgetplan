@@ -48,7 +48,7 @@ export const columns: ColumnDef<AbtTable>[] = [
             {status.icon && (
               <status.icon className={status.classname} />
             )}
-            <span>{status.label}</span>
+            <span className="text-sm">{status.label}</span>
           </div>
         </div>
       )

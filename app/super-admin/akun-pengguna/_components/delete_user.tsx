@@ -1,16 +1,12 @@
 "use client";
+
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
 import { Trash } from "iconsax-react";
 import { toast } from "@/components/ui/use-toast";
 import { deleteUser } from "@/lib/service-super-admin";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
@@ -19,16 +15,17 @@ export function DeleteUser({ uuid }: { uuid:string }) {
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   async function handleDelete() {
     setIsLoading(true);
     try {
       const res = await deleteUser(token, uuid);
       console.log(res);
-      if (res.status === 200) {
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
         toast({
           title: "Akun pengguna berhasil dihapus",
         });
@@ -37,6 +34,7 @@ export function DeleteUser({ uuid }: { uuid:string }) {
         setOpen(false);
         toast({
           title: "Gagal menghapus akun pengguna",
+          description: res.message,
           variant: "destructive",
         });
       }

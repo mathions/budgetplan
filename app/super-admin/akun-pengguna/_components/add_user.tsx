@@ -1,26 +1,15 @@
 "use client";
+
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Add, AddSquare } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { postUser } from "@/lib/service-super-admin";
 import { useState } from "react";
@@ -59,6 +48,7 @@ export function AddUser() {
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -69,10 +59,11 @@ export function AddUser() {
     try {
       const res = await postUser(token, data);
       console.log(res);
-      if (res.status === 201) {
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
+        form.reset();
         toast({
           title: "Akun pengguna berhasil dibuat",
         });
@@ -81,6 +72,7 @@ export function AddUser() {
         setOpen(false);
         toast({
           title: "Gagal membuat akun pengguna",
+          description: res.messsage,
           variant: "destructive",
         });
       }
@@ -97,13 +89,13 @@ export function AddUser() {
           <span className="hidden md:flex ml-2">Buat Akun</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] space-y-4">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[480px] pl-4 pr-2">
+        <DialogHeader className="px-2">
           <h4>Buat Akun Pengguna</h4>
         </DialogHeader>
-        <ScrollArea className="max-h-[80vh] pr-4">
+        <ScrollArea className="max-h-[80vh] pr-2">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-1">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2 px-2">
             <FormField
               control={form.control}
               name="username"
@@ -208,7 +200,7 @@ export function AddUser() {
                 </FormItem>
               )}
             />
-            <div className="flex justify-start gap-4 pt-4">
+            <div className="flex justify-start gap-4 pt-2">
               <Button disabled={isLoading} type="submit">
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

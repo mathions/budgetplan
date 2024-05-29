@@ -38,6 +38,7 @@ export function DeleteCurrency({ uuid }: { uuid:string }) {
         setOpen(false);
         toast({
           title: "Gagal menghapus mata uang",
+          description: res.message,
           variant: "destructive",
         });
       }

@@ -10,7 +10,7 @@ export default async function Page() {
         {/* <h1 className="text-center">Pengelola</h1> */}
         <div className="grid md:grid-cols-3 gap-4">
           <Link href="/super-admin/akun-pengguna" className="h-fit">
-            <Card className="p-6 space-y-2">
+            <Card className="p-6 space-y-2 hover:shadow-md">
               <div className="p-4 rounded-full bg-primary/5 w-fit h-fit">
                 <Profile2User className="w-[60px] h-[60px] text-primary" />
               </div>
@@ -21,7 +21,7 @@ export default async function Page() {
             </Card>
           </Link>
           <Link href="/super-admin/kode-akun" className="h-fit">
-            <Card className="p-6 space-y-2">
+            <Card className="p-6 space-y-2 hover:shadow-md">
               <div className="p-4 rounded-full bg-primary/5 w-fit h-fit">
                 <Note className="w-[60px] h-[60px] text-primary" />
               </div>
@@ -32,7 +32,7 @@ export default async function Page() {
             </Card>
           </Link>
           <Link href="/super-admin/mata-uang" className="h-fit">
-            <Card className="p-6 space-y-2">
+            <Card className="p-6 space-y-2 hover:shadow-md">
               <div className="p-4 rounded-full bg-primary/5 w-fit h-fit">
                 <Money className="w-[60px] h-[60px] text-primary" />
               </div>

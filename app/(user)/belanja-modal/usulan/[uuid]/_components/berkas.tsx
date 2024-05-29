@@ -88,7 +88,7 @@ export default function Berkas({
   }
 
   return (
-    <div className="col-span-1 border border-strokeweak rounded-xl p-4">
+    <div className="col-span-1 border border-strokeweak rounded-xl p-4 hover:bg-fill">
       <div className="flex justify-between">
       <div>{truncatedPath}</div>
       <div>

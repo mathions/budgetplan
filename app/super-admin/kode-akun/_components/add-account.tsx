@@ -40,7 +40,7 @@ export function AddAccount() {
     try {
       const res = await postAccount(token, data);
       console.log(res);
-      if (res.status === 200) {
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
         router.refresh();
@@ -53,6 +53,7 @@ export function AddAccount() {
         setOpen(false);
         toast({
           title: "Gagal menambahkan kode akun",
+          description: res.message,
           variant: "destructive",
         });
       }

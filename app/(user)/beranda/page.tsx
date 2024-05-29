@@ -55,7 +55,7 @@ export default function Beranda() {
       </div>
 
       {/* Belanja Modal */}
-      <div className="bg-background flex flex-col-reverse gap-8 md:gap-16 md:flex-row px-6 pb-6 pt-16 md:p-28 md:pb-14">
+      <div className="bg-background flex flex-col-reverse gap-8 md:gap-16 md:flex-row px-6 pb-6 pt-16 md:p-28 md:pb-14 md:pt-32">
         <div className="md:basis-1/2 flex flex-col gap-4">
           <div className="flex flex-col gap-3 md:w-9/12 ">
             <div className="bg-primary/15 px-3 py-2 w-fit rounded-md">
@@ -90,7 +90,7 @@ export default function Beranda() {
       </div>
 
       {/* ABT */}
-      <div className="bg-background flex flex-col gap-8 md:gap-16 md:flex-row px-6 pt-6 pb-16 md:px-28 md:pt-14 md:pb-28">
+      <div className="bg-background flex flex-col gap-8 md:gap-16 md:flex-row px-6 pt-6 pb-16 md:px-28 md:pt-14 md:pb-36">
         <div className="md:basis-1/2">
           <div className="bg-primary/5 rounded-xl p-6 h-full flex justify-center">
           <Image

@@ -9,7 +9,7 @@ import { UpdateCurrency } from "../update-currency"
 export const columns: ColumnDef<Currency>[] = [
   {
     accessorKey: "name",
-    size: 300,
+    size: 250,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Mata Uang" />
     ),
@@ -17,7 +17,7 @@ export const columns: ColumnDef<Currency>[] = [
   },
   {
     accessorKey: "initial",
-    size: 100,
+    size: 150,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Kode" />
       ),
@@ -31,8 +31,8 @@ export const columns: ColumnDef<Currency>[] = [
       <DataTableColumnHeader column={column} title=""/>
     ),
     cell: ({ row }) => 
-      <div className="flex w-full justify-start gap-2">
-        <UpdateCurrency name1={row.getValue("name")} initial1={row.getValue("initial")} uuid={row.getValue("uuid")}/>
+      <div className="flex w-full justify-center gap-4">
+        <UpdateCurrency key={row.getValue("uuid")} name1={row.getValue("name")} initial1={row.getValue("initial")} uuid={row.getValue("uuid")}/>
         <DeleteCurrency uuid={row.getValue("uuid")}/>
       </div>,
     enableSorting: false,
