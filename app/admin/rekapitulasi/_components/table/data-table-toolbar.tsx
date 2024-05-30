@@ -22,18 +22,19 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
+        <Input
+          placeholder="Cari perwakilan..."
+          value={(table.getColumn("office")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("office")?.setFilterValue(event.target.value)
+          }
+          className="h-10 flex flex-1 bg-background"
+        />
         {table.getColumn("year") && (
           <DataTableFacetedFilter
             column={table.getColumn("year")}
-            title="Tahun Anggaran"
+            title="Tahun"
             options={years}
-          />
-        )}
-        {table.getColumn("office") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("office")}
-            title="Satuan Kerja"
-            options={offices}
           />
         )}
         {table.getColumn("code") && (

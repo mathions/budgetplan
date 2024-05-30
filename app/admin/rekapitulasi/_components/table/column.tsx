@@ -18,7 +18,7 @@ export const columns: ColumnDef<Rekapitulasi>[] = [
     accessorKey: "office",
     size: 100,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Satuan Kerja" />
+      <DataTableColumnHeader column={column} title="Perwakilan" />
     ),
     cell: ({ row }) => <div className="ml-4">{row.getValue("office")}</div>
   },

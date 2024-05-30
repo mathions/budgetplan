@@ -18,7 +18,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "initial",
-    size: 100,
+    size: 150,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Kode" className="ml-4"/>
     ),
@@ -31,7 +31,7 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nilai Tukar" className="text-right"/>
     ),
-    cell: ({ row }) => <div className="ml-4 text-right">{row.getValue("value")}</div>,
+    cell: ({ row }) => <div className="ml-4 text-right">Rp {(row.getValue("value") as number).toLocaleString("id-ID")}</div>,
     enableSorting: false,
   },
   
@@ -43,8 +43,8 @@ export const columns: ColumnDef<User>[] = [
       <DataTableColumnHeader column={column} title=""/>
     ),
     cell: ({ row }) => 
-      <div className="text-xs flex w-full justify-center gap-2">
-        <UpdateKurs name={row.getValue("name")} value={row.getValue("value")} uuid={row.getValue("uuid")}/>
+      <div className="text-xs flex w-full justify-center gap-4">
+        <UpdateKurs key={row.getValue("uuid")} name={row.getValue("name")} value={row.getValue("value")} uuid={row.getValue("uuid")}/>
         <DeleteKurs uuid={row.getValue("uuid")}/>
       </div>,
     enableSorting: false,

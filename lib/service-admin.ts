@@ -303,7 +303,7 @@ export async function getKurs(token: string, uuid: string) {
   const jsonResponse = await res.json();
   console.log(jsonResponse);
   if (res.status === 200) {
-    return jsonResponse.data;
+    return jsonResponse;
   } else {
     return jsonResponse;
   }
@@ -407,4 +407,15 @@ export async function getRecap(token: string) {
   } else {
     return jsonResponse;
   }
+}
+
+export async function getExcelRekap(token: string, year:string){
+  const res = await fetch(`${url}/a/recap/excel/${year}`, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
+  });
+  console.log(res)
+  return res;
 }

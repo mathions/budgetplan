@@ -78,7 +78,7 @@ export function AddKurs({
       <DialogTrigger asChild>
         <Button variant="default">
           <AddSquare className="mr-2 h-5 w-5" />
-          Tambah Kurs
+          Tambah
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
