@@ -1,6 +1,27 @@
 import { Card } from '@/components/ui/card';
 
+const tags = [
+  {
+    id: "tag1",
+    label: "Penyampaian usulan telah sesuai",
+  },
+  {
+    id: "tag2",
+    label: "Terdapat kesalahan penulisan pada brafaks",
+  },
+  {
+    id: "tag3",
+    label: "Rencana anggaran biaya terlalu besar",
+  },
+  {
+    id: "tag4",
+    label: "Lampiran pendukung tidak lengkap",
+  },
+] as const;
+
 export default function Detail({proposal} : {proposal: any}) {
+  const tagLabels = proposal?.tag ? proposal.tag.map((tagId: string) => tags.find(t => t.id === tagId)?.label) : [];
+
   return(
     <Card className="p-8 space-y-2">
       <div className="">
@@ -17,9 +38,8 @@ export default function Detail({proposal} : {proposal: any}) {
       </div>
       <div>
         <div className="text-textweak">Umpan Balik</div>
-        <div className="font-semibold">{proposal?.tag}</div>
+        {tagLabels && tagLabels.map((label: string, index: number) => <div key={index} className="font-semibold">{label}</div>)}
         <div className="font-semibold">{proposal?.note}</div>
-        <div className="font-semibold">Terdapat kekurangan pada brafaks</div>
       </div>
     </Card>
   )

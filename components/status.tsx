@@ -23,8 +23,8 @@ export const statuses = [
     classname: "h-4 w-4 ",
   },
   {
-    value: "Sudah Direvisi",
-    label: "Sudah Direvisi",
+    value: "Direvisi",
+    label: "Direvisi",
     icon: Clock,
     class: "flex items-center rounded-full py-1 px-2 gap-1 bg-green/5 border border-green/20 text-green",
     classname: "h-4 w-4 ",

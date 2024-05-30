@@ -43,9 +43,7 @@ const FormSchema = z.object({
   tag: z.array(z.string()).refine((value) => value.some((tag) => tag), {
     message: "Pilih minimal satu tag",
   }),
-  note: z.string({
-    required_error: "Catatan perlu diisi",
-  }),
+  note: z.string().optional(),
 });
 
 export default function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {

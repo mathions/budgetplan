@@ -212,6 +212,17 @@ export async function deleteFile(token: string, uuidProposal:string, uuidFile:st
   return res;
 }
 
+export async function getExcelUsulan(token: string, uuid:string){
+  const res = await fetch(`${url}/proposal/${uuid}/export?category=proposal`, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
+  });
+  console.log(res)
+  return res;
+}
+
 // PENYESUAIAN
 export async function getPenyesuaian(token: string, uuid: string) {
   const res = await fetch(`${url}/proposal/${uuid}/approved`, {

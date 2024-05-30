@@ -8,7 +8,7 @@ import { CloseSquare, DirectInbox, AddCircle, CloseCircle, Trash, Note, DollarCi
 import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from "@/components/ui/table-rab";
 import { Input } from "@/components/ui/input-rab";
 import { GrupItem, Item, Akun, MataUang, Kurs } from "@/lib/definitions";
-import { postItems, updateKurs } from "@/lib/service";
+import { getExcelUsulan, postItems, updateKurs } from "@/lib/service";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogClose } from "@/components/ui/dialog";
@@ -133,6 +133,39 @@ export default function RAB({
         toast({
           title: "Gagal menyimpan RAB",
           description: res.message,
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function exportUsulan() {
+    setIsExportLoading(true);
+    try {
+      const res = await getExcelUsulan(token, uuid);
+      console.log(res);
+      if (res.ok) {
+        const pdfBlob = await res.blob();
+        const url = window.URL.createObjectURL(new Blob([pdfBlob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'RAB.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        if (link.parentNode) {
+          link.parentNode.removeChild(link);
+        }
+        window.URL.revokeObjectURL(url);
+        setIsExportLoading(false);
+          toast({
+            title: "RAB berhasil diekspor",
+          });
+      } else {
+        setIsExportLoading(false);
+        toast({
+          title: "Gagal mengekspor RAB",
           variant: "destructive",
         });
       }
@@ -441,7 +474,7 @@ export default function RAB({
         <h4>Rencana Anggaran Biaya</h4>
         <div className="flex gap-4">
           <ChangeCurrency/>
-          <Button variant="secondary" disabled={isExportLoading} onClick={saveItem}>{isExportLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
+          <Button variant="secondary" disabled={isExportLoading} onClick={exportUsulan}>{isExportLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
             Ekspor
           </Button>
           <Button variant="secondary" disabled={isSaveLoading} onClick={saveItem}>{isSaveLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
