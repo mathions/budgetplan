@@ -5,7 +5,7 @@ export const statuses = [
     value: "Belum Diajukan",
     label: "Belum Diajukan",
     icon: InfoCircle,
-    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-red/5 border border-red/20 text-red",
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-amber/5 border border-amber/20 text-amber",
     classname: "h-4 w-4",
   },
   {
