@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { UploadFile } from "./upload-file";
 import Berkas from "./berkas";
 
-export default function Brafaks({ uuid, token, files } : { uuid: string, token: string, files: any }) {
+export default function Brafaks({ uuid, token, files = [] } : { uuid: string, token: string, files: any }) {
 
   return (
     <Card className="p-8 space-y-6">

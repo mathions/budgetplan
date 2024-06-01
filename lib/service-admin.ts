@@ -33,7 +33,13 @@ export async function createYear(token: string, year: string, deadline:string) {
       deadline: deadline,
     }),
   });
-  return res.json();
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
 }
 
 export async function getProposal(token: string): Promise<BelmodTable[]> {

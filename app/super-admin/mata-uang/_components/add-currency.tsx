@@ -99,7 +99,7 @@ export function AddCurrency() {
                 <FormItem className="flex flex-col">
                   <FormLabel>Kode</FormLabel>
                   <FormControl>
-                    <Input {...field} autoCapitalize="on" />
+                    <Input {...field} style={{ textTransform: "uppercase" }} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

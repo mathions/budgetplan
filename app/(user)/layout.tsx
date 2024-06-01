@@ -3,6 +3,8 @@ import Navbar from "@/components/header/user/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/header/user/footer";
+import Error from "./error";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export const metadata: Metadata = {
   title: "Budgetplan",
@@ -21,7 +23,9 @@ export default function Layout({
     <div className="relative flex h-full flex-col bg-bg">
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Navbar />
-        <div className="w-full min-h-screen">{children}</div>
+        <ErrorBoundary errorComponent={Error}>
+          <div className="w-full min-h-screen">{children}</div>
+        </ErrorBoundary>
         <Footer />
         <Toaster />
       </ThemeProvider>

@@ -32,13 +32,7 @@ export async function getProposal(token: string){
         'Authorization': `Bearer ${token}`
     }
   });
-  const jsonResponse = await res.json();
-  console.log(jsonResponse);
-  if (res.status === 200) {
-    return jsonResponse.data;
-  } else {
-    return jsonResponse;
-  }
+  return res;
 }
 
 export async function updateStatus(token:string, uuid:string){

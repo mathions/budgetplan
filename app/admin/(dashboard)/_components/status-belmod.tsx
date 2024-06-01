@@ -2,6 +2,17 @@
 import { PieChart } from "@mui/x-charts/PieChart";
 
 export default function StatusBelmod({ data } : { data: any }) {
+  const defaultData = {
+    notSubmitted: 1,
+    submitted: 1,
+    needRevision: 1,
+    revised: 1,
+    accepted: 1,
+    completed: 1
+  };
+
+  const chartData = data || defaultData;
+
   return (
     <>
       <div className="rounded-xl border bg-card text-card-foreground p-6 h-fit space-y-2">
@@ -13,12 +24,12 @@ export default function StatusBelmod({ data } : { data: any }) {
           series={[
             {
               data: [
-                { id: 0, value: data?.notSubmitted, label: "Belum diajukan", color: "#21359C" },
-                { id: 1, value: data?.submitted, label: "Diajukan", color: "#2A44C6" },
-                { id: 2, value: data?.needRevision, label: "Butuh Revisi", color: "#4C63D9" },
-                { id: 3, value: data?.revised, label: "Sudah direvisi", color: "#7486E2" },
-                { id: 4, value: data?.accepted, label: "Diterima", color: "#9EABEA" },
-                { id: 5, value: data?.completed, label: "Selesai", color: "#C8CFF3" },
+                { id: 0, value: chartData.notSubmitted, label: "Belum diajukan", color: "#21359C" },
+                { id: 1, value: chartData.submitted, label: "Diajukan", color: "#2A44C6" },
+                { id: 2, value: chartData.needRevision, label: "Butuh Revisi", color: "#4C63D9" },
+                { id: 3, value: chartData.revised, label: "Sudah direvisi", color: "#7486E2" },
+                { id: 4, value: chartData.accepted, label: "Diterima", color: "#9EABEA" },
+                { id: 5, value: chartData.completed, label: "Selesai", color: "#C8CFF3" },
               ],
             },
           ]}

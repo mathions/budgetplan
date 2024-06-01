@@ -9,10 +9,11 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from 
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
 export default function Rab({ data } : { data: RabDashboard[] }) {
-  const [rabData, setRabData] = useState<RabDashboard[]>(data);
+  const [rabData, setRabData] = useState<RabDashboard[]>(data || []);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("Semua");
-  const selectedData = data.find(item => item.area === value);
+  const selectedData = data ? data.find(item => item.area === value) : { area: 'Semua', total: 0, kendaraan: 0, perangkat: 0, peralatan: 0, pembangunan: 0 };
+
   return (
     <>
       <div className="rounded-xl border bg-card text-card-foreground p-6 space-y-6">

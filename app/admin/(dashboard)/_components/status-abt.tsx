@@ -1,6 +1,15 @@
 import { Clock, CloseCircle, InfoCircle, TickCircle } from "iconsax-react";
 
 export default function StatusAbt({ data } : { data: any }) {
+  const defaultData = {
+    submitted: 0,
+    rejected: 0,
+    onProccess: 0,
+    accepted: 0
+  };
+
+  const statusData = data || defaultData;
+
   return (
     <>
       <div className="rounded-xl border bg-card text-card-foreground p-6 space-y-6">
@@ -13,7 +22,7 @@ export default function StatusAbt({ data } : { data: any }) {
                   <InfoCircle className="h-4 w-4"/><span className="text-sm">Diajukan</span>
                 </div>
               </div>
-              <h3 className="text-center">{data?.submitted}</h3>
+              <h3 className="text-center">{statusData.submitted}</h3>
             </div>
             <div className="border border-strokeweak rounded-xl py-4 space-y-2">
               <div className="flex justify-center">
@@ -21,7 +30,7 @@ export default function StatusAbt({ data } : { data: any }) {
                   <CloseCircle className="h-4 w-4"/><span className="text-sm">Ditolak</span>
                 </div>
               </div>
-              <h3 className="text-center">{data?.rejected}</h3>
+              <h3 className="text-center">{statusData.rejected}</h3>
             </div>
           </div>
           <div className="col-span-1 space-y-4">
@@ -31,7 +40,7 @@ export default function StatusAbt({ data } : { data: any }) {
                   <Clock className="h-4 w-4"/><span className="text-sm">Diproses</span>
                 </div>
               </div>
-              <h3 className="text-center">{data?.onProccess}</h3>
+              <h3 className="text-center">{statusData.onProccess}</h3>
             </div>
             <div className="border border-strokeweak rounded-xl py-4 space-y-2">
               <div className="flex justify-center">
@@ -39,7 +48,7 @@ export default function StatusAbt({ data } : { data: any }) {
                   <TickCircle className="h-4 w-4"/><span className="text-sm">Diterima</span>
                 </div>
               </div>
-              <h3 className="text-center">{data?.accepted}</h3>
+              <h3 className="text-center">{statusData.accepted}</h3>
             </div>
           </div>
         </div>

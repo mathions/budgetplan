@@ -76,6 +76,23 @@ export const statusesAbt = [
   },
 ]
 
+export const statusesTahun = [
+  {
+    value: "aktif",
+    label: "Aktif",
+    icon: Clock,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-green/5 border border-green/20 text-green ",
+    classname: "h-4 w-4 ",
+  },
+  {
+    value: "tidak-aktif",
+    label: "Tidak Aktif",
+    icon: CloseCircle,
+    class: "flex items-center rounded-full py-1 px-2 gap-1 bg-blue/5 border border-blue/20 text-blue",
+    classname: "h-4 w-4 ",
+  },
+]
+
 export const Status = ({ statuss }: { statuss: string }) => {
   const status = statuses.find(
     (status) => status.value === statuss
@@ -93,6 +110,21 @@ export const Status = ({ statuss }: { statuss: string }) => {
 
 export const StatusAbt = ({ statuss }: { statuss: string }) => {
   const status = statusesAbt.find(
+    (status) => status.value === statuss
+  );
+  if (!status) {
+    return null;
+  }
+  return (
+    <div className={status.class}>
+      {status.icon && <status.icon className={status.classname} />}
+      <span className="text-sm">{status.label}</span>
+    </div>
+  );
+}
+
+export const StatusTahun = ({ statuss }: { statuss: string }) => {
+  const status = statusesTahun.find(
     (status) => status.value === statuss
   );
   if (!status) {

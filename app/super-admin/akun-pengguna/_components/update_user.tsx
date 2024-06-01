@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast";
 import { updateUser } from "@/lib/service-super-admin";
 import { useState } from "react";
@@ -27,13 +28,13 @@ const FormSchema = z.object({
     required_error: "Nama belum terisi.",
   }),
   office: z.string({
-    required_error: "Kantor belum terisi.",
+    required_error: "Perwakilan belum terisi.",
   }),
   office_code: z.string({
-    required_error: "Kode kantor belum terisi.",
+    required_error: "Kode satker belum terisi.",
   }),
   area: z.string({
-    required_error: "Area belum terisi.",
+    required_error: "Wilayah belum terisi.",
   }),
   country: z.string({
     required_error: "Negara belum terisi.",
@@ -94,7 +95,7 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, cou
           <Edit className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] pl-4 pr-2">
+      <DialogContent className="sm:max-w-[480px] pl-4 pr-2" tabIndex={undefined}>
         <DialogHeader className="px-2">
           <h4>Ubah Akun Pengguna</h4>
         </DialogHeader>
@@ -120,9 +121,17 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, cou
               render={({ field }) => (
                 <FormItem className="Peran">
                   <FormLabel>Peran</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih peran" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="User">User</SelectItem>
+                      <SelectItem value="Admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -158,9 +167,9 @@ export function UpdateUser({ username1, role1, name1, office1, office_code1, cou
               name="office_code"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Kode Perwakilan</FormLabel>
+                  <FormLabel>Kode Satker</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

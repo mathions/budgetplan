@@ -1,9 +1,7 @@
 "use client";
+
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Add } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -12,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
+import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
@@ -31,6 +30,8 @@ const FormSchema = z.object({
 export function MulaiPengusulan({ token }: { token: string }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -41,18 +42,19 @@ export function MulaiPengusulan({ token }: { token: string }) {
     try {
       const res = await createYear(token, data.year, dl);
       console.log(res);
-      if (res.status === 201) {
+      if (res.ok) {
         setIsLoading(false);
         setOpen(false);
-        window.location.reload();
+        router.refresh();
+        form.reset();
         toast({
-          title: "Kurs berhadil ditambahkan.",
+          title: "Pengusulan berhasil dimulai.",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
         toast({
-          title: "Gagal menambahkan kurs",
+          title: "Gagal memulai pengusulan",
           description: res.message,
           variant: "destructive",
         });
