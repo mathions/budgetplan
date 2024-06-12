@@ -13,8 +13,8 @@ export default async function SuspensePage({ uuid, token, }: { uuid: string; tok
           <div className="font-semibold text-xl text-textweak">{detail?.office}</div>
           <div className="w-fit"><StatusAbt statuss={detail?.status}/></div>
         </div>
-        <h3>{detail?.perihal}</h3>
-        <div className="text-textweak text-sm">{detail?.created_at}</div>
+        <h4>{detail?.perihal}</h4>
+        <div className="text-textweak">{detail?.created_at}</div>
       </div>
       <PdfViewer uuid={uuid} token={token} />
     </Card>

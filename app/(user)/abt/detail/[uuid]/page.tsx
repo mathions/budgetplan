@@ -22,7 +22,7 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Beranda', href: '/beranda' },
           { label: 'ABT', href: '/abt' },
-          { label: 'Detail Pengajuan', href: `/abt/detail/${uuid}`, active: true }
+          { label: 'Detail Pengajuan ABT', href: `/abt/detail/${uuid}`, active: true }
         ]}
       />
       

@@ -26,9 +26,9 @@ export default async function BelanjaModal() {
       />
       <div className="flex justify-between items-end">
         <h3>Belanja Modal</h3>
-        {/* <Button variant="link" asChild className="p-0 h-fit">
+        <Button variant="link" asChild className="p-0 h-fit">
           <Link href="/belanja-modal/tahun-sebelumnya">Lihat lainnya</Link>
-        </Button> */}
+        </Button>
       </div>
       <div className="my-6">
         <Suspense fallback={<CardSkeleton />}>

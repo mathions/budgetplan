@@ -35,6 +35,22 @@ export async function getProposal(token: string){
   return res;
 }
 
+export async function getProposalData(token: string){
+  const res = await fetch(`${url}/proposal/latest`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return jsonResponse?.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
 export async function updateStatus(token:string, uuid:string){
   const res = await fetch(`${url}/proposal/${uuid}/finalize?_method=PATCH`, {
     method: 'POST',
@@ -241,7 +257,6 @@ export async function postAbt(token: string, data:any){
     body: data,
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
   if(res.ok){
     return res;
   } else {

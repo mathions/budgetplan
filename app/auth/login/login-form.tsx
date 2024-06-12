@@ -109,7 +109,7 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-          <Button disabled={isLoading} type="submit" className="w-full">
+          <Button disabled={isLoading} type="submit" className="w-full h-11">
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}

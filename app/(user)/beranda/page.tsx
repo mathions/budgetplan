@@ -45,7 +45,7 @@ export default function Beranda() {
           </div>
           <div className="px-4 md:px-0">
             <Image
-              src="/image/logo-kemlu-bw.png"
+              src="/image/logo-kemlu-cl.webp"
               width={480}
               height={192}
               alt="Logo Kemlu"
