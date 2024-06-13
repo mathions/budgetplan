@@ -73,7 +73,7 @@ export default function RAB({
       totalSarana += item.harga_total;
     }
   });
-
+  console.log(itemsData)
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     no_urut: string
@@ -551,8 +551,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                     </TableRow>
@@ -594,8 +594,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                   </TableRow>
@@ -635,8 +635,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                     </TableRow>
@@ -686,8 +686,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                     </TableRow>

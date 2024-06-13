@@ -312,9 +312,9 @@ export default function PenyesuaianRAB({
           <div>Nilai Tukar</div>
         </div>
         <div className="flex-1">
-          <div>: {currency?.name}</div>
-          <div>: {currency?.initial}</div>
-          <div>: Rp {currency?.kurs}</div>
+          <div>: <span className="font-semibold">{currency?.name}</span></div>
+          <div>: <span className="font-semibold">{currency?.initial}</span></div>
+          <div>: <span className="font-semibold">Rp {currency?.kurs}</span></div>
         </div>
       </div>
       <div>
@@ -331,7 +331,7 @@ export default function PenyesuaianRAB({
           </TableHeader>
           <TableBody>
             <TableRow className="font-semibold">
-              <TableCell>6023</TableCell>
+              <TableCell className="text-center">6023</TableCell>
               <TableCell>Pengelolaan BMN dan Umum</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -339,7 +339,7 @@ export default function PenyesuaianRAB({
               <TableCell></TableCell>
             </TableRow>
             <TableRow className="font-semibold">
-              <TableCell>6023.EBB.951</TableCell>
+              <TableCell className="text-center">6023.EBB.951</TableCell>
               <TableCell>Layanan Sarana Internal</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -347,7 +347,7 @@ export default function PenyesuaianRAB({
               <TableCell></TableCell>
             </TableRow>
             <TableRow className="font-semibold">
-              <TableCell>055</TableCell>
+              <TableCell className="text-center">055</TableCell>
               <TableCell>Kendaraan Bermotor Perwakilan RI</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -358,8 +358,8 @@ export default function PenyesuaianRAB({
               Object.keys(grupItem["055"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell>{grupItem["055"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["055"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["055"].accounts[accountNumber].number} - {grupItem["055"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -374,8 +374,8 @@ export default function PenyesuaianRAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                     </TableRow>
@@ -388,7 +388,7 @@ export default function PenyesuaianRAB({
               </TableRow>
             )}
             <TableRow className="font-semibold">
-              <TableCell>056</TableCell>
+              <TableCell className="text-center">056</TableCell>
               <TableCell>
                 Perangkat Pengolah Data dan Komunikasi Perwakilan
               </TableCell>
@@ -401,8 +401,8 @@ export default function PenyesuaianRAB({
               Object.keys(grupItem["056"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell>{grupItem["056"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["056"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["056"].accounts[accountNumber].number} - {grupItem["056"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -417,8 +417,8 @@ export default function PenyesuaianRAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                   </TableRow>
@@ -431,7 +431,7 @@ export default function PenyesuaianRAB({
               </TableRow>
             )}
             <TableRow className="font-semibold">
-              <TableCell>057</TableCell>
+              <TableCell className="text-center">057</TableCell>
               <TableCell>Peralatan Fasilitas Perkantoran Perwakilan</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -442,8 +442,8 @@ export default function PenyesuaianRAB({
               Object.keys(grupItem["057"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell>{grupItem["057"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["057"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["057"].accounts[accountNumber].number} - {grupItem["057"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -458,8 +458,8 @@ export default function PenyesuaianRAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                     </TableRow>
@@ -472,7 +472,7 @@ export default function PenyesuaianRAB({
               </TableRow>
             )}
             <TableRow className="font-semibold">
-              <TableCell>6023.EBB.971</TableCell>
+              <TableCell className="text-center">6023.EBB.971</TableCell>
               <TableCell>Layanan PraSarana Internal</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -480,7 +480,7 @@ export default function PenyesuaianRAB({
               <TableCell></TableCell>
             </TableRow>
             <TableRow className="font-semibold">
-              <TableCell>058</TableCell>
+              <TableCell className="text-center">058</TableCell>
               <TableCell>
                 Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI
               </TableCell>
@@ -493,8 +493,8 @@ export default function PenyesuaianRAB({
               Object.keys(grupItem["058"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell>{grupItem["058"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["058"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["058"].accounts[accountNumber].number} - {grupItem["058"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -509,8 +509,8 @@ export default function PenyesuaianRAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
                     </TableRow>

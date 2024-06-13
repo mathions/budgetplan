@@ -16,6 +16,7 @@ export async function SuspensePage() {
   const completedMaps = data?.completedMaps;
   const submittedRab = data?.submittedRab;
   const completedRab = data?.completedRab;
+  console.log(submittedRab)
   
   return (
     <div className="flex-1 space-y-4 ">

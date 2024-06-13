@@ -16,7 +16,6 @@ export default async function SuspensePage({
   const items = await proposal?.items;
   const currency = await proposal?.currency;
   console.log(proposal)
-  console.log(account)
   return (
     <div className="space-y-6">
       <Brafaks uuid={uuid} token={token} files={files} />

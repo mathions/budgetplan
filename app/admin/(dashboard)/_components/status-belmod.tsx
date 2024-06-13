@@ -31,6 +31,7 @@ export default function StatusBelmod({ data } : { data: any }) {
                 { id: 4, value: chartData.accepted, label: "Diterima", color: "#9EABEA" },
                 { id: 5, value: chartData.completed, label: "Selesai", color: "#C8CFF3" },
               ],
+              innerRadius: 50,
             },
           ]}
           width={400}

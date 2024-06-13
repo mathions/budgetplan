@@ -51,7 +51,7 @@ export const columns: ColumnDef<Rekapitulasi>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Volume" />
     ),
-    cell: ({ row }) => <div className="ml-4">{row.getValue("volume")}</div>
+    cell: ({ row }) => <div className="ml-4 ">{row.getValue("volume")}</div>
   },
   {
     accessorKey: "information",

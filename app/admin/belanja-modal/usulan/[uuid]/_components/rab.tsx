@@ -200,9 +200,9 @@ export default function RAB({
           <div>Nilai Tukar</div>
         </div>
         <div className="flex-1">
-          <div>: {currency?.name}</div>
-          <div>: {currency?.initial}</div>
-          <div>: Rp {currency?.kurs}</div>
+          <div>: <span className="font-semibold">{currency?.name}</span></div>
+          <div>: <span className="font-semibold">{currency?.initial}</span></div>
+          <div>: <span className="font-semibold">Rp {currency?.kurs}</span></div>
         </div>
       </div>
       <div>
@@ -242,8 +242,8 @@ export default function RAB({
               Object.keys(grupItem["055"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell className="text-center">{grupItem["055"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["055"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["055"].accounts[accountNumber].number} - {grupItem["055"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -252,8 +252,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.harga_satuan}</TableCell>
-                      <TableCell className="text-right">{item.jumlah.toLocaleString("us-US")}</TableCell>
+                      <TableCell className="text-center">{item.jumlah}</TableCell>
+                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                     </TableRow>
                   ))}
@@ -277,8 +277,8 @@ export default function RAB({
               Object.keys(grupItem["056"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell className="text-center">{grupItem["056"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["056"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["056"].accounts[accountNumber].number} - {grupItem["056"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -287,8 +287,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.harga_satuan}</TableCell>
-                      <TableCell className="text-right">{item.jumlah.toLocaleString("us-US")}</TableCell>
+                      <TableCell className="text-center">{item.jumlah}</TableCell>
+                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                   </TableRow>
                   ))}
@@ -310,8 +310,8 @@ export default function RAB({
               Object.keys(grupItem["057"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell className="text-center">{grupItem["057"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["057"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["057"].accounts[accountNumber].number} - {grupItem["057"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -320,8 +320,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.harga_satuan}</TableCell>
-                      <TableCell className="text-right">{item.jumlah.toLocaleString("us-US")}</TableCell>
+                      <TableCell className="text-center">{item.jumlah}</TableCell>
+                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                     </TableRow>
                   ))}
@@ -352,8 +352,8 @@ export default function RAB({
               Object.keys(grupItem["058"].accounts).map((accountNumber) => (
                 <>
                   <TableRow key={accountNumber}>
-                    <TableCell className="text-center">{grupItem["058"].accounts[accountNumber].number}</TableCell>
-                    <TableCell>{grupItem["058"].accounts[accountNumber].name}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>{grupItem["058"].accounts[accountNumber].number} - {grupItem["058"].accounts[accountNumber].name}</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
@@ -362,8 +362,8 @@ export default function RAB({
                     <TableRow key={item.no_urut}>
                       <TableCell></TableCell>
                       <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.harga_satuan}</TableCell>
-                      <TableCell className="text-right">{item.jumlah.toLocaleString("us-US")}</TableCell>
+                      <TableCell className="text-center">{item.jumlah}</TableCell>
+                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                     </TableRow>
                   ))}
