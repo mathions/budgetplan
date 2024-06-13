@@ -422,6 +422,5 @@ export async function getExcelRekap(token: string, year:string){
         'Authorization': `Bearer ${token}`,
     },
   });
-  console.log(res)
   return res;
 }

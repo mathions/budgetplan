@@ -74,7 +74,7 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
               name="status"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel>Status</FormLabel>
+                  {/* <FormLabel>Status</FormLabel> */}
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}

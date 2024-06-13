@@ -13,7 +13,7 @@ export function Ekspor({token} : {token: string}) {
   async function handleDownload() {
     setIsLoading(true);
     try {
-      const res = await getExcelRekap(token, "2025");
+      const res = await getExcelRekap(token, "2026");
       console.log(res);
       if (res.ok) {
       const pdfBlob = await res.blob();

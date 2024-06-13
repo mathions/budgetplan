@@ -17,7 +17,7 @@ export default async function Detail({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Dashboard', href: '/admin' },
           { label: 'ABT', href: '/admin/abt' },
-          { label: 'Detail', href: `/admin/abt/detail/${uuid}`, active: true }
+          { label: 'Detail Pengajuan ABT', href: `/admin/abt/detail/${uuid}`, active: true }
         ]}
       />
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">

@@ -21,10 +21,10 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Dashboard', href: '/admin' },
           { label: 'Belanja Modal', href: '/admin/belanja-modal'},
-          { label: 'Detail', href: '/admin/belanja-modal/detail', active: true },
+          { label: 'Detail Belanja Modal', href: '/admin/belanja-modal/detail', active: true },
         ]}
       />
-      <h3>Detail</h3>
+      <h3>Detail Belanja Modal</h3>
       <div className="my-6">
         <Suspense fallback={<CardSkeleton />}>
           <SuspensePage uuid={uuid} token={token}/>
