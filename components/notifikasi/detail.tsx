@@ -15,7 +15,6 @@ export function AddCurrency() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">
-          <AddSquare className="mr-2 h-5 w-5" />
           Tambah
         </Button>
       </DialogTrigger>
