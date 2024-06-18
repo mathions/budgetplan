@@ -97,12 +97,12 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
           <h4>Beri Keputusan</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-2">
             <FormField
               control={form.control}
               name="status"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col space-y-2">
                   <FormLabel>Status</FormLabel>
                   <FormControl>
                     <RadioGroup
@@ -135,7 +135,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
               name="tag"
               render={() => (
                 <FormItem>
-                  <div className="mb-4">
+                  <div className="">
                     <FormLabel className="text-base">Tag</FormLabel>
                   </div>
                   {tags.map((tag) => (
@@ -179,7 +179,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
               control={form.control}
               name="note"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col space-y-2">
                   <FormLabel>Catatan</FormLabel>
                   <Textarea {...field} />
                   <FormControl></FormControl>

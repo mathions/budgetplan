@@ -37,8 +37,11 @@ export default function Detail({proposal} : {proposal: any}) {
         <div className="font-semibold">{proposal?.status}</div>
       </div>
       <div>
-        <div className="text-textweak">Umpan Balik</div>
+        <div className="text-textweak">Tag</div>
         {tagLabels && tagLabels.map((label: string, index: number) => <div key={index} className="font-semibold">{label}</div>)}
+      </div>
+      <div>
+        <div className="text-textweak">Catatan</div>
         <div className="font-semibold">{proposal?.note}</div>
       </div>
     </Card>

@@ -245,6 +245,23 @@ export async function postFinalisasi(token: string, uuid: string) {
   }
 }
 
+export async function getAccount(token: string) {
+  const res = await fetch(`${url}/list-accounts`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse)
+  if (res.ok) {
+    return jsonResponse?.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
 // ABT
 export async function getAbt(token: string): Promise<AbtTable[]> {
   const res = await fetch(`${url}/a/abt/`, {

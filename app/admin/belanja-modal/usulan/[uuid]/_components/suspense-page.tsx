@@ -1,11 +1,10 @@
-import { getItems, getDetailProposal, getPenyesuaian } from "@/services/admin";
+import { getItems, getDetailProposal, getPenyesuaian, getAccount } from "@/services/admin";
 import Detail from "./detail";
 import RAB from "./rab";
 import Brafaks from "./brafaks";
 import BeriKeputusan from "./beri-keputusan";
 import PenyesuaianRAB from "./penyesuaian-rab";
 import Finalisasi from "./finalisasi";
-import { Akun } from "@/lib/definitions";
 
 export default async function SuspensePage({
   uuid,
@@ -18,29 +17,11 @@ export default async function SuspensePage({
   const usulan_items = await getItems(token, uuid);
   const usulan_files = proposal?.files;
   const usulan_currency = proposal?.currency;
-
+  const account = await getAccount(token);
   const penyesuaian = await getPenyesuaian(token, uuid);
   const items_penyesuaian = penyesuaian?.data?.items;
   const currency_penyesuian = penyesuaian?.data?.kurs;
   console.log(penyesuaian);
-
-  const account: Akun[] = [
-    {
-      no_urut: 1,
-      account_number: "531111",
-      account_name: "Belanja Modal Tanah",
-    },
-    {
-      no_urut: 3,
-      account_number: "531112",
-      account_name: "Belanja Modal Pembebasan Tanah",
-    },
-    {
-      no_urut: 5,
-      account_number: "531113",
-      account_name: "Belanja Modal Pembayaran Honor Tim Tanah",
-    },
-  ];
 
   return (
     <div className="space-y-10">
