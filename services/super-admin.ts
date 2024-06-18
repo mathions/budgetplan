@@ -1,6 +1,4 @@
-import { unstable_noStore as noStore } from "next/cache";
-
-const url = 'https://api.budgetplan.masuk.id/api/v1';
+import { url } from './constans';
 
 // AKUN PENGGUNA
 export async function getUser(token: string){

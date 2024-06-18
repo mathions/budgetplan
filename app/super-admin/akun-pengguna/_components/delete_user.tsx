@@ -1,16 +1,16 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Trash } from "iconsax-react";
+import { deleteUser } from "@/services/super-admin";
 import { toast } from "@/components/ui/use-toast";
-import { deleteUser } from "@/lib/service-super-admin";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
-export function DeleteUser({ uuid }: { uuid:string }) {
+export function DeleteUser({ uuid }: { uuid: string }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
@@ -55,14 +55,23 @@ export function DeleteUser({ uuid }: { uuid:string }) {
           <h4>Hapus akun pengguna?</h4>
         </DialogHeader>
         <div className="flex justify-start gap-4 pt-2">
-          <Button disabled={isLoading} onClick={handleDelete} variant="destructive">
+          <Button
+            disabled={isLoading}
+            onClick={handleDelete}
+            variant="destructive"
+          >
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Hapus
           </Button>
           <DialogClose asChild>
-            <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">Batal</Button>
+            <Button
+              variant="secondary"
+              className="border-destructive text-destructive hover:bg-destructive/5"
+            >
+              Batal
+            </Button>
           </DialogClose>
         </div>
       </DialogContent>

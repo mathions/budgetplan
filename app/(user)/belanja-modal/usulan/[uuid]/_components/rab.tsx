@@ -1,29 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CloseSquare, DirectInbox, AddCircle, CloseCircle, Trash, Note, DollarCircle } from "iconsax-react";
 import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from "@/components/ui/table-rab";
 import { Input } from "@/components/ui/input-rab";
 import { GrupItem, Item, Akun, MataUang, Kurs } from "@/lib/definitions";
-import { getExcelUsulan, postItems, updateKurs } from "@/lib/service";
+import { getExcelUsulan, postItems, updateKurs } from "@/services/user";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
-import { Check, CheckIcon, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Check, CheckIcon, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { CaretSortIcon } from "@radix-ui/react-icons";
-
 
 export default function RAB({
   items,
@@ -69,11 +68,11 @@ export default function RAB({
     grupItem[item.code_number].accounts[item.account_number].items.push(item);
 
     total += item.harga_total;
-    if(item.code_number !== "058") {
+    if (item.code_number !== "058") {
       totalSarana += item.harga_total;
     }
   });
-  console.log(itemsData)
+  console.log(itemsData);
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     no_urut: string
@@ -100,7 +99,7 @@ export default function RAB({
     const newDataWithTotal = editData.map((item) => {
       const harga_satuan = item.harga_satuan;
       const jumlah = item.jumlah;
-      const kurs  = currency?.kurs;
+      const kurs = currency?.kurs;
       const harga_total =
         isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah * kurs;
       return {
@@ -113,8 +112,8 @@ export default function RAB({
 
   const saveItem = async () => {
     const newItemsData = itemsData.map((item) => {
-      const { no_urut, output_number, output, code, account, ...rest } = item;
-      return rest;
+        const { no_urut, output_number, output, code, account, ...rest } = item;
+        return rest;
     }).filter(item => !(item.uraian === '' || item.jumlah === 0 || item.harga_satuan === 0));
 
     console.log(newItemsData);
@@ -139,7 +138,7 @@ export default function RAB({
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   async function exportUsulan() {
     setIsExportLoading(true);
@@ -149,9 +148,9 @@ export default function RAB({
       if (res.ok) {
         const pdfBlob = await res.blob();
         const url = window.URL.createObjectURL(new Blob([pdfBlob]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', 'RAB.xlsx');
+        link.setAttribute("download", "RAB.xlsx");
         document.body.appendChild(link);
         link.click();
         if (link.parentNode) {
@@ -159,9 +158,9 @@ export default function RAB({
         }
         window.URL.revokeObjectURL(url);
         setIsExportLoading(false);
-          toast({
-            title: "RAB berhasil diekspor",
-          });
+        toast({
+          title: "RAB berhasil diekspor",
+        });
       } else {
         setIsExportLoading(false);
         toast({
@@ -178,7 +177,7 @@ export default function RAB({
     code_number: string,
     code: string,
     account_number: string,
-    account: string,
+    account: string
   ) => {
     const no_urut = String(itemsData.length + 1);
     const newRow = {
@@ -207,17 +206,19 @@ export default function RAB({
       (item) => !(item.account_number === account_number && item.code_number === code_number)
     );
     setItemsData(updatedData);
-  }
+  };
 
   const AddAccount = ({code_number, code} : {code_number: string, code:string}) => {
     const [number, setNumber] = useState("");
     const [name, setName] = useState("");
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    return(
+    return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="link" className="p-2 block mx-auto"><Note className="h-6 w-6"/></Button>
+          <Button variant="link" className="p-2 block mx-auto">
+            <Note className="h-6 w-6" />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[480px]">
           <div className="space-y-6">
@@ -228,7 +229,7 @@ export default function RAB({
               <div className="space-y-2">
                 <Label>Kode Akun</Label>
                 <Popover>
-                  <PopoverTrigger asChild>        
+                  <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       role="combobox"
@@ -238,36 +239,35 @@ export default function RAB({
                         ? account.find((account) => account.account_number === number)?.account_number
                         : "Cari kode akun..."}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
+                    </Button>
+                  </PopoverTrigger>
                   <PopoverContent side="bottom" className="h-60">
                     <Command>
                       <CommandInput placeholder="Cari kode akun" />
-                      <CommandEmpty>
-                        Akun tidak ditemukan.
-                      </CommandEmpty>
-                    <ScrollArea className="h-52">
-                      <CommandGroup>
-                        {account.map((account) => (
-                          <CommandItem 
-                            key={account.account_number} 
-                            value={account.account_number}
-                            onSelect={() => {
-                              setName(account.account_name)
-                              setNumber(account.account_number)
-                            }}>
-                            <CheckIcon
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                account.account_number === number
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {account.account_number} - {account.account_name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
+                      <CommandEmpty>Akun tidak ditemukan.</CommandEmpty>
+                      <ScrollArea className="h-52">
+                        <CommandGroup>
+                          {account.map((account) => (
+                            <CommandItem
+                              key={account.account_number}
+                              value={account.account_number}
+                              onSelect={() => {
+                                setName(account.account_name);
+                                setNumber(account.account_number);
+                              }}
+                            >
+                              <CheckIcon
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  account.account_number === number
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {account.account_number} - {account.account_name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
                       </ScrollArea>
                     </Command>
                   </PopoverContent>
@@ -279,7 +279,10 @@ export default function RAB({
               </div>
             </div>
             <div className="flex justify-start gap-4">
-              <Button disabled={isLoading} onClick={() => addRow(code_number, code, number, name)}>
+              <Button
+                disabled={isLoading}
+                onClick={() => addRow(code_number, code, number, name)}
+              >
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
@@ -292,15 +295,17 @@ export default function RAB({
           </div>
         </DialogContent>
       </Dialog>
-    )
-  }
+    );
+  };
 
   const DeleteAccount = ({code_number, account_number} : {code_number: string, account_number: string}) => {
     const [open, setOpen] = useState(false);
-    return(
+    return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="link" className="p-2"><Trash className="h-6 w-6"/></Button>
+          <Button variant="link" className="p-2">
+            <Trash className="h-6 w-6" />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[480px]">
           <div className="space-y-6">
@@ -308,18 +313,26 @@ export default function RAB({
               <h4>Hapus Akun?</h4>
             </DialogHeader>
             <div className="flex justify-start gap-4">
-              <Button variant="destructive" onClick={() => deleteAccount(code_number, account_number)}>
+              <Button
+                variant="destructive"
+                onClick={() => deleteAccount(code_number, account_number)}
+              >
                 Hapus Akun
               </Button>
               <DialogClose asChild>
-                <Button variant="secondary" className="border-destructive text-destructive">Batal</Button>
+                <Button
+                  variant="secondary"
+                  className="border-destructive text-destructive"
+                >
+                  Batal
+                </Button>
               </DialogClose>
             </div>
           </div>
         </DialogContent>
       </Dialog>
-    )
-  }
+    );
+  };
 
   const ChangeCurrency = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -359,10 +372,12 @@ export default function RAB({
         console.log(err);
       }
     }
-    return(
+    return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="secondary" className="">Ubah Mata Uang</Button>
+          <Button variant="secondary" className="">
+            Ubah Mata Uang
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[480px]">
           <div className="space-y-6">
@@ -370,7 +385,10 @@ export default function RAB({
               <h4>Ubah Mata Uang</h4>
             </DialogHeader>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
@@ -450,14 +468,14 @@ export default function RAB({
           </div>
         </DialogContent>
       </Dialog>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     const newDataWithTotal = itemsData.map((item) => {
       const harga_satuan = item.harga_satuan;
       const jumlah = item.jumlah;
-      const kurs  = currency?.kurs;
+      const kurs = currency?.kurs;
       const harga_total =
         isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah * kurs;
       return {
@@ -541,7 +559,7 @@ export default function RAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("055", "Kendaraan Bermotor Perwakilan RI", grupItem["055"].accounts[accountNumber].number, grupItem["055"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"055"} account_number={grupItem["055"].accounts[accountNumber].number}/>
                       </div>
@@ -584,7 +602,7 @@ export default function RAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("056", "Perangkat Pengolah Data dan Komunikasi Perwakilan", grupItem["056"].accounts[accountNumber].number, grupItem["056"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"056"} account_number={grupItem["056"].accounts[accountNumber].number}/>
                       </div>
@@ -598,7 +616,7 @@ export default function RAB({
                       <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
-                  </TableRow>
+                    </TableRow>
                   ))}
                 </>
               ))
@@ -625,7 +643,7 @@ export default function RAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("057", "Peralatan Fasilitas Perkantoran Perwakilan", grupItem["057"].accounts[accountNumber].number, grupItem["057"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"057"} account_number={grupItem["057"].accounts[accountNumber].number}/>
                       </div>
@@ -676,7 +694,7 @@ export default function RAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("058", "Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI", grupItem["058"].accounts[accountNumber].number, grupItem["058"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"058"} account_number={grupItem["058"].accounts[accountNumber].number}/>
                       </div>

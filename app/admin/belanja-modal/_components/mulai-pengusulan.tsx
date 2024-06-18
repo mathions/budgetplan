@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Add } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, } from "
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { createYear } from "@/lib/service-admin";
+import { createYear } from "@/services/admin";
 
 const FormSchema = z.object({
   year: z.string({
@@ -86,7 +86,10 @@ export function MulaiPengusulan({ token }: { token: string }) {
           <h4>Mulai Pengusulan</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 pt-2"
+          >
             <div className="space-y-4">
               <FormField
                 control={form.control}

@@ -129,3 +129,9 @@ export type Currency = {
   name: string;
   initial: string;
 }
+
+export type Notification = {
+  title: string;
+  message: string;
+}
+

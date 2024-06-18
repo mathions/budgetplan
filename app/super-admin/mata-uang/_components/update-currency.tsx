@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Edit } from "iconsax-react";
@@ -11,7 +11,7 @@ import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { updateCurrency } from "@/lib/service-super-admin";
+import { updateCurrency } from "@/services/super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
@@ -81,7 +81,10 @@ export function UpdateCurrency({ name1, initial1, uuid }: { name1: string, initi
           <h4>Ubah Mata Uang</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 pt-2"
+          >
             <FormField
               control={form.control}
               name="name"
@@ -89,7 +92,7 @@ export function UpdateCurrency({ name1, initial1, uuid }: { name1: string, initi
                 <FormItem className="flex flex-col">
                   <FormLabel>Mata Uang</FormLabel>
                   <FormControl>
-                    <Input {...field}/>
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

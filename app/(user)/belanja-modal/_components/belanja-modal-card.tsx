@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
-import { getProposal } from "@/lib/service";
+import { getProposal } from "@/services/user";
 import { DocumentUpload, TableDocument } from "iconsax-react";
 import { Status } from "@/components/status";
 
@@ -9,7 +9,7 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
   const jsonResponse = await res.json();
   const data = jsonResponse.data;
 
-  if(res.ok !== true){
+  if (res.ok !== true) {
     return (
       <Card className="w-full">
         <div className="p-6 md:p-8 space-y-4 md:space-y-6">
@@ -31,14 +31,14 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
               </div>
               <h5 className="text-textstrong">Hasil Penyesuaian RAB</h5>
               <div className="text-textweak">
-                Biro Umum menyesuaikan Rencana Anggaran Biaya (RAB)
-                berdasarkan perkiraan alokasi anggaran
+                Biro Umum menyesuaikan Rencana Anggaran Biaya (RAB) berdasarkan
+                perkiraan alokasi anggaran
               </div>
             </Card>
           </div>
         </div>
       </Card>
-    )
+    );
   }
 
   return (
@@ -48,14 +48,14 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
           {/* <h4>Penyampaian Usulan Kebutuhan Belanja Modal</h4> */}
           <div className="flex justify-between">
             <div className="space-y-2">
-              <h4 className="leading-none">
-                {data?.office}
-              </h4>
+              <h4 className="leading-none">{data?.office}</h4>
               <div className="text-base md:text-xl text-textweak">
                 Tahun Anggaran {data?.year}
               </div>
             </div>
-            <div><Status statuss={data?.status}/></div>
+            <div>
+              <Status statuss={data?.status} />
+            </div>
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:gap-6">
             <Link

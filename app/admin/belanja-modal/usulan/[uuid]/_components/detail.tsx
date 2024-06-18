@@ -24,7 +24,7 @@ export default function Detail({proposal} : {proposal: any}) {
 
   return(
     <Card className="p-8 space-y-2">
-      <div className="">
+      <div>
         <div className="text-textweak">Satuan Kerja</div>
         <div className="font-semibold">{proposal?.office}</div>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { postFiles } from "@/lib/service";
+import { postFiles } from "@/services/user";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ExportCurve } from "iconsax-react";
@@ -67,7 +67,10 @@ export function UploadFile({ uuid, token }: { uuid: string; token: string }) {
           <h4>Unggah Berkas</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 pt-2"
+          >
             <FormField
               control={form.control}
               name="file"
@@ -82,7 +85,9 @@ export function UploadFile({ uuid, token }: { uuid: string; token: string }) {
                     }
                   />
                   <FormControl></FormControl>
-                  <FormDescription>Format yang diterima .pdf, .xlsx, .xls, .dan .zip.</FormDescription>
+                  <FormDescription>
+                    Format yang diterima .pdf, .xlsx, .xls, .dan .zip.
+                  </FormDescription>
                   <FormDescription>Ukuran maksimal 10 mb.</FormDescription>
                   <FormMessage />
                 </FormItem>

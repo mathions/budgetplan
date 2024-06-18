@@ -1,0 +1,1 @@
+export const url = 'https://api.budgetplan.masuk.id/api/v1';

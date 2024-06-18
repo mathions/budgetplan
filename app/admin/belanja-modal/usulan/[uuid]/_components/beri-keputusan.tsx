@@ -1,11 +1,11 @@
 "use client";
 
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ClipboardTick, Send2, Tag } from "iconsax-react";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
-import { updateStatus } from "@/lib/service-admin";
+import { updateStatus } from "@/services/admin";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
@@ -34,10 +34,10 @@ const tags = [
     id: "tag4",
     label: "Lampiran pendukung tidak lengkap",
   },
-] as const
+] as const;
 
 const FormSchema = z.object({
-  status:  z.enum(["Butuh Revisi", "Diterima"], {
+  status: z.enum(["Butuh Revisi", "Diterima"], {
     required_error: "Status perlu dipilih",
   }),
   tag: z.array(z.string()).refine((value) => value.some((tag) => tag), {
@@ -89,7 +89,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
       <DialogTrigger asChild>
         <Button variant="default">
           <ClipboardTick className="mr-2 w-5 h-5" />
-            Beri Keputusan
+          Beri Keputusan
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
@@ -122,9 +122,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
                         <FormControl>
                           <RadioGroupItem value="Diterima" />
                         </FormControl>
-                        <FormLabel className="font-normal">
-                          Diterima
-                        </FormLabel>
+                        <FormLabel className="font-normal">Diterima</FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>
@@ -161,7 +159,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
                                         field.value?.filter(
                                           (value) => value !== tag.id
                                         )
-                                      )
+                                      );
                                 }}
                               />
                             </FormControl>
@@ -169,7 +167,7 @@ export default function BeriKeputusan({ uuid, token }: { uuid:string, token:stri
                               {tag.label}
                             </FormLabel>
                           </FormItem>
-                        )
+                        );
                       }}
                     />
                   ))}

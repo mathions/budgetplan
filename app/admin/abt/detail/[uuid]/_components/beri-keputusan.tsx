@@ -1,5 +1,5 @@
 "use client";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
@@ -11,10 +11,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
-import { updateStatusAbt } from "@/lib/service-admin";
+import { updateStatusAbt } from "@/services/admin";
 
 const FormSchema = z.object({
-  status:  z.enum(["Diproses", "Diterima", "Ditolak"], {
+  status: z.enum(["Diproses", "Diterima", "Ditolak"], {
     required_error: "Status perlu dipilih",
   }),
 });
@@ -60,7 +60,7 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
       <DialogTrigger asChild>
         <Button variant="default">
           <ClipboardTick className="mr-2 w-5 h-5" />
-            Beri Keputusan
+          Beri Keputusan
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
@@ -85,25 +85,19 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
                         <FormControl>
                           <RadioGroupItem value="Diterima" />
                         </FormControl>
-                        <FormLabel className="font-normal">
-                          Diterima
-                        </FormLabel>
+                        <FormLabel className="font-normal">Diterima</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem value="Diproses" />
                         </FormControl>
-                        <FormLabel className="font-normal">
-                          Diproses
-                        </FormLabel>
+                        <FormLabel className="font-normal">Diproses</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem value="Ditolak" />
                         </FormControl>
-                        <FormLabel className="font-normal">
-                          Ditolak
-                        </FormLabel>
+                        <FormLabel className="font-normal">Ditolak</FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>

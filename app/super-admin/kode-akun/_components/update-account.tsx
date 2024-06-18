@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Add, Edit } from "iconsax-react";
@@ -11,7 +11,7 @@ import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { updateAccount } from "@/lib/service-super-admin";
+import { updateAccount } from "@/services/super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
@@ -20,8 +20,8 @@ const FormSchema = z.object({
     required_error: "Kode akun belum terisi.",
   }),
   account_name: z.string({
-      required_error: "Uraian akun belum terisi.",
-    }),
+    required_error: "Uraian akun belum terisi.",
+  }),
 });
 
 export function UpdateAccount({ number, name, uuid }: { number: string, name:string, uuid:string }) {
@@ -77,7 +77,10 @@ export function UpdateAccount({ number, name, uuid }: { number: string, name:str
           <h4>Ubah Kode Akun</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 pt-2"
+          >
             <FormField
               control={form.control}
               name="account_number"
@@ -85,7 +88,7 @@ export function UpdateAccount({ number, name, uuid }: { number: string, name:str
                 <FormItem className="flex flex-col">
                   <FormLabel>Kode Akun</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field}/>
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

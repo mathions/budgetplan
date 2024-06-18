@@ -1,8 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
-import { postKurs } from "@/lib/service-admin";
+import { useRouter } from "next/navigation";
+import { postKurs } from "@/services/admin";
 import { Button } from "@/components/ui/button";
 import { AddSquare } from "iconsax-react";
 import { cn } from "@/lib/utils";
@@ -18,7 +18,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from 
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
 import { Currency } from "@/lib/definitions";
 import { Icons } from "@/components/icons";
-import CurrencyInput from 'react-currency-input-field';
+import CurrencyInput from "react-currency-input-field";
 
 const FormSchema = z.object({
   name: z.string({
@@ -86,7 +86,10 @@ export function AddKurs({
           <h4>Tambah Kurs</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 pt-2"
+          >
             <div className="space-y-4">
               <FormField
                 control={form.control}
@@ -161,7 +164,8 @@ export function AddKurs({
                         onValueChange={(e) => field.onChange(e)}
                         groupSeparator="."
                         decimalSeparator=","
-                        prefix="Rp "/>
+                        prefix="Rp "
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

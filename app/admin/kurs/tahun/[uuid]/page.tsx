@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
 import { KursTable } from "./_components/kurs-table";
 import { YearTableSkeleteon } from "./_components/skeleton";
-import { getCurrency } from "@/lib/service-admin";
+import { getCurrency } from "@/services/admin";
 import { AddKurs } from "./_components/add-kurs";
 
 export default async function KursTahun({ params, }: { params: { uuid: string };}) {
@@ -19,9 +19,9 @@ export default async function KursTahun({ params, }: { params: { uuid: string };
           { label: "Kurs", href: "/admin/kurs", active: true },
         ]}
       />
-        <Suspense fallback={<YearTableSkeleteon />}>
-          <KursTable token={token} uuid={uuid} />
-        </Suspense>
+      <Suspense fallback={<YearTableSkeleteon />}>
+        <KursTable token={token} uuid={uuid} />
+      </Suspense>
     </div>
   );
 }

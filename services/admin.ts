@@ -1,9 +1,9 @@
+import { url } from './constans';
+
 import { unstable_noStore as noStore } from "next/cache";
-import { AbtTable, BelmodTable } from "./definitions";
+import { AbtTable, BelmodTable } from "../lib/definitions";
 
-const url = "https://api.budgetplan.masuk.id/api/v1";
-
-//
+//DASHBOARD
 export async function getDashboard(token: string) {
   const res = await fetch(`${url}/a/general-information/`, {
     method: "GET",
@@ -21,12 +21,16 @@ export async function getDashboard(token: string) {
 }
 
 // BELANJA MODAL
-export async function createYear(token: string, year: string, deadline:string) {
+export async function createYear(
+  token: string,
+  year: string,
+  deadline: string
+) {
   const res = await fetch(`${url}/a/year`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       year: year,
@@ -34,7 +38,7 @@ export async function createYear(token: string, year: string, deadline:string) {
     }),
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
+  console.log(jsonResponse);
   if (res.ok) {
     return res;
   } else {
@@ -44,7 +48,7 @@ export async function createYear(token: string, year: string, deadline:string) {
 
 export async function getProposal(token: string): Promise<BelmodTable[]> {
   noStore();
-  const res = await fetch(`${url}/a/proposal/`, {
+  const res = await fetch(`${url}/a/proposal`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -52,8 +56,7 @@ export async function getProposal(token: string): Promise<BelmodTable[]> {
     },
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse);
-  if (res.status === 200) {
+  if (res.ok) {
     return jsonResponse.data;
   } else {
     return jsonResponse;
@@ -78,17 +81,17 @@ export async function getDetailProposal(token: string, uuid: string) {
   }
 }
 
-export async function updateStatus(token:string, uuid:string, data:any){
+export async function updateStatus(token: string, uuid: string, data: any) {
   const res = await fetch(`${url}/a/proposal/${uuid}?_method=PATCH`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
+  console.log(jsonResponse);
   if (res.ok) {
     return res;
   } else {
@@ -116,14 +119,21 @@ export async function getItems(token: string, uuid: string) {
 }
 
 // BRAFAKS
-export async function getFile(token: string, uuidProposal: string, uuidFile: string) {
-  const res = await fetch(`${url}/a/proposal/${uuidProposal}/files/${uuidFile}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      // "Content-Type": "application/pdf",
-    },
-  });
+export async function getFile(
+  token: string,
+  uuidProposal: string,
+  uuidFile: string
+) {
+  const res = await fetch(
+    `${url}/a/proposal/${uuidProposal}/files/${uuidFile}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // "Content-Type": "application/pdf",
+      },
+    }
+  );
   console.log(res);
   return res;
 }
@@ -133,7 +143,7 @@ export async function getYear(token: string) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
@@ -169,7 +179,7 @@ export async function getPenyesuaian(token: string, uuid: string) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
@@ -182,7 +192,7 @@ export async function postSalinRab(token: string, uuid: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
@@ -194,12 +204,16 @@ export async function postSalinRab(token: string, uuid: string) {
   }
 }
 
-export async function postItemsPenyesuaian(token: string, uuid: string, data: any ) {
+export async function postItemsPenyesuaian(
+  token: string,
+  uuid: string,
+  data: any
+) {
   const res = await fetch(`${url}/a/proposal/${uuid}/approved`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       data: data,
@@ -219,7 +233,7 @@ export async function postFinalisasi(token: string, uuid: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
@@ -278,17 +292,17 @@ export async function getFilesAbt(token: string, uuid: string) {
   return res;
 }
 
-export async function updateStatusAbt(token:string, uuid:string, data:any){
+export async function updateStatusAbt(token: string, uuid: string, data: any) {
   const res = await fetch(`${url}/a/abt/${uuid}?_method=PATCH`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
   const jsonResponse = await res.json();
-  console.log(jsonResponse)
+  console.log(jsonResponse);
   if (res.ok) {
     return res;
   } else {
@@ -345,19 +359,19 @@ export async function postKurs(
   }
 }
 
-export async function updateKurs(token: string, uuid:string, data:any){
+export async function updateKurs(token: string, uuid: string, data: any) {
   const res = await fetch(`${url}/a/kurs/${uuid}/?_method=PATCH`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       value: data.value,
-    })
+    }),
   });
   const jsonResponse = await res.json();
-  console.log(res)
+  console.log(res);
   if (res.status === 200) {
     return res;
   } else {
@@ -365,15 +379,15 @@ export async function updateKurs(token: string, uuid:string, data:any){
   }
 }
 
-export async function deleteKurs(token: string, uuid:string){
+export async function deleteKurs(token: string, uuid: string) {
   const res = await fetch(`${url}/a/kurs/${uuid}/?_method=DELETE`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
-  console.log(res)
+  console.log(res);
   if (res.status === 200) {
     return res;
   } else {
@@ -403,7 +417,7 @@ export async function getRecap(token: string) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const jsonResponse = await res.json();
@@ -415,11 +429,11 @@ export async function getRecap(token: string) {
   }
 }
 
-export async function getExcelRekap(token: string, year:string){
+export async function getExcelRekap(token: string, year: string) {
   const res = await fetch(`${url}/a/recap/excel/${year}`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-        'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   return res;

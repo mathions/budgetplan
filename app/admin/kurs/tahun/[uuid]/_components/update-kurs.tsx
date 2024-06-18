@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Add, Edit } from "iconsax-react";
@@ -10,10 +10,10 @@ import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { updateKurs } from "@/lib/service-admin";
+import { updateKurs } from "@/services/admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
-import CurrencyInput from 'react-currency-input-field';
+import CurrencyInput from "react-currency-input-field";
 
 const FormSchema = z.object({
   name: z.string({
@@ -76,39 +76,43 @@ export function UpdateKurs({ name, value, uuid }: { name: string, value:string, 
           <h4>Ubah Kurs</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-2">
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="flex flex-col space-y-2">
-                  <FormLabel>Mata Uang</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="value"
-              render={({ field }) => (
-                <FormItem className="flex flex-col space-y-2">
-                  <FormLabel>Nilai Tukar</FormLabel>
-                  <FormControl>
-                    <CurrencyInput
-                      className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-0"
-                      onValueChange={(e) => field.onChange(e)}
-                      groupSeparator="."
-                      decimalSeparator=","
-                      prefix="Rp "/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 pt-2"
+          >
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col space-y-2">
+                    <FormLabel>Mata Uang</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col space-y-2">
+                    <FormLabel>Nilai Tukar</FormLabel>
+                    <FormControl>
+                      <CurrencyInput
+                        className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-0"
+                        onValueChange={(e) => field.onChange(e)}
+                        groupSeparator="."
+                        decimalSeparator=","
+                        prefix="Rp "
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="flex justify-start gap-4">
               <Button disabled={isLoading} type="submit">

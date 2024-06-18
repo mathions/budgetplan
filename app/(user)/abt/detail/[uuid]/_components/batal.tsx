@@ -1,5 +1,5 @@
 "use client";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +12,8 @@ import { Copy, TickCircle } from "iconsax-react";
 import { toast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { Icons } from "@/components/icons";
-import { postFinalisasi } from "@/lib/service-admin";
-import { deleteAbt } from "@/lib/service";
+import { postFinalisasi } from "@/services/admin";
+import { deleteAbt } from "@/services/user";
 
 export default function Batal({ uuid, token }: { uuid:string, token:string }) {
   const [open, setOpen] = useState(false);
@@ -51,12 +51,15 @@ export default function Batal({ uuid, token }: { uuid:string, token:string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">
-            Batalkan
+        <Button
+          variant="secondary"
+          className="border-destructive text-destructive hover:bg-destructive/5"
+        >
+          Batalkan
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
-        <DialogHeader> 
+        <DialogHeader>
           <h5>Batalkan pengajuan ABT?</h5>
         </DialogHeader>
         <div className="flex justify-start gap-4">
@@ -67,7 +70,12 @@ export default function Batal({ uuid, token }: { uuid:string, token:string }) {
             Konfirmasi
           </Button>
           <DialogClose asChild>
-            <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">Tidak</Button>
+            <Button
+              variant="secondary"
+              className="border-destructive text-destructive hover:bg-destructive/5"
+            >
+              Tidak
+            </Button>
           </DialogClose>
         </div>
       </DialogContent>

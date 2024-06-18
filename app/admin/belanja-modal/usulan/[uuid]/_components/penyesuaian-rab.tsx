@@ -1,31 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CloseSquare, DirectInbox, AddCircle, CloseCircle, Trash, Note, DollarCircle } from "iconsax-react";
 import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from "@/components/ui/table-rab";
 import { Input } from "@/components/ui/input-rab";
 import { GrupItem, Item, Akun, MataUang, Kurs } from "@/lib/definitions";
-import { postItems, updateKurs } from "@/lib/service";
+import { postItems, updateKurs } from "@/services/user";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
-import { Check, CheckIcon, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Check, CheckIcon, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { CaretSortIcon } from "@radix-ui/react-icons";
-import { Salin } from "./salin"
-import { postItemsPenyesuaian } from "@/lib/service-admin";
-
+import { Salin } from "./salin";
+import { postItemsPenyesuaian } from "@/services/admin";
 
 export default function PenyesuaianRAB({
   items,
@@ -74,7 +73,7 @@ export default function PenyesuaianRAB({
       }
     });
   } else {
-    console.error('itemsData is not an array');
+    console.error("itemsData is not an array");
   }
 
   const onChange = (
@@ -103,7 +102,7 @@ export default function PenyesuaianRAB({
     const newDataWithTotal = editData.map((item) => {
       const harga_satuan = item.harga_satuan;
       const jumlah = item.jumlah;
-      const kurs  = currency?.kurs;
+      const kurs = currency?.kurs;
       const harga_total =
         isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah * kurs;
       return {
@@ -141,13 +140,13 @@ export default function PenyesuaianRAB({
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const addRow = (
     code_number: string,
     code: string,
     account_number: string,
-    account: string,
+    account: string
   ) => {
     const no_urut = String(itemsData.length + 1);
     const newRow = {
@@ -176,17 +175,19 @@ export default function PenyesuaianRAB({
       (item) => !(item.account_number === account_number && item.code_number === code_number)
     );
     setItemsData(updatedData);
-  }
+  };
 
   const AddAccount = ({code_number, code} : {code_number: string, code:string}) => {
     const [number, setNumber] = useState("");
     const [name, setName] = useState("");
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    return(
+    return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="link" className="p-2 block mx-auto"><Note className="h-6 w-6"/></Button>
+          <Button variant="link" className="p-2 block mx-auto">
+            <Note className="h-6 w-6" />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[480px]">
           <div className="space-y-6">
@@ -197,7 +198,7 @@ export default function PenyesuaianRAB({
               <div className="space-y-2">
                 <Label>Kode Akun</Label>
                 <Popover>
-                  <PopoverTrigger asChild>        
+                  <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       role="combobox"
@@ -207,36 +208,35 @@ export default function PenyesuaianRAB({
                         ? account.find((account) => account.account_number === number)?.account_number
                         : "Cari kode akun..."}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
+                    </Button>
+                  </PopoverTrigger>
                   <PopoverContent side="bottom" className="h-60">
                     <Command>
                       <CommandInput placeholder="Cari kode akun" />
-                      <CommandEmpty>
-                        Akun tidak ditemukan.
-                      </CommandEmpty>
-                    <ScrollArea className="h-52">
-                      <CommandGroup>
-                        {account.map((account) => (
-                          <CommandItem 
-                            key={account.account_number} 
-                            value={account.account_number}
-                            onSelect={() => {
-                              setName(account.account_name)
-                              setNumber(account.account_number)
-                            }}>
-                            <CheckIcon
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                account.account_number === number
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {account.account_number} - {account.account_name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
+                      <CommandEmpty>Akun tidak ditemukan.</CommandEmpty>
+                      <ScrollArea className="h-52">
+                        <CommandGroup>
+                          {account.map((account) => (
+                            <CommandItem
+                              key={account.account_number}
+                              value={account.account_number}
+                              onSelect={() => {
+                                setName(account.account_name);
+                                setNumber(account.account_number);
+                              }}
+                            >
+                              <CheckIcon
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  account.account_number === number
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {account.account_number} - {account.account_name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
                       </ScrollArea>
                     </Command>
                   </PopoverContent>
@@ -261,12 +261,12 @@ export default function PenyesuaianRAB({
           </div>
         </DialogContent>
       </Dialog>
-    )
-  }
+    );
+  };
 
   const DeleteAccount = ({code_number, account_number} : {code_number: string, account_number: string}) => {
     const [open, setOpen] = useState(false);
-    return(
+    return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="link" className="p-2"><Trash className="h-6 w-6"/></Button>
@@ -287,8 +287,8 @@ export default function PenyesuaianRAB({
           </div>
         </DialogContent>
       </Dialog>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     setItemsData(items);
@@ -364,7 +364,7 @@ export default function PenyesuaianRAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("055", "Kendaraan Bermotor Perwakilan RI", grupItem["055"].accounts[accountNumber].number, grupItem["055"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"055"} account_number={grupItem["055"].accounts[accountNumber].number}/>
                       </div>
@@ -407,7 +407,7 @@ export default function PenyesuaianRAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("056", "Perangkat Pengolah Data dan Komunikasi Perwakilan", grupItem["056"].accounts[accountNumber].number, grupItem["056"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"056"} account_number={grupItem["056"].accounts[accountNumber].number}/>
                       </div>
@@ -421,7 +421,7 @@ export default function PenyesuaianRAB({
                       <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
                       <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
-                  </TableRow>
+                    </TableRow>
                   ))}
                 </>
               ))
@@ -448,7 +448,7 @@ export default function PenyesuaianRAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("057", "Peralatan Fasilitas Perkantoran Perwakilan", grupItem["057"].accounts[accountNumber].number, grupItem["057"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"057"} account_number={grupItem["057"].accounts[accountNumber].number}/>
                       </div>
@@ -499,7 +499,7 @@ export default function PenyesuaianRAB({
                     <TableCell></TableCell>
                     <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
                     <TableCell>
-                      <div className="flex justify-center"> 
+                      <div className="flex justify-center">
                         <Button onClick={() => addRow("058", "Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI", grupItem["058"].accounts[accountNumber].number, grupItem["058"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
                         <DeleteAccount code_number={"058"} account_number={grupItem["058"].accounts[accountNumber].number}/>
                       </div>

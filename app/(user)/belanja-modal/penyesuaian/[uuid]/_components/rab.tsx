@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CloseSquare, DirectInbox, AddCircle, CloseCircle, Trash, Note, DollarCircle } from "iconsax-react";
 import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from "@/components/ui/table-rab";
 import { Input } from "@/components/ui/input-rab";
 import { GrupItem, Item, Akun, MataUang, Kurs } from "@/lib/definitions";
-import { postItems, updateKurs } from "@/lib/service";
+import { postItems, updateKurs } from "@/services/user";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogClose } from "@/components/ui/dialog";
@@ -18,7 +18,7 @@ export default function RAB({
   items,
   uuid,
   token,
-  currency
+  currency,
 }: {
   items: [Item];
   uuid: string;
@@ -55,12 +55,12 @@ export default function RAB({
       grupItem[item.code_number].accounts[item.account_number].items.push(item);
 
       total += item.harga_total;
-      if(item.code_number !== "058") {
+      if (item.code_number !== "058") {
         totalSarana += item.harga_total;
       }
     });
   } else {
-    console.error('itemsData is not an array');
+    console.error("itemsData is not an array");
   }
 
   const onChange = (
@@ -89,7 +89,7 @@ export default function RAB({
     const newDataWithTotal = editData.map((item) => {
       const harga_satuan = item.harga_satuan;
       const jumlah = item.jumlah;
-      const kurs  = currency?.kurs;
+      const kurs = currency?.kurs;
       const harga_total =
         isNaN(harga_satuan) || isNaN(jumlah) ? 0 : harga_satuan * jumlah * kurs;
       return {
@@ -127,13 +127,13 @@ export default function RAB({
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const addRow = (
     code_number: string,
     code: string,
     account_number: string,
-    account: string,
+    account: string
   ) => {
     const no_urut = String(itemsData.length + 1);
     const newRow = {
@@ -162,16 +162,16 @@ export default function RAB({
       (item) => !(item.account_number === account_number && item.code_number === code_number)
     );
     setItemsData(updatedData);
-  }
-
-
+  };
 
   const DeleteAccount = ({code_number, account_number} : {code_number: string, account_number: string}) => {
     const [open, setOpen] = useState(false);
-    return(
+    return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="link" className="p-2"><Trash className="h-6 w-6"/></Button>
+          <Button variant="link" className="p-2">
+            <Trash className="h-6 w-6" />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[480px]">
           <div className="space-y-6">
@@ -179,18 +179,26 @@ export default function RAB({
               <h4>Hapus Akun?</h4>
             </DialogHeader>
             <div className="flex justify-start gap-4">
-              <Button variant="destructive" onClick={() => deleteAccount(code_number, account_number)}>
+              <Button
+                variant="destructive"
+                onClick={() => deleteAccount(code_number, account_number)}
+              >
                 Hapus Akun
               </Button>
               <DialogClose asChild>
-                <Button variant="secondary" className="border-destructive text-destructive">Batal</Button>
+                <Button
+                  variant="secondary"
+                  className="border-destructive text-destructive"
+                >
+                  Batal
+                </Button>
               </DialogClose>
             </div>
           </div>
         </DialogContent>
       </Dialog>
-    )
-  }
+    );
+  };
 
   return (
     <Card className="p-8 space-y-6">
@@ -294,7 +302,7 @@ export default function RAB({
                       <TableCell className="text-center">{item.harga_satuan}</TableCell>
                       <TableCell className="text-right">{item.jumlah.toLocaleString("us-US")}</TableCell>
                       <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                  </TableRow>
+                    </TableRow>
                   ))}
                 </>
               ))

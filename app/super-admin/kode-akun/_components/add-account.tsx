@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Add, AddSquare } from "iconsax-react";
@@ -11,7 +11,7 @@ import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { postAccount } from "@/lib/service-super-admin";
+import { postAccount } from "@/services/super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
@@ -20,8 +20,8 @@ const FormSchema = z.object({
     required_error: "Kode akun belum terisi.",
   }),
   account_name: z.string({
-      required_error: "Uraian akun belum terisi.",
-    }),
+    required_error: "Uraian akun belum terisi.",
+  }),
 });
 
 export function AddAccount() {
@@ -75,7 +75,10 @@ export function AddAccount() {
           <h4>Tambah Kode Akun</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 pt-2"
+          >
             <FormField
               control={form.control}
               name="account_number"

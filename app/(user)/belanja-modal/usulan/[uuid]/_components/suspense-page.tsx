@@ -1,4 +1,4 @@
-import { getAccount, getFilesPath, getItems, getKurs, getProposalData } from "@/lib/service";
+import { getAccount, getFilesPath, getItems, getKurs, getProposalData } from "@/services/user";
 import Brafaks from "./brafaks";
 import RAB from "./rab";
 
@@ -15,7 +15,7 @@ export default async function SuspensePage({
   const kurs = await getKurs(token, uuid);
   const items = await proposal?.items;
   const currency = await proposal?.currency;
-  console.log(proposal)
+  console.log(proposal);
   return (
     <div className="space-y-6">
       <Brafaks uuid={uuid} token={token} files={files} />

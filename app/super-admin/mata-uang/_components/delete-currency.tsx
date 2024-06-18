@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/dialog";
 import { Add, Trash } from "iconsax-react";
 import { toast } from "@/components/ui/use-toast";
-import { deleteCurrency } from "@/lib/service-super-admin";
+import { deleteCurrency } from "@/services/super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 
-export function DeleteCurrency({ uuid }: { uuid:string }) {
+export function DeleteCurrency({ uuid }: { uuid: string }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   async function handleDelete() {
     setIsLoading(true);
@@ -59,14 +59,23 @@ export function DeleteCurrency({ uuid }: { uuid:string }) {
           <h4>Hapus mata uang ?</h4>
         </DialogHeader>
         <div className="flex justify-start gap-4 mt-2">
-          <Button disabled={isLoading} onClick={handleDelete} variant="destructive">
+          <Button
+            disabled={isLoading}
+            onClick={handleDelete}
+            variant="destructive"
+          >
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Hapus
           </Button>
           <DialogClose asChild>
-            <Button variant="secondary" className="border-destructive text-destructive hover:bg-destructive/5">Batal</Button>
+            <Button
+              variant="secondary"
+              className="border-destructive text-destructive hover:bg-destructive/5"
+            >
+              Batal
+            </Button>
           </DialogClose>
         </div>
       </DialogContent>

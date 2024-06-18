@@ -1,9 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { postAbt } from "@/lib/service";
+import { postAbt } from "@/services/user";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Add } from "iconsax-react";
@@ -35,9 +35,9 @@ export function CreateABT() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
-    const formdata = new FormData()
-    formdata.set('file', data.file)
-    formdata.set('perihal', data.perihal)
+    const formdata = new FormData();
+    formdata.set("file", data.file);
+    formdata.set("perihal", data.perihal);
     try {
       const res = await postAbt(token, formdata);
       console.log(res);
@@ -76,7 +76,10 @@ export function CreateABT() {
           <h4>Buat Pengajuan ABT</h4>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 mt-2"
+          >
             <div className="space-y-4">
               <FormField
                 control={form.control}
@@ -101,7 +104,9 @@ export function CreateABT() {
                       accept=".pdf"
                       type="file"
                       onChange={(e) =>
-                        field.onChange(e.target.files ? e.target.files[0] : null)
+                        field.onChange(
+                          e.target.files ? e.target.files[0] : null
+                        )
                       }
                     />
                     <FormControl></FormControl>

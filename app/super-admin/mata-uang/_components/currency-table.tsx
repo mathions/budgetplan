@@ -1,5 +1,5 @@
 import { columns } from "./table/column";
-import { getCurrency } from "@/lib/service-super-admin";
+import { getCurrency } from "@/services/super-admin";
 import { DataTable } from "./table/data-table";
 
 export async function CurrencyTable ({ token } : { token:string }) {
