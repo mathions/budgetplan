@@ -44,11 +44,11 @@ export function Profile() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <div className="px-2 py-1.5">
           <Button className="w-full" onClick={() => signOut()}>
             Logout
           </Button>
-        </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

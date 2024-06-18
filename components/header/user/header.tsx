@@ -1,11 +1,9 @@
-import { ModeToggle } from "../mode-toggle";
-import { Profile } from "../profile";
 import Link from "next/link";
 import Nav from "./nav";
 import Image from "next/image";
 import logo from "@/public/logo.svg";
-import { Language } from "../language";
-import { Notif } from "../notification";
+import { Notif } from "./notif";
+import { Profile } from "./profile";
 
 export default function Header() {
   return (
@@ -20,9 +18,7 @@ export default function Header() {
         <Nav />
         <div className="flex w-full justify-end items-center gap-2 md:ml-auto md:gap-3 mr-2 md:mr-0">
           <div className="flex gap-1">
-            {/* <ModeToggle />
-            <Language/>
-            <Notif/> */}
+            <Notif/>
           </div>
           <Profile />
         </div>

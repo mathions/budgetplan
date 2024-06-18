@@ -35,7 +35,7 @@ export function Profile() {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Link
-              href="/profil"
+              href="/super-admin/profil"
               className="w-full text-base font-regular flex items-center gap-2 rounded-md px-2 py-1 text-foreground"
             >
               <User className="h-4 w-4" />
@@ -44,11 +44,11 @@ export function Profile() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <div className="px-2 py-1.5">
           <Button className="w-full" onClick={() => signOut()}>
             Logout
           </Button>
-        </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

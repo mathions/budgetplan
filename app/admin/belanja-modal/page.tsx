@@ -3,7 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
 import ListBelmod from "@/app/admin/belanja-modal/_components/list-belmod";
-import { TableBelmodSkeleton } from "@/components/admin/skeletons";
+import { TableSkeleton } from "./_components/skeleton";
 import { MulaiPengusulan } from "./_components/mulai-pengusulan";
 
 export default async function BelanjaModal() {
@@ -23,7 +23,7 @@ export default async function BelanjaModal() {
         <MulaiPengusulan token={token}/>
       </div>
       <div className="py-6">
-        <Suspense fallback={<TableBelmodSkeleton />}>
+        <Suspense fallback={<TableSkeleton />}>
           <ListBelmod token={token} />
         </Suspense>
       </div>

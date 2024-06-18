@@ -3,7 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
 import ListAbt from "@/app/(user)/abt/_components/list-abt";
-import { TableAbtSkeleton } from "@/components/user/skeletons";
+import { TableAbtSkeleton } from "./_components/skeleton";
 import { CreateABT } from "./_components/create-abt";
 
 export default async function AbtPage() {

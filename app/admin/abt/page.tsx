@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
-import { TableAbtSkeleton } from "@/components/admin/skeletons";
+import { TableSkeleton } from "./_components/skeleton";
 import ListAbt from "@/app/admin/abt/_components/list-abt";
 
 export default async function Abt() {
@@ -18,9 +18,8 @@ export default async function Abt() {
         ]}
       />
       <h3>ABT</h3>
-
       <div className="my-6">
-        <Suspense fallback={<TableAbtSkeleton />}>
+        <Suspense fallback={<TableSkeleton />}>
           <ListAbt token={token} />
         </Suspense>
       </div>

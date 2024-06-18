@@ -1,10 +1,4 @@
-import { Skeleton } from "../ui/skeleton"
-
-export function BelmodCardSkeleton () {
-  return (
-    <Skeleton className="h-[462px] flex rounded-xl" />
-  )
-}
+import { Skeleton } from "@/components/ui/skeleton"
 
 export function TableAbtSkeleton () {
   return (

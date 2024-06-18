@@ -18,8 +18,6 @@ export default async function Header() {
         <Nav />
         <div className="flex w-full justify-end items-center gap-2 md:ml-auto md:gap-3 mr-2 md:mr-0">
           <div className="flex gap-1">
-            {/* <ModeToggle />
-            <Language/> */}
             <Notif />
           </div>
           <Profile />
