@@ -17,6 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popove
 import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { createYear } from "@/services/admin";
+import { Icons } from "@/components/icons";
 
 const FormSchema = z.object({
   year: z.string({
@@ -168,7 +169,12 @@ export function MulaiPengusulan({ token }: { token: string }) {
               />
             </div>
             <div className="flex justify-start gap-4">
-              <Button type="submit">Mulai Pengusulan</Button>
+              <Button disabled={isLoading} type="submit">
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Mulai Pengusulan
+              </Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>
               </DialogClose>

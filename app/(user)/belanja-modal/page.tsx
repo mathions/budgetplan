@@ -11,7 +11,6 @@ import { redirect } from "next/navigation";
 export default async function BelanjaModal() {
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
-  console.log(session)
   if (session?.user?.role !== "user") {
     redirect('auth/login');
   }
@@ -27,7 +26,7 @@ export default async function BelanjaModal() {
       <div className="flex justify-between items-end">
         <h3>Belanja Modal</h3>
         <Button variant="link" asChild className="p-0 h-fit">
-          <Link href="/belanja-modal/tahun-sebelumnya">Lihat lainnya</Link>
+          <Link href="/belanja-modal/lihat-semua">Lihat semua</Link>
         </Button>
       </div>
       <div className="my-6">

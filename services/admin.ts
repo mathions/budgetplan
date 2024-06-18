@@ -429,8 +429,8 @@ export async function getRecap(token: string) {
   }
 }
 
-export async function getExcelRekap(token: string, year: string) {
-  const res = await fetch(`${url}/a/recap/excel/${year}`, {
+export async function getExcelRekap(token: string, data: any) {
+  const res = await fetch(`${url}/a/recap/excel/${data.year}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

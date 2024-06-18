@@ -321,3 +321,19 @@ export async function deleteAbt(token: string, uuid: string) {
     return res.json();
   }
 }
+
+export async function getAllProposal(token: string) {
+  const res = await fetch(`${url}/proposal`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return jsonResponse?.data;
+  } else {
+    return jsonResponse;
+  }
+}

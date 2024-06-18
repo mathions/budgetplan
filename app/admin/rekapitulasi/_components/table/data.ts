@@ -9,17 +9,6 @@ export const years = [
   },
 ]
 
-export const offices = [
-  {
-    value: "KBRI Abu Dhabi",
-    label: "KBRI Abu Dhabi",
-  },
-  {
-    value: "KBRI Paris",
-    label: "KBRI Paris",
-  },
-]
-
 export const codes = [
   {
     value: "055",

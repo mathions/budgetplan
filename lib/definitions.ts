@@ -135,3 +135,10 @@ export type Notification = {
   message: string;
 }
 
+export type Proposal = {
+  no_urut: number;
+  uuid: string;
+  year: string;
+  user: string;
+  status: string;
+}

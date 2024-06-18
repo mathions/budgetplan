@@ -2,12 +2,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
-import BelanjaModalCard from "@/app/(user)/belanja-modal/_components/belanja-modal-card";
+import { CardSkeleton } from "../_components/skeleton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { SuspensePage } from "./_components/suspense-page";
 
-export default async function TahunSebelumnya() {
+export default async function LihatSemuaPage() {
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
   console.log(session)
@@ -20,20 +21,19 @@ export default async function TahunSebelumnya() {
       <Breadcrumbs
         breadcrumbs={[
           { label: "Beranda", href: "/beranda" },
-          { label: "Belanja Modal", href: "/belanja-modal"},
-          { label: "Tahun Sebelumnya", href: "/tahun-sebelumnya", active: true },
+          { label: "Belanja Modal", href: "/belanja-modal", active: true},
         ]}
       />
       <div className="flex justify-between items-end">
-        <h3>Tahun Sebelumnya</h3>
+        <h3>Belanja Modal</h3>
         <Button variant="link" asChild className="p-0 h-fit">
-          <Link href="/belanja-modal/tahun-sebelumnya">Lihat lainnya</Link>
+          <Link href="/belanja-modal">Kembali</Link>
         </Button>
       </div>
       <div className="my-6">
-        {/* <Suspense fallback={<CardSkeleton />}>
-          <BelanjaModalCard token={token} />
-        </Suspense> */}
+        <Suspense fallback={<CardSkeleton />}>
+          <SuspensePage token={token} />
+        </Suspense>
       </div>
     </div>
   );
