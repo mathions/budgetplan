@@ -11,10 +11,10 @@ import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { postCurrency } from "@/services/super-admin";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { updateProfil } from "@/services/auth";
 
 const FormSchema = z.object({
   username: z.string({
@@ -37,21 +37,30 @@ const FormSchema = z.object({
   }),  
 });
 
-export function UbahProfil() {
+export function UbahProfil({ username, name, office, office_code, country, area } : { username:string, name:string, office:string, office_code:string, country:string, area:string}) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
+  console.log(token);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: username,
+      name: name,
+      office: office,
+      office_code: office_code,
+      area: area,
+      country: country,
+    },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
     try {
-      const res = await postCurrency(token, data);
+      const res = await updateProfil(token, data);
       if (res.ok) {
         setIsLoading(false);
         setOpen(false);
@@ -78,7 +87,7 @@ export function UbahProfil() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">
+        <Button variant="secondary">
           Ubah Profil
         </Button>
       </DialogTrigger>
