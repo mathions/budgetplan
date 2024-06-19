@@ -21,7 +21,7 @@ export default async function Dipa({ params }: {params: { uuid: string } }) {
         breadcrumbs={[
           { label: 'Beranda', href: '/beranda' },
           { label: 'Belanja Modal', href: '/belanja-modal' },
-          { label: 'Penyesuaian', href: `/belanja-modal/penyesuaian/${uuid}`, active: true }
+          { label: 'Penyesuaian RAB', href: `/belanja-modal/penyesuaian/${uuid}`, active: true }
         ]}
       />
       <h3>Penyesuaian RAB</h3>

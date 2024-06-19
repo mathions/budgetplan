@@ -18,11 +18,6 @@ import { Label } from "@/components/ui/label";
 import { Check, CheckIcon, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
-import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Salin } from "./salin";
 import { postItemsPenyesuaian } from "@/services/admin";
 
