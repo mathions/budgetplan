@@ -48,7 +48,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => 
       <div className="text-xs flex w-full gap-2 justify-start">
         <Button asChild variant="link">
-          <Link href={`/admin/kurs/tahun/${row.getValue("uuid")}`} >Detail</Link>
+          <Link href={`/admin/tahun-anggaran/detail/${row.getValue("uuid")}`} >Detail</Link>
         </Button>
       </div>,
     enableSorting: false,

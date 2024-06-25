@@ -7,7 +7,7 @@ import { YearTableSkeleteon } from "./_components/skeleton";
 import { getCurrency } from "@/services/admin";
 import { AddKurs } from "./_components/add-kurs";
 
-export default async function KursTahun({ params, }: { params: { uuid: string };}) {
+export default async function DetailPage({ params, }: { params: { uuid: string };}) {
   const session: any = await getServerSession(authOptions);
   const token = session?.user?.token;
   const uuid = params.uuid;
@@ -16,7 +16,8 @@ export default async function KursTahun({ params, }: { params: { uuid: string };
       <Breadcrumbs
         breadcrumbs={[
           { label: "Dashboard", href: "/admin" },
-          { label: "Kurs", href: "/admin/kurs", active: true },
+          { label: "Tahun Anggaran", href: "/admin/tahun-anggaran" },
+          { label: "Detail", href: `/admin/tahun-anggaran/detail/${uuid}`, active: true },
         ]}
       />
       <Suspense fallback={<YearTableSkeleteon />}>

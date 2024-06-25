@@ -25,16 +25,16 @@ export default function Detail({proposal} : {proposal: any}) {
   return(
     <Card className="p-8 space-y-2">
       <div>
-        <div className="text-textweak">Satuan Kerja</div>
-        <div className="font-semibold">{proposal?.office}</div>
+        <p className="text-textweak">Satuan Kerja</p>
+        <p className="font-semibold">{proposal?.office}</p>
       </div>
       <div>
-        <div className="text-textweak">Tahun Anggaran</div>
-        <div className="font-semibold">{proposal?.year}</div>
+        <p className="text-textweak">Tahun Anggaran</p>
+        <p className="font-semibold">{proposal?.year}</p>
       </div>
       <div>
-        <div className="text-textweak">Status</div>
-        <div className="font-semibold">{proposal?.status}</div>
+        <p className="text-textweak">Status</p>
+        <p className="font-semibold">{proposal?.status}</p>
       </div>
       <div>
         <div className="text-textweak">Tag</div>

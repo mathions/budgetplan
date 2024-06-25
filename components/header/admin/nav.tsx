@@ -25,9 +25,9 @@ export default function Nav() {
       icon: Shop,
     },
     {
-      href: "/admin/kurs",
-      nav: "kurs",
-      label: "Kurs",
+      href: "/admin/tahun-anggaran",
+      nav: "tahun-anggaran",
+      label: "Tahun Anggaran",
       icon: DollarSquare,
     },
     {

@@ -84,7 +84,7 @@ export default function LoginForm() {
                 <FormControl>
                   <div className="relative">
                     <User className="h-4 w-4 absolute left-4 top-[14px]"/>
-                    <Input {...field} disabled={isLoading} className="pl-10" />
+                    <Input {...field} disabled={isLoading} className="pl-10 h-11" />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -98,7 +98,7 @@ export default function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <PasswordInput {...field} disabled={isLoading} />
+                  <PasswordInput {...field} disabled={isLoading} className="h-11"/>
                 </FormControl>
                 <FormMessage />
                 <div className="flex w-full justify-start">

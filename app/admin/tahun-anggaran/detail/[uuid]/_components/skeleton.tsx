@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function YearTableSkeleteon () {
   return (
     <div>
-      <h3>Kurs</h3>
+      <h3>Tahun Anggaran</h3>
       <div className="py-6">
         <div className="flex flex-col space-y-4">
           <div className="flex flex-row space-x-2">
