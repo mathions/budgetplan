@@ -20,7 +20,7 @@ export async function KursTable ({ token, uuid } : { token:string, uuid:string }
       <div className="border-t border-border h-[1px] mt-8"></div>
       <div className="py-12 space-y-6">
         <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-          <h4>Rincian</h4>
+          <h4>Detail</h4>
           <div className="flex gap-4">
             <UbahDeadline token={token} uuid={uuid}/>
             <UbahStatus token={token} uuid={uuid}/>
