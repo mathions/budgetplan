@@ -9,10 +9,10 @@ export default async function Kurs() {
       <Breadcrumbs
         breadcrumbs={[
           { label: "Dashboard", href: "/admin" },
-          { label: "Kurs", href: "/admin/kurs", active: true },
+          { label: "Tahun Anggaran", href: "/admin/kurs", active: true },
         ]}
       />
-      <h3>Kurs</h3>
+      <h3>Tahun Anggaran</h3>
       <div className="py-6">
         <Suspense fallback={<YearTableSkeleteon />}>
           <YearTable />

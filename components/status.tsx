@@ -138,5 +138,21 @@ export const StatusTahun = ({ statuss }: { statuss: string }) => {
   );
 }
 
+export const StatussTahun = ({ statuss }: { statuss: boolean }) => {
+  if (statuss === true) {
+    return (
+      <div className="flex">
+        <StatusTahun statuss="aktif"/>
+      </div>
+    )
+  } else {
+    return (
+      <div className="flex">
+        <StatusTahun statuss="tidak-aktif"/>
+      </div>
+    )
+  }
+}
+
 
 

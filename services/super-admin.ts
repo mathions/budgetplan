@@ -18,6 +18,23 @@ export async function getUser(token: string){
   }
 }
 
+export async function getDetailUser(token: string, uuid:string){
+  const res = await fetch(`${url}/sa/user/${uuid}`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse.data)
+  if (res.status === 200) {
+    return jsonResponse.data;
+  } else {
+    return jsonResponse;
+  }
+}
+
 export async function postUser(token: string, data:any){
   const res = await fetch(`${url}/sa/register`, {
     method: 'POST',
@@ -36,13 +53,15 @@ export async function postUser(token: string, data:any){
 }
 
 export async function deleteUser(token: string, uuid:string){
-  const res = await fetch(`${url}/sa/user/${uuid}/?_method=DELETE`, {
+  const res = await fetch(`${url}/sa/user/${uuid}?_method=DELETE`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
     },
   });
+  console.log(uuid);
   const jsonResponse = await res.json();
+  console.log(jsonResponse);
   if (res.ok) {
     return res;
   } else {
@@ -67,6 +86,40 @@ export async function updateUser(token: string, uuid: string, data:any){
   }
 }
 
+export async function updatePassword(token: string, uuid: string, data:any){
+  const res = await fetch(`${url}/sa/user/${uuid}/password?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function updateStatusUser(token: string, uuid: string, active: boolean) {
+  const res = await fetch(`${url}/sa/user/${uuid}/active?_method=PATCH&status=${active}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(active);
+  console.log(jsonResponse);
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
 
 // KODE AKUN
 export async function getAccount(token: string){

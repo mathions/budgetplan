@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast";
 import { postUser } from "@/services/super-admin";
 import { useState } from "react";
@@ -37,6 +38,9 @@ const FormSchema = z.object({
   }),
   office_code: z.string({
     required_error: "Kode kantor belum terisi.",
+  }),
+  country: z.string({
+    required_error: "Negara belum terisi.",
   }),
   area: z.string({
     required_error: "Area belum terisi.",
@@ -72,7 +76,7 @@ export function AddUser() {
         setOpen(false);
         toast({
           title: "Gagal membuat akun pengguna",
-          description: res.messsage,
+          description: res.data,
           variant: "destructive",
         });
       }
@@ -89,7 +93,7 @@ export function AddUser() {
           <span className="hidden md:flex ml-2">Buat Akun</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px] pl-4 pr-2">
+      <DialogContent className="sm:max-w-[480px] pl-4 pr-2" tabIndex={undefined}>
         <DialogHeader className="px-2">
           <h4>Buat Akun Pengguna</h4>
         </DialogHeader>
@@ -140,19 +144,6 @@ export function AddUser() {
               />
               <FormField
                 control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem className="Peran">
-                    <FormLabel>Peran</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
@@ -166,10 +157,34 @@ export function AddUser() {
               />
               <FormField
                 control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem className="Peran">
+                    <FormLabel>Peran</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih peran" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="User">User</SelectItem>
+                        <SelectItem value="Admin">Admin</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="office"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Perwakilan</FormLabel>
+                    <FormLabel>Satuan Kerja</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -182,7 +197,20 @@ export function AddUser() {
                 name="office_code"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Kode Perwakilan</FormLabel>
+                    <FormLabel>Kode Satuan Kerja</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Negara</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

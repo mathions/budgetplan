@@ -173,6 +173,44 @@ export async function getDetailYear(token: string, uuid: string) {
   }
 }
 
+export async function updateDeadline(token: string, uuid: string, deadline: string) {
+  const res = await fetch(`${url}/a/year/${uuid}/deadline?_method=PATCH`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      deadline: deadline,
+    }),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse);
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
+export async function updateStatusYear(token: string, uuid: string, active: boolean) {
+  const res = await fetch(`${url}/a/year/${uuid}?_method=PATCH&status=${active}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const jsonResponse = await res.json();
+  console.log(active);
+  console.log(jsonResponse);
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
 // PENYESUAIAN
 export async function getPenyesuaian(token: string, uuid: string) {
   const res = await fetch(`${url}/a/proposal/${uuid}/approved`, {
@@ -313,7 +351,7 @@ export async function updateStatusAbt(token: string, uuid: string, data: any) {
   const res = await fetch(`${url}/a/abt/${uuid}?_method=PATCH`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

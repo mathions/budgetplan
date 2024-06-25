@@ -11,17 +11,15 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
-import { updateStatusAbt } from "@/services/admin";
-import { Textarea } from "@/components/ui/textarea";
+import { updateStatusYear } from "@/services/admin";
 
 const FormSchema = z.object({
-  status: z.enum(["Diproses", "Diterima", "Ditolak"], {
+  status: z.enum(["Aktif", "Tidak Aktif"], {
     required_error: "Status perlu dipilih",
   }),
-  note: z.string().optional(),
 });
 
-export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
+export function UbahStatus({ uuid, token }: { uuid:string, token:string }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -32,8 +30,10 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
+    console.log(data.status);
     try {
-      const res = await updateStatusAbt(token, uuid, data);
+      const active = data.status === 'Aktif';
+      const res = await updateStatusYear(token, uuid, active);
       console.log(res);
       console.log(res.message);
       if (res.ok) {
@@ -41,13 +41,13 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
         setOpen(false);
         router.refresh();
         toast({
-          title: "Keputusan berhasil diberikan",
+          title: "Status berhasil diubah",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
         toast({
-          title: "Gagal memberikan keputusan",
+          title: "Gagal mengubah status",
           description: res.message,
           variant: "destructive",
         });
@@ -60,14 +60,13 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">
-          <ClipboardTick className="mr-2 w-5 h-5" />
-          Beri Keputusan
+        <Button variant="secondary">
+          Ubah Status
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <h4>Beri Keputusan</h4>
+          <h4>Ubah Status</h4>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -76,7 +75,7 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
               name="status"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel>Status</FormLabel>
+                  {/* <FormLabel>Status</FormLabel> */}
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -85,36 +84,18 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="Diterima" />
+                          <RadioGroupItem value="Aktif" />
                         </FormControl>
-                        <FormLabel className="font-normal">Diterima</FormLabel>
+                        <FormLabel className="font-normal">Aktif</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="Diproses" />
+                          <RadioGroupItem value="Tidak Aktif" />
                         </FormControl>
-                        <FormLabel className="font-normal">Diproses</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="Ditolak" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Ditolak</FormLabel>
+                        <FormLabel className="font-normal">Tidak Aktif</FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="note"
-              render={({ field }) => (
-                <FormItem className="flex flex-col space-y-2">
-                  <FormLabel>Catatan</FormLabel>
-                  <Textarea {...field} />
-                  <FormControl></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -124,7 +105,7 @@ export function BeriKeputusan({ uuid, token }: { uuid:string, token:string }) {
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Beri Keputusan
+                Ubah Status
               </Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>
