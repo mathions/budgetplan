@@ -13,7 +13,8 @@ export default async function SuspensePage({
   const currency = proposal?.data?.kurs;
   console.log(proposal);
   return (
-    <div className="space-y-6">
+    <div className="space-y-12">
+      <div className="border-t border-border h-[1px]"></div>
       <RAB uuid={uuid} token={token} items={items} currency={currency} />
     </div>
   );

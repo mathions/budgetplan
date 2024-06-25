@@ -25,7 +25,7 @@ export default function Detail({proposal} : {proposal: any}) {
 
   return(
     <div className="space-y-6">
-      <h4>Rincian</h4>
+      <h4>Detail</h4>
       <Card className="p-8 space-y-2">
         <div className="grid grid-cols-3">
           <div className="col-span-1 space-y-1">

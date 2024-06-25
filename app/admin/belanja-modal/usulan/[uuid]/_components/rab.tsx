@@ -187,194 +187,194 @@ export default function RAB({
   };
 
   return (
-    <Card className="p-8 space-y-6">
-      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-        <h4>Rencana Anggaran Biaya</h4>
-      </div>
-      <div className="flex">
-        <div className="basis-40">
-          <div>Mata Uang</div>
-          <div>Kode</div>
-          <div>Nilai Tukar</div>
+    <div className="space-y-6">
+      <h4>RAB Usulan</h4>
+      <Card className="p-8 space-y-6">
+        <div className="flex">
+          <div className="basis-40 text-textweak">
+            <p>Mata Uang</p>
+            <p>Kode</p>
+            <p>Nilai Tukar</p>
+          </div>
+          <div className="flex-1">
+            <p>: <span className="font-semibold">{currency?.name}</span> </p>
+            <p>: <span className="font-semibold">{currency?.initial}</span></p>
+            <p>: <span className="font-semibold">Rp {currency?.kurs.toLocaleString("id-ID")}</span></p>
+          </div>
         </div>
-        <div className="flex-1">
-          <div>: <span className="font-semibold">{currency?.name}</span></div>
-          <div>: <span className="font-semibold">{currency?.initial}</span></div>
-          <div>: <span className="font-semibold">Rp {currency?.kurs}</span></div>
+        <div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-24">Kode</TableHead>
+                <TableHead className="w-[22rem]">Uraian RO/Komponen/Akun/Detil</TableHead>
+                <TableHead className="w-32">Jumlah Unit</TableHead>
+                <TableHead className="w-36">Harga Satuan</TableHead>
+                <TableHead className="w-36">Jumlah</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">6023</TableCell>
+                <TableCell>Pengelolaan BMN dan Umum</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {total.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">6023.EBB.951</TableCell>
+                <TableCell>Layanan Sarana Internal</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {totalSarana.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">055</TableCell>
+                <TableCell>Kendaraan Bermotor Perwakilan RI</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["055"]?.total.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              {grupItem["055"] ? (
+                Object.keys(grupItem["055"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["055"].accounts[accountNumber].number} - {grupItem["055"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                    </TableRow>
+                    {grupItem["055"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell>{item.uraian}</TableCell>
+                        <TableCell className="text-center">{item.jumlah}</TableCell>
+                        <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5}></TableCell>
+                </TableRow>
+              )}
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">056</TableCell>
+                <TableCell>
+                  Perangkat Pengolah Data dan Komunikasi Perwakilan
+                </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["056"]?.total.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              {grupItem["056"] ? (
+                Object.keys(grupItem["056"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["056"].accounts[accountNumber].number} - {grupItem["056"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                    </TableRow>
+                    {grupItem["056"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell>{item.uraian}</TableCell>
+                        <TableCell className="text-center">{item.jumlah}</TableCell>
+                        <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5}></TableCell>
+                </TableRow>
+              )}
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">057</TableCell>
+                <TableCell>Peralatan Fasilitas Perkantoran Perwakilan</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["057"]?.total.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              {grupItem["057"] ? (
+                Object.keys(grupItem["057"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["057"].accounts[accountNumber].number} - {grupItem["057"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                    </TableRow>
+                    {grupItem["057"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell>{item.uraian}</TableCell>
+                        <TableCell className="text-center">{item.jumlah}</TableCell>
+                        <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5}></TableCell>
+                </TableRow>
+              )}
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">6023.EBB.971</TableCell>
+                <TableCell>Layanan PraSarana Internal</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["058"]?.total.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">058</TableCell>
+                <TableCell>
+                  Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI
+                </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["058"]?.total.toLocaleString("id-ID")}</TableCell>
+              </TableRow>
+              {grupItem["058"] ? (
+                Object.keys(grupItem["058"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["058"].accounts[accountNumber].number} - {grupItem["058"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                    </TableRow>
+                    {grupItem["058"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell>{item.uraian}</TableCell>
+                        <TableCell className="text-center">{item.jumlah}</TableCell>
+                        <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5}></TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
-      </div>
-      <div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-24">Kode</TableHead>
-              <TableHead className="w-[22rem]">Uraian RO/Komponen/Akun/Detil</TableHead>
-              <TableHead className="w-32">Jumlah Unit</TableHead>
-              <TableHead className="w-36">Harga Satuan</TableHead>
-              <TableHead className="w-36">Jumlah</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">6023</TableCell>
-              <TableCell>Pengelolaan BMN dan Umum</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {total.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">6023.EBB.951</TableCell>
-              <TableCell>Layanan Sarana Internal</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {totalSarana.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">055</TableCell>
-              <TableCell>Kendaraan Bermotor Perwakilan RI</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["055"]?.total.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            {grupItem["055"] ? (
-              Object.keys(grupItem["055"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["055"].accounts[accountNumber].number} - {grupItem["055"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                  </TableRow>
-                  {grupItem["055"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.jumlah}</TableCell>
-                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5}></TableCell>
-              </TableRow>
-            )}
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">056</TableCell>
-              <TableCell>
-                Perangkat Pengolah Data dan Komunikasi Perwakilan
-              </TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["056"]?.total.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            {grupItem["056"] ? (
-              Object.keys(grupItem["056"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["056"].accounts[accountNumber].number} - {grupItem["056"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                  </TableRow>
-                  {grupItem["056"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.jumlah}</TableCell>
-                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5}></TableCell>
-              </TableRow>
-            )}
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">057</TableCell>
-              <TableCell>Peralatan Fasilitas Perkantoran Perwakilan</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["057"]?.total.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            {grupItem["057"] ? (
-              Object.keys(grupItem["057"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["057"].accounts[accountNumber].number} - {grupItem["057"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                  </TableRow>
-                  {grupItem["057"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.jumlah}</TableCell>
-                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5}></TableCell>
-              </TableRow>
-            )}
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">6023.EBB.971</TableCell>
-              <TableCell>Layanan PraSarana Internal</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["058"]?.total.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">058</TableCell>
-              <TableCell>
-                Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI
-              </TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["058"]?.total.toLocaleString("id-ID")}</TableCell>
-            </TableRow>
-            {grupItem["058"] ? (
-              Object.keys(grupItem["058"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["058"].accounts[accountNumber].number} - {grupItem["058"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                  </TableRow>
-                  {grupItem["058"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell>{item.uraian}</TableCell>
-                      <TableCell className="text-center">{item.jumlah}</TableCell>
-                      <TableCell className="text-right">{item.harga_satuan.toLocaleString("us-US")}</TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5}></TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }

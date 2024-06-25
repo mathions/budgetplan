@@ -24,7 +24,7 @@ export default async function Dipa({ params }: {params: { uuid: string } }) {
           { label: 'Penyesuaian RAB', href: `/belanja-modal/penyesuaian/${uuid}`, active: true }
         ]}
       />
-      <h3>Penyesuaian RAB</h3>
+      <h3>Hasil Penyesuaian RAB</h3>
       <div className="my-6 space-y-4">
         <Suspense fallback={<CardSkeleton />}>
           <SuspensePage uuid={uuid} token={token}/>

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { CardSkeleton } from "./_components/skeleton";
 import SuspensePage from "./_components/suspense-page";
 import { redirect } from "next/navigation";
+import BeriKeputusan from "./_components/beri-keputusan";
 
 export default async function Usulan({ params }: {params: { uuid: string } }) {
   const uuid = params.uuid;
@@ -24,7 +25,10 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
           { label: 'Detail Belanja Modal', href: '/admin/belanja-modal/detail', active: true },
         ]}
       />
-      <h3>Detail Belanja Modal</h3>
+      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
+        <h3>Detail Belanja Modal</h3>
+        <BeriKeputusan token={token} uuid={uuid} />
+      </div>
       <div className="my-8">
         <Suspense fallback={<CardSkeleton />}>
           <SuspensePage uuid={uuid} token={token}/>

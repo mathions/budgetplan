@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Salin } from "./salin";
 import { postItemsPenyesuaian } from "@/services/admin";
+import Finalisasi from "./finalisasi";
 
 export default function PenyesuaianRAB({
   items,
@@ -290,236 +291,239 @@ export default function PenyesuaianRAB({
   }, [items]);
 
   return (
-    <Card className="p-8 space-y-6">
+    <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-        <h4>Rencana Anggaran Biaya</h4>
+        <h4>RAB Penyesuaian</h4>
         <div className="flex gap-4">
           <Salin uuid={uuid} token={token}/>
           <Button variant="secondary" disabled={isSaveLoading} onClick={saveItem}>{isSaveLoading && (<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />)}
             <DirectInbox className="mr-2 w-5 h-5" />Simpan
           </Button>
+          <Finalisasi token={token} uuid={uuid} />
         </div>
       </div>
-      <div className="flex">
-        <div className="basis-40">
-          <div>Mata Uang</div>
-          <div>Kode</div>
-          <div>Nilai Tukar</div>
+      <Card className="p-8 space-y-6">
+        <div className="flex">
+          <div className="basis-40 text-textweak">
+            <p>Mata Uang</p>
+            <p>Kode</p>
+            <p>Nilai Tukar</p>
+          </div>
+          <div className="flex-1">
+            <p>: <span className="font-semibold">{currency?.name}</span> </p>
+            <p>: <span className="font-semibold">{currency?.initial}</span></p>
+            <p>: <span className="font-semibold">Rp {currency?.kurs.toLocaleString("id-ID")}</span></p>
+          </div>
         </div>
-        <div className="flex-1">
-          <div>: <span className="font-semibold">{currency?.name}</span></div>
-          <div>: <span className="font-semibold">{currency?.initial}</span></div>
-          <div>: <span className="font-semibold">Rp {currency?.kurs}</span></div>
+        <div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-24">Kode</TableHead>
+                <TableHead className="w-80">Uraian RO/Komponen/Akun/Detil</TableHead>
+                <TableHead className="w-32">Jumlah Unit</TableHead>
+                <TableHead className="w-36">Harga Satuan</TableHead>
+                <TableHead className="w-36">Jumlah</TableHead>
+                <TableHead className="w-24">Aksi</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">6023</TableCell>
+                <TableCell>Pengelolaan BMN dan Umum</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {total.toLocaleString("id-ID")}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">6023.EBB.951</TableCell>
+                <TableCell>Layanan Sarana Internal</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {totalSarana.toLocaleString("id-ID")}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">055</TableCell>
+                <TableCell>Kendaraan Bermotor Perwakilan RI</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["055"]?.total.toLocaleString("id-ID")}</TableCell>
+                <TableCell><AddAccount code_number={"055"} code={"Kendaraan Bermotor Perwakilan RI"}/></TableCell>
+              </TableRow>
+              {grupItem["055"] ? (
+                Object.keys(grupItem["055"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["055"].accounts[accountNumber].number} - {grupItem["055"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                      <TableCell>
+                        <div className="flex justify-center">
+                          <Button onClick={() => addRow("055", "Kendaraan Bermotor Perwakilan RI", grupItem["055"].accounts[accountNumber].number, grupItem["055"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
+                          <DeleteAccount code_number={"055"} account_number={grupItem["055"].accounts[accountNumber].number}/>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {grupItem["055"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                        <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6}><AddAccount code_number={"055"} code={"Kendaraan Bermotor Perwakilan RI"}></AddAccount></TableCell>
+                </TableRow>
+              )}
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">056</TableCell>
+                <TableCell>
+                  Perangkat Pengolah Data dan Komunikasi Perwakilan
+                </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["056"]?.total.toLocaleString("id-ID")}</TableCell>
+                <TableCell><AddAccount code_number={"056"} code={"Perangkat Pengolah Data dan Komunikasi Perwakilan"}/></TableCell>
+              </TableRow>
+              {grupItem["056"] ? (
+                Object.keys(grupItem["056"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["056"].accounts[accountNumber].number} - {grupItem["056"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                      <TableCell>
+                        <div className="flex justify-center">
+                          <Button onClick={() => addRow("056", "Perangkat Pengolah Data dan Komunikasi Perwakilan", grupItem["056"].accounts[accountNumber].number, grupItem["056"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
+                          <DeleteAccount code_number={"056"} account_number={grupItem["056"].accounts[accountNumber].number}/>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {grupItem["056"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                        <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6}><AddAccount code_number={"056"} code={"Perangkat Pengolah Data dan Komunikasi Perwakilan"}></AddAccount></TableCell>
+                </TableRow>
+              )}
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">057</TableCell>
+                <TableCell>Peralatan Fasilitas Perkantoran Perwakilan</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["057"]?.total.toLocaleString("id-ID")}</TableCell>
+                <TableCell><AddAccount code_number={"057"} code={"Peralatan Fasilitas Perkantoran Perwakilan"}/></TableCell>
+              </TableRow>
+              {grupItem["057"] ? (
+                Object.keys(grupItem["057"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["057"].accounts[accountNumber].number} - {grupItem["057"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                      <TableCell>
+                        <div className="flex justify-center">
+                          <Button onClick={() => addRow("057", "Peralatan Fasilitas Perkantoran Perwakilan", grupItem["057"].accounts[accountNumber].number, grupItem["057"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
+                          <DeleteAccount code_number={"057"} account_number={grupItem["057"].accounts[accountNumber].number}/>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {grupItem["057"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                        <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6}><AddAccount code_number={"057"} code={"Peralatan Fasilitas Perkantoran Perwakilan"}></AddAccount></TableCell>
+                </TableRow>
+              )}
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">6023.EBB.971</TableCell>
+                <TableCell>Layanan PraSarana Internal</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+              <TableRow className="font-semibold">
+                <TableCell className="text-center">058</TableCell>
+                <TableCell>
+                  Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI
+                </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right">Rp {grupItem["058"]?.total.toLocaleString("id-ID")}</TableCell>
+                <TableCell><AddAccount code_number={"058"} code={"Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI"}/></TableCell>
+              </TableRow>
+              {grupItem["058"] ? (
+                Object.keys(grupItem["058"].accounts).map((accountNumber) => (
+                  <>
+                    <TableRow key={accountNumber}>
+                      <TableCell></TableCell>
+                      <TableCell>{grupItem["058"].accounts[accountNumber].number} - {grupItem["058"].accounts[accountNumber].name}</TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
+                      <TableCell>
+                        <div className="flex justify-center">
+                          <Button onClick={() => addRow("058", "Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI", grupItem["058"].accounts[accountNumber].number, grupItem["058"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
+                          <DeleteAccount code_number={"058"} account_number={grupItem["058"].accounts[accountNumber].number}/>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {grupItem["058"].accounts[accountNumber].items.map((item) => (
+                      <TableRow key={item.no_urut}>
+                        <TableCell></TableCell>
+                        <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
+                        <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
+                        <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6}><AddAccount code_number={"058"} code={"Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI"}></AddAccount></TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
-      </div>
-      <div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-24">Kode</TableHead>
-              <TableHead className="w-80">Uraian RO/Komponen/Akun/Detil</TableHead>
-              <TableHead className="w-32">Jumlah Unit</TableHead>
-              <TableHead className="w-36">Harga Satuan</TableHead>
-              <TableHead className="w-36">Jumlah</TableHead>
-              <TableHead className="w-24">Aksi</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">6023</TableCell>
-              <TableCell>Pengelolaan BMN dan Umum</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {total.toLocaleString("id-ID")}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">6023.EBB.951</TableCell>
-              <TableCell>Layanan Sarana Internal</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {totalSarana.toLocaleString("id-ID")}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">055</TableCell>
-              <TableCell>Kendaraan Bermotor Perwakilan RI</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["055"]?.total.toLocaleString("id-ID")}</TableCell>
-              <TableCell><AddAccount code_number={"055"} code={"Kendaraan Bermotor Perwakilan RI"}/></TableCell>
-            </TableRow>
-            {grupItem["055"] ? (
-              Object.keys(grupItem["055"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["055"].accounts[accountNumber].number} - {grupItem["055"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["055"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Button onClick={() => addRow("055", "Kendaraan Bermotor Perwakilan RI", grupItem["055"].accounts[accountNumber].number, grupItem["055"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
-                        <DeleteAccount code_number={"055"} account_number={grupItem["055"].accounts[accountNumber].number}/>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                  {grupItem["055"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                      <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6}><AddAccount code_number={"055"} code={"Kendaraan Bermotor Perwakilan RI"}></AddAccount></TableCell>
-              </TableRow>
-            )}
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">056</TableCell>
-              <TableCell>
-                Perangkat Pengolah Data dan Komunikasi Perwakilan
-              </TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["056"]?.total.toLocaleString("id-ID")}</TableCell>
-              <TableCell><AddAccount code_number={"056"} code={"Perangkat Pengolah Data dan Komunikasi Perwakilan"}/></TableCell>
-            </TableRow>
-            {grupItem["056"] ? (
-              Object.keys(grupItem["056"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["056"].accounts[accountNumber].number} - {grupItem["056"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["056"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Button onClick={() => addRow("056", "Perangkat Pengolah Data dan Komunikasi Perwakilan", grupItem["056"].accounts[accountNumber].number, grupItem["056"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
-                        <DeleteAccount code_number={"056"} account_number={grupItem["056"].accounts[accountNumber].number}/>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                  {grupItem["056"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                      <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6}><AddAccount code_number={"056"} code={"Perangkat Pengolah Data dan Komunikasi Perwakilan"}></AddAccount></TableCell>
-              </TableRow>
-            )}
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">057</TableCell>
-              <TableCell>Peralatan Fasilitas Perkantoran Perwakilan</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["057"]?.total.toLocaleString("id-ID")}</TableCell>
-              <TableCell><AddAccount code_number={"057"} code={"Peralatan Fasilitas Perkantoran Perwakilan"}/></TableCell>
-            </TableRow>
-            {grupItem["057"] ? (
-              Object.keys(grupItem["057"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["057"].accounts[accountNumber].number} - {grupItem["057"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["057"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Button onClick={() => addRow("057", "Peralatan Fasilitas Perkantoran Perwakilan", grupItem["057"].accounts[accountNumber].number, grupItem["057"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
-                        <DeleteAccount code_number={"057"} account_number={grupItem["057"].accounts[accountNumber].number}/>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                  {grupItem["057"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                      <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6}><AddAccount code_number={"057"} code={"Peralatan Fasilitas Perkantoran Perwakilan"}></AddAccount></TableCell>
-              </TableRow>
-            )}
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">6023.EBB.971</TableCell>
-              <TableCell>Layanan PraSarana Internal</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow className="font-semibold">
-              <TableCell className="text-center">058</TableCell>
-              <TableCell>
-                Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI
-              </TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="text-right">Rp {grupItem["058"]?.total.toLocaleString("id-ID")}</TableCell>
-              <TableCell><AddAccount code_number={"058"} code={"Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI"}/></TableCell>
-            </TableRow>
-            {grupItem["058"] ? (
-              Object.keys(grupItem["058"].accounts).map((accountNumber) => (
-                <>
-                  <TableRow key={accountNumber}>
-                    <TableCell></TableCell>
-                    <TableCell>{grupItem["058"].accounts[accountNumber].number} - {grupItem["058"].accounts[accountNumber].name}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">Rp {grupItem["058"].accounts[accountNumber].total.toLocaleString("id-ID")}</TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Button onClick={() => addRow("058", "Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI", grupItem["058"].accounts[accountNumber].number, grupItem["058"].accounts[accountNumber].name)} variant="link" className="p-2"><AddCircle className="h-6 w-6"/></Button>
-                        <DeleteAccount code_number={"058"} account_number={grupItem["058"].accounts[accountNumber].number}/>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                  {grupItem["058"].accounts[accountNumber].items.map((item) => (
-                    <TableRow key={item.no_urut}>
-                      <TableCell></TableCell>
-                      <TableCell><Input name="uraian" autoComplete="off" spellCheck={false} value={item.uraian} onChange={(e) =>onChange(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="jumlah" type="number" min="0" className="text-right" value={item.jumlah} onChange={(e) =>onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell><Input name="harga_satuan" type="number" min="0" className="text-right" value={item.harga_satuan} onChange={(e) => onChangeNumber(e, item.no_urut)}></Input></TableCell>
-                      <TableCell className="text-right">Rp {item.harga_total.toLocaleString("id-ID")}</TableCell>
-                      <TableCell><Button onClick={() => deleteRow(item.no_urut)} variant="link" className="p-2 block mx-auto"><CloseSquare className="h-6 w-6"/></Button></TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6}><AddAccount code_number={"058"} code={"Pembangunan/Renovasi Gedung dan Bangunan Perwakilan RI"}></AddAccount></TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }

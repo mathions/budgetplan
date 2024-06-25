@@ -243,6 +243,17 @@ export async function getPenyesuaian(token: string, uuid: string) {
   return jsonResponse;
 }
 
+export async function getExcelPenyesuaian(token: string, uuid: string) {
+  const res = await fetch(`${url}/proposal/${uuid}/export?category=approved`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(res);
+  return res;
+}
+
 // ANGGARAN BIAYA TAMBAHAN
 export async function postAbt(token: string, data: any) {
   const res = await fetch(`${url}/abt/create`, {
