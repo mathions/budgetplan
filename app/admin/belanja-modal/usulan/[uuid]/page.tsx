@@ -25,7 +25,7 @@ export default async function Usulan({ params }: {params: { uuid: string } }) {
         ]}
       />
       <h3>Detail Belanja Modal</h3>
-      <div className="my-6">
+      <div className="my-8">
         <Suspense fallback={<CardSkeleton />}>
           <SuspensePage uuid={uuid} token={token}/>
         </Suspense>

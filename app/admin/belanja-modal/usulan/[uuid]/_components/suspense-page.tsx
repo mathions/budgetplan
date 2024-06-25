@@ -22,14 +22,15 @@ export default async function SuspensePage({
   const items_penyesuaian = penyesuaian?.data?.items;
   const currency_penyesuian = penyesuaian?.data?.kurs;
   console.log(penyesuaian);
-
+  console.log(proposal);
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
+      <div className="border-t border-border h-[1px]"></div>
       <Detail proposal={proposal} />
       <div className="border-t border-border h-[1px]"></div>
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-          <h3>Penyampaian Usulan</h3>
+          <h4>Penyampaian Usulan</h4>
           <BeriKeputusan token={token} uuid={uuid} />
         </div>
         <Brafaks uuid={uuid} token={token} files={usulan_files} />
@@ -38,7 +39,7 @@ export default async function SuspensePage({
       <div className="border-t border-border h-[1px]"></div>
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
-          <h3>Penyesuaian RAB</h3>
+          <h4>Penyesuaian RAB</h4>
           <Finalisasi token={token} uuid={uuid} />
         </div>
         <PenyesuaianRAB uuid={uuid} token={token} account={account} items={items_penyesuaian} currency={currency_penyesuian} />

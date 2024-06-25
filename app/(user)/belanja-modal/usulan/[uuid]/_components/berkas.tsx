@@ -82,40 +82,37 @@ export default function Berkas({
   }
 
   return (
-    <div className="col-span-1 border border-strokeweak rounded-xl p-4 hover:bg-fill">
-      <div className="flex justify-between">
-        <div>{truncatedPath}</div>
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost" className="h-8 w-8">
-                <MoreVertical className="h-3.5 w-3.5" />
-                <span className="sr-only">More</span>
+    <div className="col-span-1 border border-strokestrong rounded-xl px-4 py-3 hover:bg-fill">
+      <div className="flex justify-between items-center">
+        <p>{truncatedPath}</p>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="ghost" className="h-8 w-8">
+              <MoreVertical className="h-3.5 w-3.5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>
+              <Button
+                variant="ghost"
+                className="w-full"
+                onClick={handleDownload}
+              >
+                Unduh
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Button
-                  variant="ghost"
-                  className="w-full"
-                  onClick={handleDownload}
-                >
-                  Unduh
-                </Button>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Button
-                  variant="ghost"
-                  className="w-full"
-                  onClick={handleDelete}
-                >
-                  Hapus
-                </Button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Button
+                variant="ghost"
+                className="w-full"
+                onClick={handleDelete}
+              >
+                Hapus
+              </Button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
