@@ -24,7 +24,7 @@ export default async function SuspensePage({
   return (
     <div className="space-y-12">
       <div className="border-t border-border h-[1px]"></div>
-      <Detail proposal={proposal} />
+      <Detail proposal={proposal} uuid={uuid} token={token} />
       <div className="border-t border-border h-[1px]"></div>
       <Brafaks uuid={uuid} token={token} files={usulan_files} />
       <div className="border-t border-border h-[1px]"></div>

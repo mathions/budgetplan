@@ -1,5 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Status } from "@/components/status";
+import BeriKeputusan from "./beri-keputusan";
+import { UbahDeadline } from "./ubah-deadline";
 
 const tags = [
   {
@@ -20,12 +22,18 @@ const tags = [
   },
 ] as const;
 
-export default function Detail({proposal} : {proposal: any}) {
+export default function Detail({ proposal, token, uuid } : {proposal: any, token: string, uuid: string}) {
   const tagLabels = proposal?.tag ? proposal.tag.map((tagId: string) => tags.find(t => t.id === tagId)?.label) : [];
 
   return(
     <div className="space-y-6">
-      <h4>Detail</h4>
+      <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
+        <h4>Detail</h4>
+        <div className="flex gap-4">
+          <UbahDeadline key={proposal.deadline} token={token} uuid={uuid} deadline={proposal.deadline} />
+          <BeriKeputusan token={token} uuid={uuid} />
+        </div>
+      </div>
       <Card className="p-8 space-y-2">
         <div className="grid grid-cols-3">
           <div className="col-span-1 space-y-1">

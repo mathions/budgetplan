@@ -99,6 +99,26 @@ export async function updateStatus(token: string, uuid: string, data: any) {
   }
 }
 
+export async function updateDeadlineProposal(token: string, uuid: string, deadline: string) {
+  const res = await fetch(`${url}/a/proposal/${uuid}/deadline?_method=PATCH`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      deadline: deadline,
+    }),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse);
+  if (res.ok) {
+    return res;
+  } else {
+    return jsonResponse;
+  }
+}
+
 // RAB
 export async function getItems(token: string, uuid: string) {
   noStore();
