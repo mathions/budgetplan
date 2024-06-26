@@ -20,7 +20,6 @@ export default async function Rekapitulasi () {
       />
       <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
         <h3>Rekapitulasi</h3>
-        <Ekspor token={token} />
       </div>
       <div className="py-6">
         <Suspense fallback={<TableSkeleteon/>}>

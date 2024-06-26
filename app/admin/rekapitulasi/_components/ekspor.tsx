@@ -13,14 +13,23 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from 
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const FormSchema = z.object({
-  year: z.string({
+  year: z.number({
     required_error: "Tahun anggaran belum terpilih.",
   }),
 });
 
-export function Ekspor({ token }: { token: string }) {
+export type Year = {
+  year: number;
+  label: string;
+}
+
+export function Ekspor({ token, year }: { token: string, year: Year[] }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -62,14 +71,14 @@ export function Ekspor({ token }: { token: string }) {
     }
   }
 
-  const currentYear = new Date().getFullYear();
-  const year: { label: string; value: string }[] = Array.from(
-    { length: 3 },
-    (_, index) => {
-      const label = `${currentYear + index}`;
-      return { label, value: label };
-    }
-  );
+  // const currentYear = new Date().getFullYear();
+  // const year: { label: string; value: string }[] = Array.from(
+  //   { length: 3 },
+  //   (_, index) => {
+  //     const label = `${currentYear + index}`;
+  //     return { label, value: label };
+  //   }
+  // );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -92,28 +101,58 @@ export function Ekspor({ token }: { token: string }) {
               control={form.control}
               name="year"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col space-y-2">
                   <FormLabel>Tahun Anggaran</FormLabel>
-                    <Select onValueChange={field.onChange}>
+                  <Popover>
+                    <PopoverTrigger asChild>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pilih tahun" />
-                        </SelectTrigger>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? year.find(
+                                (year) => year.year === field.value
+                              )?.year
+                            : "Pilih tahun anggaran"}
+                          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
                       </FormControl>
-                      <SelectContent>
-                        {year.map((year) => (
-                          <SelectItem
-                            value={year.label}
-                            key={year.value}
-                            onSelect={() => {
-                              form.setValue("year", year.value);
-                            }}
-                          >
-                            {year.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Command>
+                        <CommandInput placeholder="Cari tahun anggaran..." />
+                        <CommandEmpty>
+                          Tahun anggaran tidak ditemukan.
+                        </CommandEmpty>
+                        <CommandGroup>
+                          {year.map((year) => (
+                            <CommandItem
+                              value={year.label}
+                              key={year.year}
+                              onSelect={() => {
+                                form.setValue("year", year.year);
+                              }}
+                            >
+                              <CheckIcon
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  year.year === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {year.year}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}

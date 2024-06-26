@@ -1,24 +1,23 @@
 "use client";
 
-import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
-
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import Link from "next/link";
-import { codes, offices, years } from "./data";
-
+import { codes, years } from "./data";
+import { Ekspor } from "../ekspor";
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
+  table: Table<TData>
+  token: string
+  year: any
 }
 
 export function DataTableToolbar<TData>({
   table,
+  token,
+  year,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-
+  console.log(year)
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
@@ -44,6 +43,7 @@ export function DataTableToolbar<TData>({
             options={codes}
           />
         )}
+        <Ekspor token={token} year={year} />
       </div>
     </div>
   );

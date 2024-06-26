@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { Rekapitulasi } from "../table"
-import { years, offices, codes } from "./data"
+import { years, codes } from "./data"
 
 export const columns: ColumnDef<Rekapitulasi>[] = [
   {

@@ -22,7 +22,7 @@ export async function KursTable ({ token, uuid } : { token:string, uuid:string }
         <div className="flex flex-col md:flex-row gap-4 md:justify-between md:items-end">
           <h4>Detail</h4>
           <div className="flex gap-4">
-            <UbahDeadline token={token} uuid={uuid}/>
+            <UbahDeadline token={token} uuid={uuid} deadline={year.deadlineProposal}/>
             <UbahStatus token={token} uuid={uuid}/>
           </div>
         </div>

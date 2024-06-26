@@ -25,13 +25,16 @@ const FormSchema = z.object({
   }),
 });
 
-export function UbahDeadline({ token, uuid }: { token: string, uuid: string }) {
+export function UbahDeadline({ token, uuid, deadline }: { token: string, uuid: string, deadline: string }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
+  const deadlineDate = new Date(deadline);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      deadline: deadlineDate,
+    },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -46,7 +49,7 @@ export function UbahDeadline({ token, uuid }: { token: string, uuid: string }) {
         router.refresh();
         form.reset();
         toast({
-          title: "Deadline berhasil diubah.",
+          title: "Deadline berhasil diubah",
         });
       } else {
         setIsLoading(false);
@@ -96,7 +99,7 @@ export function UbahDeadline({ token, uuid }: { token: string, uuid: string }) {
                             )}
                           >
                             {field.value ? (
-                              format(field.value, "dd-MMM-yyyy") // Modified date format
+                              format(field.value, "dd MMM yyyy") // Modified date format
                             ) : (
                               <span>Pilih tanggal</span>
                             )}

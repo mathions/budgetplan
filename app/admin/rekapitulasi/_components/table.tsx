@@ -1,5 +1,5 @@
 import { columns } from "./table/column";
-import { getRecap } from "@/services/admin";
+import { getRecap, getYear } from "@/services/admin";
 import { DataTable } from "./table/data-table";
 
 export type Rekapitulasi = {
@@ -13,8 +13,9 @@ export type Rekapitulasi = {
 
 export async function Table({ token }: { token: string }) {
   const data = await getRecap(token);
+  const year = await getYear(token);
 
   return (
-    <DataTable columns={columns} data={data} />
+    <DataTable columns={columns} data={data} token={token} year={year} />
   )
 }
