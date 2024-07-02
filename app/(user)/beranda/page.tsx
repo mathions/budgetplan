@@ -6,10 +6,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Data, MessageText1, TickCircle } from "iconsax-react";
 
-// export const metadata: Metadata = {
-//   title: "Beranda",
-// };
-
 export default function Beranda() {
   return (
     <div className="">
@@ -176,7 +172,7 @@ export default function Beranda() {
               <Button
                 asChild
                 variant="secondary"
-                className="border-background text-background hover:bg-background/20"
+                className="border-background bg-primary text-background hover:bg-background/20"
               >
                 <Link href="/abt">ABT</Link>
               </Button>

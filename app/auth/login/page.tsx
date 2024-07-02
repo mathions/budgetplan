@@ -6,15 +6,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import LoginForm from "./login-form";
-import Image from "next/image";
-import logo from "@/public/logo.svg";
+import { Logo } from "@/components/header/logo"
 
 export default function LoginPage() {
   
   return (
     <div className="w-full max-w-sm space-y-6 px-4 md:px-0">
       <div className="flex justify-center">
-        <Image src={logo} width={218} height={32} alt="logo"></Image>
+        <Logo />
       </div>
       <Card className="h-fit shadow-sm">
         <CardHeader>

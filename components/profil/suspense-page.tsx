@@ -1,54 +1,22 @@
 import { getProfil } from "@/services/auth";
-import { Notification } from "@/lib/definitions";
-import { Card } from "@/components/ui/card";
-import { UbahPassword } from "./ubah-password";
-import { UbahProfil } from "./ubah-profil";
+import { FotoProfil } from "./foto-profil";
+import { Profil } from "./profil";
+import { Autentikasi } from "./autentikasi";
 
 export async function SuspensePage ({ token } : { token:string }) {
-  const data = await getProfil(token)
-  console.log(data)
+  const user = await getProfil(token)
+  console.log(user)
   return (
-    <div>
-      <Card className="p-8 space-y-6">
-        <div className="grid grid-cols-2">
-          <div className="col-span-1 space-y-2">
-            <div>
-              <div className="text-textweak">Username</div>
-              <div className="font-semibold">{data?.username}</div>
-            </div>
-            <div>
-              <div className="text-textweak">Nama</div>
-              <div className="font-semibold">{data?.name}</div>
-            </div>
-            <div>
-              <div className="text-textweak">Peran</div>
-              <div className="font-semibold">{data?.role}</div>
-            </div>
-            <div>
-            <div className="text-textweak">Satuan Kerja</div>
-            <div className="font-semibold">{data?.office}</div>
-            </div>
-          </div>
-          <div className="col-span-1 space-y-2">
-            <div>
-              <div className="text-textweak">Kode Satuan Kerja</div>
-              <div className="font-semibold">{data?.office_code}</div>
-            </div>
-            <div>
-              <div className="text-textweak">Negara</div>
-              <div className="font-semibold">{data?.country}</div>
-            </div>
-            <div>
-              <div className="text-textweak">Wilayah</div>
-              <div className="font-semibold">{data?.area}</div>
-            </div>
-          </div>
+    <div className="space-y-8">
+      <div className="grid grid-cols-2 gap-8">
+        <div className="col-span-1">
+          <Profil username={user?.username} name={user?.name} role={user?.role} office={user?.office} office_code={user?.office_code} country={user?.country} area={user?.area} uuid={user?.uuid}/>
         </div>
-        <div className="flex gap-4">
-          <UbahProfil key={data.uuid} username={data.username} name={data.name} office={data.office} office_code={data.office_code} country={data.country} area={data.area}/>
-          <UbahPassword/>
+        <div className="col-span-1 space-y-8">
+          <FotoProfil image={user?.image} />
+          <Autentikasi />
         </div>
-      </Card>
+      </div>
     </div>
   )
 }

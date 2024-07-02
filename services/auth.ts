@@ -91,3 +91,23 @@ export async function updateProfil(token: string, data:any){
     return jsonResponse;
   }
 }
+
+export async function updateImage(token: string, data:any){
+  const res = await fetch(`${url}/auth/me/image?_method=PATCH`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      image: data,
+    }),
+  });
+  const jsonResponse = await res.json();
+  console.log(jsonResponse);
+  if (res.ok) {
+    return jsonResponse;
+  } else {
+    return jsonResponse;
+  }
+}

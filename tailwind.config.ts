@@ -32,6 +32,7 @@ const config = {
         amber: "hsl(var(--amber))",
         green: "hsl(var(--green))",
         blue: "hsl(var(--blue))",
+        footer: "hsl(var(--footer))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

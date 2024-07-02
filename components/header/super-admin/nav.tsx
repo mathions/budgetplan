@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 import { Button } from "../../ui/button";
 import { SafeHome, HambergerMenu, Profile2User, Note, Money } from "iconsax-react";
-import Image from "next/image";
-import logo from "@/public/logo.svg";
+import { Logo } from "../logo";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -70,9 +69,8 @@ export default function Nav() {
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col">
           <nav className="grid gap-4 text-xl font-medium">
-            <Link href="/beranda" className="w-[218px] flex align-center mb-4">
-              <Image src={logo} width={218} height={32} alt="logo"></Image>
-              <span className="sr-only">budgetplan</span>
+            <Link href="/super-admin" className="mb-4">
+              <Logo />
             </Link>
             {routes.map((route, i) => (
               <Link

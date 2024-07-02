@@ -1,34 +1,27 @@
 "use client";
 
+import { put } from '@vercel/blob';
+import { revalidatePath } from 'next/cache';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AddSquare } from "iconsax-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogClose, } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { updatePassword } from "@/services/auth";
+import { updateImage } from "@/services/auth";
 import { useState } from "react";
 import { Icons } from "@/components/icons";
-import { PasswordInput } from "@/components/password-input";
+import { uploadImage } from './upload-image';
 
 const FormSchema = z.object({
-  oldPassword: z.string({
-    required_error: "Password lama belum terisi",
-  }),
-  newPassword: z.string({
-    required_error: "Password baru belum terisi",
-  }),
-  confirmPassword: z.string({
-    required_error: "Konfirmasi password belum terisi",
-  })
+  image: typeof window === 'undefined' ? z.any() : z.instanceof(File, {message: "Belum ada gambar terpilih."}),
 });
 
-export function UbahPassword() {
+export function UnggahGambar({ image } : { image: string }) {
   const { data: session }: { data: any } = useSession();
   const token = session?.user?.token;
   const [open, setOpen] = useState(false);
@@ -38,25 +31,28 @@ export function UbahPassword() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
+ 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
     try {
-      const res = await updatePassword(token, data);
-      if (res.ok) {
+      const formData = new FormData();
+      formData.append('image', data.image, data.image.name);
+      const res = await uploadImage(token, image, formData);
+      console.log(res);
+      if (res.success) {
         setIsLoading(false);
         setOpen(false);
         router.refresh();
         form.reset();
         toast({
-          title: "Password berhasil diubah",
+          title: "Gambar berhasil diunggah",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
         form.reset();
         toast({
-          title: "Gagal mengubah password",
+          title: "Gagal mengunggah gambar",
           description: res.message,
           variant: "destructive",
         });
@@ -70,12 +66,12 @@ export function UbahPassword() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary">
-          Ubah Password
+          Unggah Gambar
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <h4>Ubah Password</h4>
+          <h4>Unggah Gambar</h4>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -84,38 +80,20 @@ export function UbahPassword() {
           >
             <FormField
               control={form.control}
-              name="oldPassword"
+              name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password Lama</FormLabel>
+                  <FormLabel>Foto Profil</FormLabel>
                   <FormControl>
-                    <PasswordInput {...field} disabled={isLoading} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="newPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password Baru</FormLabel>
-                  <FormControl>
-                    <PasswordInput {...field} disabled={isLoading} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Konfirmasi Password</FormLabel>
-                  <FormControl>
-                    <PasswordInput {...field} disabled={isLoading} />
+                    <Input
+                      accept=".jpg"
+                      type="file"
+                      onChange={(e) =>
+                        field.onChange(
+                          e.target.files ? e.target.files[0] : null
+                        )
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -126,7 +104,7 @@ export function UbahPassword() {
                 {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Ubah Password
+                Unggah Gambar
               </Button>
               <DialogClose asChild>
                 <Button variant="secondary">Batal</Button>

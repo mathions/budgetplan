@@ -5,6 +5,7 @@ import { Chart } from "react-google-charts";
 export const options = {
   colorAxis: { colors: ["#A5B1EB","#4C63D9"] },
   tooltip: {isHtml: true, showTitle: false},
+  backgroundColor: 'transparent',
 };
 
 export default function Peta({ data } : { data: any }) {
