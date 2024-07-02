@@ -39,6 +39,7 @@ export const authOptions: NextAuthOptions = {
         token.office = user.data.office;
         token.role = user.data.role;
         token.token = user.data.token;
+        token.image = user.data.image;
       }
       return token;
     },
@@ -58,6 +59,9 @@ export const authOptions: NextAuthOptions = {
       }
       if ("token" in token) {
         session.user.token = token.token;
+      }
+      if ("image" in token) {
+        session.user.image = token.image;
       }
       return session;
     },

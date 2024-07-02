@@ -13,8 +13,8 @@ export function Profile() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-9 w-9 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="/avatars/user.png" alt="profile image" />
-            <AvatarFallback>U</AvatarFallback>
+            <AvatarImage src={session?.user?.image} alt="profile image" />
+            <AvatarFallback>A</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -22,8 +22,8 @@ export function Profile() {
         <DropdownMenuLabel>
           <div className="flex gap-2 items-center">
             <Avatar className="h-10 w-10">
-              <AvatarImage src="/avatars/user.png" alt="profile image" />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarImage src={session?.user?.image} alt="profile image" />
+              <AvatarFallback>A</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <p className="text-base font-semibold text-grey-900">{session?.user?.name}</p>

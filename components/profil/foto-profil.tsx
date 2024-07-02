@@ -4,12 +4,6 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export async function FotoProfil({ image } : { image: string }) {
-  let gambar = "";
-  if(image){
-    gambar = image;
-  } else {
-    gambar = "/avatars/default.jpg"
-  }
   return (
     <Card className="p-8 space-y-4">
       {/* <div className="space-y-2">
@@ -17,7 +11,7 @@ export async function FotoProfil({ image } : { image: string }) {
       </div> */}
       <div className="flex justify-center">
         <Avatar className="h-40 w-40">
-          <AvatarImage key={gambar} src={gambar} alt="profile image" />
+          <AvatarImage key={image} src={image} alt="profile image" />
           <AvatarFallback></AvatarFallback>
         </Avatar>
       </div>

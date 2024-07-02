@@ -122,6 +122,7 @@ export function Profil({ username, role, name, office, office_code, country, are
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -131,6 +132,7 @@ export function Profil({ username, role, name, office, office_code, country, are
                   <SelectContent>
                     <SelectItem value="User">User</SelectItem>
                     <SelectItem value="Admin">Admin</SelectItem>
+                    <SelectItem value="Superadmin">Super Admin</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
