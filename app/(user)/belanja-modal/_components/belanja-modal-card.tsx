@@ -88,6 +88,11 @@ export default async function BelanjaModalCard({ token }: { token: any }) {
               </Card>
             </Link>
           </div>
+          {data?.note && (
+            <div className="p-2 rounded-lg bg-amber/5 border border-amber/20 text-amber">
+              <p>{data.note}</p>
+            </div>
+          )}
         </div>
       </div>
     </Card>
