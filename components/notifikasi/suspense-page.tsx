@@ -7,7 +7,7 @@ export async function SuspensePage ({ token } : { token:string }) {
   return (
     <div className="space-y-2">
       {notifications.map((notification, index) => (
-        <div key={index} className="border p-4 bg-white rounded-lg">
+        <div key={index} className="border p-4 bg-background rounded-lg">
           <div className="font-semibold text-textstrong">{notification?.title}</div>
           <div className="text-textweak">{notification?.message}</div>
         </div>
