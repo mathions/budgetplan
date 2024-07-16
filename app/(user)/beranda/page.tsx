@@ -52,7 +52,7 @@ export default function Beranda() {
 
       {/* Belanja Modal */}
       <div className="bg-background flex flex-col-reverse gap-8 md:gap-16 md:flex-row px-6 pb-6 pt-16 md:p-28 md:pb-14 md:pt-32">
-        <div className="md:basis-1/2 flex flex-col gap-4">
+        <div className="md:basis-1/2 flex flex-col gap-4 justify-center">
           <div className="flex flex-col gap-3 md:w-9/12 ">
             <div className="bg-primary/15 px-3 py-2 w-fit rounded-md">
               <div className="text-sm font-semibold tracking-wide text-textstrong">
@@ -97,7 +97,7 @@ export default function Beranda() {
           ></Image>
           </div>
         </div>
-        <div className="md:basis-1/2 flex flex-col gap-4">
+        <div className="md:basis-1/2 flex flex-col gap-4 justify-center">
           <div className="flex flex-col gap-3 md:w-9/12">
             <div className="bg-primary/15 px-3 py-2 w-fit rounded-md">
               <div className="text-sm font-semibold tracking-wide text-textstrong">
