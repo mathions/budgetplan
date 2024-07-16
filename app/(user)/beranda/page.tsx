@@ -45,6 +45,7 @@ export default function Beranda() {
               width={480}
               height={192}
               alt="Logo Kemlu"
+              unoptimized
             ></Image>
           </div>
         </div>
@@ -76,10 +77,12 @@ export default function Beranda() {
         <div className="md:basis-1/2">
           <div className="bg-primary/5 rounded-xl p-6 h-full flex justify-center">
             <Image
-              src="/image/beranda2.png"
+              src="/image/beranda2.webp"
               width={480}
-              height={192}
+              height={374}
               alt="Logo Kemlu"
+              className="rounded-lg"
+              unoptimized
             ></Image>
           </div>
         </div>
@@ -90,10 +93,12 @@ export default function Beranda() {
         <div className="md:basis-1/2">
           <div className="bg-primary/5 rounded-xl p-6 h-full flex justify-center">
           <Image
-            src="/image/beranda3.png"
+            src="/image/beranda3.webp"
             width={480}
-            height={192}
+            height={374}
             alt="Logo Kemlu"
+            className="rounded-lg"
+            unoptimized
           ></Image>
           </div>
         </div>
