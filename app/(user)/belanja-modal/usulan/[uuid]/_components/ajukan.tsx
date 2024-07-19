@@ -23,13 +23,13 @@ export function Ajukan({ uuid, token }: { uuid: string; token: string }) {
         setOpen(false);
         router.refresh();
         toast({
-          title: "Penyampaian usulan belanja modal berhasil diajukan",
+          title: "Penyampaian usulan berhasil diajukan",
         });
       } else {
         setIsLoading(false);
         setOpen(false);
         toast({
-          title: "Gagal mengajukan penyampaian usulan belanja modal",
+          title: "Gagal mengajukan penyampaian usulan",
           variant: "destructive",
         });
       }
@@ -48,7 +48,7 @@ export function Ajukan({ uuid, token }: { uuid: string; token: string }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px] space-y-4">
         <DialogHeader>
-          <h5>Ajukan penyampaian usulan kebutuhan belanja modal?</h5>
+          <h5>Ajukan penyampaian usulan <br/>belanja modal?</h5>
         </DialogHeader>
         <div className="flex justify-start gap-4">
           <Button disabled={isLoading} onClick={handleUpdate}>
